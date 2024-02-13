@@ -122,10 +122,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\BlankSpeedometer.png" />
+    <None Include="Resources\Tachometer.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Tachometer.jpg" />
+    <None Include="Resources\GasPedal.Png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BrakePedal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BlankSpeedometer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
