@@ -47,7 +47,7 @@ Partial Class frmCarSim
         Me.pbxBrake.ErrorImage = Nothing
         Me.pbxBrake.Image = Global.CSC300_CarSim.My.Resources.Resources.BrakePedal
         Me.pbxBrake.InitialImage = Global.CSC300_CarSim.My.Resources.Resources.BrakePedal
-        Me.pbxBrake.Location = New System.Drawing.Point(12, 235)
+        Me.pbxBrake.Location = New System.Drawing.Point(12, 492)
         Me.pbxBrake.Name = "pbxBrake"
         Me.pbxBrake.Size = New System.Drawing.Size(145, 203)
         Me.pbxBrake.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -57,7 +57,7 @@ Partial Class frmCarSim
         'pbxGas
         '
         Me.pbxGas.Image = Global.CSC300_CarSim.My.Resources.Resources.GasPedal
-        Me.pbxGas.Location = New System.Drawing.Point(236, 235)
+        Me.pbxGas.Location = New System.Drawing.Point(234, 492)
         Me.pbxGas.Name = "pbxGas"
         Me.pbxGas.Size = New System.Drawing.Size(121, 203)
         Me.pbxGas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -78,7 +78,7 @@ Partial Class frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(1142, 707)
         Me.Controls.Add(Me.pbxRpm)
         Me.Controls.Add(Me.pbxGas)
         Me.Controls.Add(Me.pbxBrake)
