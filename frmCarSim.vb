@@ -38,6 +38,6 @@
     End Sub
 
     Private Sub pbxGas_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseUp
-        tmrGasHeld.Stop(
+        tmrGasHeld.Stop()
     End Sub
 End Class
