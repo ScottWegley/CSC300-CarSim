@@ -30,13 +30,19 @@ Public Class frmCarSim
     Private WithEvents timer As Timer
 
     ' This sub is where all configuration code should go.
+    Public Sub New()
+        ' Enable double buffering for the form
+        Me.DoubleBuffered = True
+        InitializeComponent()
+    End Sub
+
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' Currently the brakes and gas trigger 5 times a second, or once every 200 milliseconds, subject to change
         tmrBrakeHeld.Interval = 200
         tmrGasHeld.Interval = 200
 
         timer = New Timer()
-        timer.Interval = 100 ' Update interval in milliseconds (e.g., 100ms)
+        timer.Interval = 1 ' Update interval in milliseconds (e.g., 100ms)
         timer.Start()
     End Sub
 
@@ -68,14 +74,14 @@ Public Class frmCarSim
 
         ' Update angle for next iteration
         If accelerating Then
-            If angle + 0.1 < Math.PI * 2 Then
-                angle = angle + 0.1
+            If angle + 0.01 < Math.PI * 2 Then
+                angle = angle + 0.01
             Else
                 accelerating = False
             End If
         Else
             If angle - 0.1 > Math.PI Then
-                angle = angle - 0.1
+                angle = angle - 0.01
             Else
                 accelerating = True
             End If

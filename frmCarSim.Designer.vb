@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmCarSim
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,13 +20,12 @@ Partial Class frmCarSim
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.pbxSpeed = New System.Windows.Forms.PictureBox()
         Me.pbxBrake = New System.Windows.Forms.PictureBox()
         Me.pbxGas = New System.Windows.Forms.PictureBox()
         Me.pbxRpm = New System.Windows.Forms.PictureBox()
-        Me.BtnDraw = New System.Windows.Forms.Button()
         CType(Me.pbxSpeed, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxBrake, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxGas, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -79,21 +78,11 @@ Partial Class frmCarSim
         Me.pbxRpm.TabIndex = 3
         Me.pbxRpm.TabStop = False
         '
-        'BtnDraw
-        '
-        Me.BtnDraw.Location = New System.Drawing.Point(581, 381)
-        Me.BtnDraw.Name = "BtnDraw"
-        Me.BtnDraw.Size = New System.Drawing.Size(75, 30)
-        Me.BtnDraw.TabIndex = 4
-        Me.BtnDraw.Text = "Draw"
-        Me.BtnDraw.UseVisualStyleBackColor = True
-        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1713, 1088)
-        Me.Controls.Add(Me.BtnDraw)
         Me.Controls.Add(Me.pbxRpm)
         Me.Controls.Add(Me.pbxGas)
         Me.Controls.Add(Me.pbxBrake)
@@ -113,5 +102,4 @@ Partial Class frmCarSim
     Friend WithEvents pbxBrake As PictureBox
     Friend WithEvents pbxGas As PictureBox
     Friend WithEvents pbxRpm As PictureBox
-    Friend WithEvents BtnDraw As Button
 End Class
