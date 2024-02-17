@@ -40,4 +40,8 @@
     Private Sub pbxGas_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseUp
         tmrGasHeld.Stop()
     End Sub
+
+    Private Sub pbxGas_Click(sender As Object, e As EventArgs) Handles pbxGas.Click
+        'go vroom
+    End Sub
 End Class
