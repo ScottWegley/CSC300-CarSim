@@ -16,8 +16,8 @@ Public Class frmCarSim
     Dim dblBrakeRpmMod As Double = 0
 
     ' Used for calculating how long the gas/brakes are being held so we can scale the modification with the held length
-    Dim tmrBrakeHeld As Timer = New Timer()
-    Dim tmrGasHeld As Timer = New Timer()
+    Private WithEvents tmrBrakeHeld As Timer = New Timer()
+    Private WithEvents tmrGasHeld As Timer = New Timer()
 
     Dim length = 100
     Dim angle = Math.PI
@@ -42,7 +42,7 @@ Public Class frmCarSim
         tmrGasHeld.Interval = 200
 
         tmrNeedleUpdate = New Timer()
-        tmrNeedleUpdate.Interval = 1 ' Update interval in milliseconds (e.g., 100ms)
+        tmrNeedleUpdate.Interval = 100 ' Update interval in milliseconds (e.g., 100ms)
         tmrNeedleUpdate.Start()
     End Sub
 
@@ -61,10 +61,6 @@ Public Class frmCarSim
 
     Private Sub pbxGas_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseUp
         tmrGasHeld.Stop()
-    End Sub
-
-    Private Sub pbxSpeed_Click(sender As Object, e As EventArgs) Handles pbxSpeed.Click
-
     End Sub
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
