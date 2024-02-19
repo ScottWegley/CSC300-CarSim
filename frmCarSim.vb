@@ -27,7 +27,7 @@ Public Class frmCarSim
     Dim end_y = start_y
     Dim accelerating As Boolean = True
 
-    Private WithEvents timer As Timer
+    Private WithEvents tmrNeedleUpdate As Timer
 
     ' This sub is where all configuration code should go.
     Public Sub New()
@@ -41,9 +41,9 @@ Public Class frmCarSim
         tmrBrakeHeld.Interval = 200
         tmrGasHeld.Interval = 200
 
-        timer = New Timer()
-        timer.Interval = 1 ' Update interval in milliseconds (e.g., 100ms)
-        timer.Start()
+        tmrNeedleUpdate = New Timer()
+        tmrNeedleUpdate.Interval = 1 ' Update interval in milliseconds (e.g., 100ms)
+        tmrNeedleUpdate.Start()
     End Sub
 
 
@@ -67,7 +67,7 @@ Public Class frmCarSim
 
     End Sub
 
-    Private Sub Timer_Tick(sender As Object, e As EventArgs) Handles timer.Tick
+    Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
         end_x = start_x + Convert.ToInt32(Math.Cos(angle) * length)
         end_y = start_y + Convert.ToInt32(Math.Sin(angle) * length)
