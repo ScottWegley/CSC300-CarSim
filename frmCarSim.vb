@@ -21,8 +21,8 @@ Public Class frmCarSim
 
     Const intNeedleLength = 100
     Dim dblSpeedNeedleAngle = Math.PI
-    Dim intSpeedNeedleXOrigin = 200
-    Dim intSpeedNeedleYOrigin = 350
+    Const intSpeedNeedleXOrigin = 114
+    Const intSpeedNeedleYOrigin = 114
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
     Dim accelerating As Boolean = True
@@ -42,7 +42,7 @@ Public Class frmCarSim
         tmrGasHeld.Interval = 200
 
         tmrNeedleUpdate = New Timer()
-        tmrNeedleUpdate.Interval = 100 ' Update interval in milliseconds (e.g., 100ms)
+        tmrNeedleUpdate.Interval = 1 ' Update interval in milliseconds (e.g., 100ms)
         tmrNeedleUpdate.Start()
     End Sub
 
@@ -62,6 +62,9 @@ Public Class frmCarSim
     Private Sub pbxGas_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseUp
         tmrGasHeld.Stop()
     End Sub
+
+    Dim bmpSpeedNeedle As New Bitmap(216, 216)
+    Dim grphSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
@@ -83,15 +86,17 @@ Public Class frmCarSim
             End If
         End If
 
-        ' Trigger the Paint event to redraw the form
-        Me.Invalidate()
+        grphSheet.Dispose()
+        bmpSpeedNeedle.Dispose()
+        bmpSpeedNeedle = New Bitmap(216, 216)
+        grphSheet = Graphics.FromImage(bmpSpeedNeedle)
+
+        pbxSpeed.Refresh()
     End Sub
 
-    Private Sub frmCarSim_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        Dim graphics As Graphics = e.Graphics
-        Dim pen As Pen = New Pen(Brushes.DarkMagenta, 1)
 
-        ' Draw the line
-        graphics.DrawLine(pen, intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
+    Private Sub frmCarSim_Paint(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
+        grphSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
+        e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
     End Sub
 End Class
