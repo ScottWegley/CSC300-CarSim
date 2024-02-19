@@ -20,8 +20,10 @@ Public Class frmCarSim
     Private WithEvents tmrGasHeld As Timer = New Timer()
 
     Const intNeedleLength = 100
-    Dim dblSpeedNeedleAngle = Math.PI
-    Const intSpeedNeedleXOrigin = 114
+    Const dblSpeedNeedleMinAngle = 2.15
+    Const dblSpeedNeedleMaxAngle = 7.25
+    Dim dblSpeedNeedleAngle = 2.15
+    Const intSpeedNeedleXOrigin = 107
     Const intSpeedNeedleYOrigin = 114
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
@@ -42,8 +44,7 @@ Public Class frmCarSim
         tmrGasHeld.Interval = 200
 
         tmrNeedleUpdate = New Timer()
-        tmrNeedleUpdate.Interval = 1 ' Update interval in milliseconds (e.g., 100ms)
-        tmrNeedleUpdate.Start()
+        tmrNeedleUpdate.Interval = 5 ' Update interval in milliseconds (e.g., 100ms
     End Sub
 
 
@@ -66,25 +67,28 @@ Public Class frmCarSim
     Dim bmpSpeedNeedle As New Bitmap(216, 216)
     Dim grphSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
 
+    Dim lastDirection = True
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
         intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
         intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
 
-        ' Update angle for next iteration
-        If accelerating Then
-            If dblSpeedNeedleAngle + 0.01 < Math.PI * 2 Then
+
+        If lastDirection Then
+            If dblSpeedNeedleAngle + 0.1 < 7.25 Then
                 dblSpeedNeedleAngle = dblSpeedNeedleAngle + 0.01
             Else
-                accelerating = False
+                lastDirection = False
             End If
         Else
-            If dblSpeedNeedleAngle - 0.1 > Math.PI Then
+            If dblSpeedNeedleAngle - 0.1 > 2.15 Then
                 dblSpeedNeedleAngle = dblSpeedNeedleAngle - 0.01
             Else
-                accelerating = True
+                lastDirection = True
             End If
         End If
+
+
 
         grphSheet.Dispose()
         bmpSpeedNeedle.Dispose()
@@ -92,11 +96,20 @@ Public Class frmCarSim
         grphSheet = Graphics.FromImage(bmpSpeedNeedle)
 
         pbxSpeed.Refresh()
+        TextBox1.Text = lastDirection
     End Sub
 
 
     Private Sub frmCarSim_Paint(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
         grphSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
         e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        tmrNeedleUpdate.Stop()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        tmrNeedleUpdate.Start()
     End Sub
 End Class
