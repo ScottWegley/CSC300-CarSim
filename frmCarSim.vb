@@ -19,12 +19,12 @@ Public Class frmCarSim
     Private WithEvents tmrBrakeHeld As Timer = New Timer()
     Private WithEvents tmrGasHeld As Timer = New Timer()
 
-    Dim length = 100
-    Dim angle = Math.PI
-    Dim start_x = 200
-    Dim start_y = 350
-    Dim end_x = start_x
-    Dim end_y = start_y
+    Const intNeedleLength = 100
+    Dim dblSpeedNeedleAngle = Math.PI
+    Dim intSpeedNeedleXOrigin = 200
+    Dim intSpeedNeedleYOrigin = 350
+    Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
+    Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
     Dim accelerating As Boolean = True
 
     Private WithEvents tmrNeedleUpdate As Timer
@@ -65,19 +65,19 @@ Public Class frmCarSim
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
-        end_x = start_x + Convert.ToInt32(Math.Cos(angle) * length)
-        end_y = start_y + Convert.ToInt32(Math.Sin(angle) * length)
+        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
+        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
 
         ' Update angle for next iteration
         If accelerating Then
-            If angle + 0.01 < Math.PI * 2 Then
-                angle = angle + 0.01
+            If dblSpeedNeedleAngle + 0.01 < Math.PI * 2 Then
+                dblSpeedNeedleAngle = dblSpeedNeedleAngle + 0.01
             Else
                 accelerating = False
             End If
         Else
-            If angle - 0.1 > Math.PI Then
-                angle = angle - 0.01
+            If dblSpeedNeedleAngle - 0.1 > Math.PI Then
+                dblSpeedNeedleAngle = dblSpeedNeedleAngle - 0.01
             Else
                 accelerating = True
             End If
@@ -92,6 +92,6 @@ Public Class frmCarSim
         Dim pen As Pen = New Pen(Brushes.DarkMagenta, 1)
 
         ' Draw the line
-        graphics.DrawLine(pen, start_x, start_y, end_x, end_y)
+        graphics.DrawLine(pen, intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
     End Sub
 End Class
