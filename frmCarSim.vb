@@ -27,7 +27,6 @@ Public Class frmCarSim
     Const intSpeedNeedleYOrigin = 114
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
-    Dim accelerating As Boolean = True
 
     Private WithEvents tmrNeedleUpdate As Timer
 
@@ -67,28 +66,10 @@ Public Class frmCarSim
     Dim bmpSpeedNeedle As New Bitmap(216, 216)
     Dim grphSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
 
-    Dim lastDirection = True
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
         intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
         intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
-
-
-        If lastDirection Then
-            If dblSpeedNeedleAngle + 0.1 < 7.25 Then
-                dblSpeedNeedleAngle = dblSpeedNeedleAngle + 0.01
-            Else
-                lastDirection = False
-            End If
-        Else
-            If dblSpeedNeedleAngle - 0.1 > 2.15 Then
-                dblSpeedNeedleAngle = dblSpeedNeedleAngle - 0.01
-            Else
-                lastDirection = True
-            End If
-        End If
-
-
 
         grphSheet.Dispose()
         bmpSpeedNeedle.Dispose()
@@ -96,7 +77,6 @@ Public Class frmCarSim
         grphSheet = Graphics.FromImage(bmpSpeedNeedle)
 
         pbxSpeed.Refresh()
-        TextBox1.Text = lastDirection
     End Sub
 
 
@@ -105,11 +85,11 @@ Public Class frmCarSim
         e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         tmrNeedleUpdate.Stop()
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
         tmrNeedleUpdate.Start()
     End Sub
 End Class
