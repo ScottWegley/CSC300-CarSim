@@ -111,7 +111,7 @@ Partial Class frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(945, 743)
+        Me.ClientSize = New System.Drawing.Size(1154, 743)
         Me.Controls.Add(Me.pbxStartButton)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.pbxSpeed)
