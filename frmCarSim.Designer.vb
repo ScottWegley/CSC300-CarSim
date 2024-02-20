@@ -39,7 +39,7 @@ Partial Class frmCarSim
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(728, 767)
+        Me.TextBox1.Location = New System.Drawing.Point(122, 508)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 4
@@ -47,7 +47,7 @@ Partial Class frmCarSim
         'pbxStartButton
         '
         Me.pbxStartButton.Image = Global.CSC300_CarSim.My.Resources.Resources.engine_start_stop
-        Me.pbxStartButton.Location = New System.Drawing.Point(1346, 1072)
+        Me.pbxStartButton.Location = New System.Drawing.Point(740, 813)
         Me.pbxStartButton.Name = "pbxStartButton"
         Me.pbxStartButton.Size = New System.Drawing.Size(109, 106)
         Me.pbxStartButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -58,7 +58,7 @@ Partial Class frmCarSim
         '
         Me.pbxSpeed.Image = Global.CSC300_CarSim.My.Resources.Resources.BlankSpeedometer
         Me.pbxSpeed.InitialImage = Global.CSC300_CarSim.My.Resources.Resources.BlankSpeedometer
-        Me.pbxSpeed.Location = New System.Drawing.Point(668, 545)
+        Me.pbxSpeed.Location = New System.Drawing.Point(62, 286)
         Me.pbxSpeed.Name = "pbxSpeed"
         Me.pbxSpeed.Size = New System.Drawing.Size(216, 216)
         Me.pbxSpeed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -68,7 +68,7 @@ Partial Class frmCarSim
         'pbxSteeringWheel
         '
         Me.pbxSteeringWheel.Image = Global.CSC300_CarSim.My.Resources.Resources.SteeringWheel
-        Me.pbxSteeringWheel.Location = New System.Drawing.Point(799, 649)
+        Me.pbxSteeringWheel.Location = New System.Drawing.Point(193, 390)
         Me.pbxSteeringWheel.Name = "pbxSteeringWheel"
         Me.pbxSteeringWheel.Size = New System.Drawing.Size(573, 529)
         Me.pbxSteeringWheel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -78,7 +78,7 @@ Partial Class frmCarSim
         'pbxRpm
         '
         Me.pbxRpm.Image = Global.CSC300_CarSim.My.Resources.Resources.Tachometer1
-        Me.pbxRpm.Location = New System.Drawing.Point(969, 454)
+        Me.pbxRpm.Location = New System.Drawing.Point(363, 195)
         Me.pbxRpm.Name = "pbxRpm"
         Me.pbxRpm.Size = New System.Drawing.Size(216, 216)
         Me.pbxRpm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -88,7 +88,7 @@ Partial Class frmCarSim
         'pbxGas
         '
         Me.pbxGas.Image = Global.CSC300_CarSim.My.Resources.Resources.GasPedal1
-        Me.pbxGas.Location = New System.Drawing.Point(1107, 1203)
+        Me.pbxGas.Location = New System.Drawing.Point(501, 944)
         Me.pbxGas.Name = "pbxGas"
         Me.pbxGas.Size = New System.Drawing.Size(121, 203)
         Me.pbxGas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -100,7 +100,7 @@ Partial Class frmCarSim
         Me.pbxBrake.ErrorImage = Nothing
         Me.pbxBrake.Image = Global.CSC300_CarSim.My.Resources.Resources.BrakePedal1
         Me.pbxBrake.InitialImage = Global.CSC300_CarSim.My.Resources.Resources.BrakePedal
-        Me.pbxBrake.Location = New System.Drawing.Point(938, 1203)
+        Me.pbxBrake.Location = New System.Drawing.Point(332, 944)
         Me.pbxBrake.Name = "pbxBrake"
         Me.pbxBrake.Size = New System.Drawing.Size(145, 203)
         Me.pbxBrake.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -111,7 +111,7 @@ Partial Class frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(2250, 1605)
+        Me.ClientSize = New System.Drawing.Size(1537, 1192)
         Me.Controls.Add(Me.pbxStartButton)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.pbxSpeed)
