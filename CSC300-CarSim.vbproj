@@ -133,5 +133,26 @@
   <ItemGroup>
     <None Include="Resources\BlankSpeedometer.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GasPedal1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BrakePedal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tachometer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SteeringWheel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HornButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HornButton %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\engine start stop.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

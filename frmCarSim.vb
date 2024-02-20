@@ -113,4 +113,6 @@ Public Class frmCarSim
     Private Sub Button2_Click(sender As Object, e As EventArgs)
         tmrNeedleUpdate.Start()
     End Sub
+
+
 End Class
