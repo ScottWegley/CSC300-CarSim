@@ -14,12 +14,12 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
-    Const intNeedleLength = 100
+    Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
     Const dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
-    Const intSpeedNeedleXOrigin = 107
-    Const intSpeedNeedleYOrigin = 114
+    Const intSpeedNeedleXOrigin = 84
+    Const intSpeedNeedleYOrigin = 84
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
 
@@ -90,7 +90,7 @@ Public Class frmCarSim
         dblSpeedNeedleAngle = dblSpeedNeedleAngle + (dblSpeedIncrease * 0.15)
         If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
         If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
-
+        TextBox2.Text = Convert.ToInt32((dblSpeedNeedleAngle - 2.15) * 40)
 
         grphSheet.Dispose()
         bmpSpeedNeedle.Dispose()
