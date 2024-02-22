@@ -3,11 +3,11 @@
 Public Class frmCarSim
 
     ' These represent the current change being applied to the speed and rpm
-    Dim dblSpeedIncrease As Double = 0
+    Dim dblSpeedIncrease As Double
     Dim dblRpmIncrease As Double = 0
 
     ' These represent the current modification the brake is applying to the speed and rpm
-    Dim dblBrakeSpeedMod As Double = 0
+    Dim dblBrakeSpeedMod As Double = 0.99
     Dim dblBrakeRpmMod As Double = 0
 
     Private WithEvents tmrPedals As Timer = New Timer()
@@ -43,12 +43,6 @@ Public Class frmCarSim
 
 
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
-        If boolBrakeHeld Then
-
-        Else
-
-        End If
-
         If boolGasHeld Then
             dblSpeedIncrease = dblSpeedIncrease + 0.003
             If dblSpeedIncrease > 0.05 Then
@@ -83,14 +77,18 @@ Public Class frmCarSim
     Dim grphSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
-        ' Update end coordinates
-        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
-        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
 
         dblSpeedNeedleAngle = dblSpeedNeedleAngle + (dblSpeedIncrease * 0.15)
         If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
         If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
 
+        If boolBrakeHeld Then
+            dblSpeedNeedleAngle = dblSpeedNeedleAngle * dblBrakeSpeedMod
+        End If
+
+        ' Update end coordinates
+        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
+        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
 
         grphSheet.Dispose()
         bmpSpeedNeedle.Dispose()
