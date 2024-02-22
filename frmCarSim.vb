@@ -103,8 +103,4 @@ Public Class frmCarSim
         grphSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
         e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
     End Sub
-      
-    Private Sub pbxGas_Click(sender As Object, e As EventArgs) Handles pbxGas.Click
-        'go vroom
-    End Sub
 End Class
