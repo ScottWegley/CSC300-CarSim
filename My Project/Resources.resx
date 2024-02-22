@@ -118,16 +118,37 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BlankSpeedometer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BlankSpeedometer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Tachometer1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tachometer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BrakePedal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BrakePedal.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BrakePedal1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BrakePedal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GasPedal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GasPedal.Png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Tachometer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tachometer.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BlankSpeedometer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BlankSpeedometer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GasPedal1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GasPedal1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SteeringWheel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SteeringWheel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BrakePedal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BrakePedal.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HornButton (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HornButton (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HornButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\HornButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="engine start stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\engine start stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
