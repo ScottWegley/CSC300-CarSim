@@ -6,11 +6,16 @@ Public Class frmCarSim
     Dim dblSpeedIncrease As Double
     Dim dblRpmIncrease As Double = 0
 
+    ' This boolean represents whether or not the car is on.
+    Dim boolCarOn As Boolean = False
+
     ' These represent the current modification the brake is applying to the speed and rpm
     Dim dblBrakeSpeedMod As Double = 0.99
     Dim dblBrakeRpmMod As Double = 0
 
     Private WithEvents tmrPedals As Timer = New Timer()
+
+    ' These booleans represent the current state of the gas pedal and the brake pedal
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
@@ -43,6 +48,7 @@ Public Class frmCarSim
 
 
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
+        ' Increase or decrease the speed based on the gas, with upper and lower limits
         If boolGasHeld Then
             dblSpeedIncrease = dblSpeedIncrease + 0.003
             If dblSpeedIncrease > 0.05 Then
@@ -51,14 +57,15 @@ Public Class frmCarSim
         Else
             dblSpeedIncrease = dblSpeedIncrease - 0.002
             If dblSpeedIncrease < -0.074 Then
-                dblSpeedIncrease = -0.075
+                dblSpeedIncrease = -0.074
             End If
         End If
         TextBox1.Text = dblSpeedIncrease
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
-        boolBrakeHeld = True
+        ' The AND means this will only work if the car is on
+        boolBrakeHeld = True And boolCarOn
     End Sub
 
     Private Sub pbxBrake_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseUp
@@ -66,22 +73,26 @@ Public Class frmCarSim
     End Sub
 
     Private Sub pbxGas_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseDown
-        boolGasHeld = True
+        ' The AND means this will only work if the car is on
+        boolGasHeld = True And boolCarOn
     End Sub
 
     Private Sub pbxGas_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseUp
         boolGasHeld = False
     End Sub
 
+    ' Create a blank overlay to store the speedneedle on
     Dim bmpSpeedNeedle As New Bitmap(216, 216)
     Dim grphSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
 
+        ' Apply the increase/decreate to the angle, limit the angle to the ends of the gauge
         dblSpeedNeedleAngle = dblSpeedNeedleAngle + (dblSpeedIncrease * 0.15)
         If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
         If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
 
+        ' Apply the brake if it is held
         If boolBrakeHeld Then
             dblSpeedNeedleAngle = dblSpeedNeedleAngle * dblBrakeSpeedMod
         End If
@@ -90,6 +101,7 @@ Public Class frmCarSim
         intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
         intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
 
+        ' Remove the previous needle and put a new blank bitmap over the gauge
         grphSheet.Dispose()
         bmpSpeedNeedle.Dispose()
         bmpSpeedNeedle = New Bitmap(216, 216)
@@ -100,7 +112,13 @@ Public Class frmCarSim
 
 
     Private Sub frmCarSim_Paint(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
+        ' Draw the needle onto the graphics sheet from the bitmap.
         grphSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
+        ' Draw the bitmap on top of the gauge
         e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
+    End Sub
+
+    Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
+        boolCarOn = Not boolCarOn
     End Sub
 End Class
