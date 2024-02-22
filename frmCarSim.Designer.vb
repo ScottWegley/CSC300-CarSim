@@ -29,6 +29,7 @@ Partial Class frmCarSim
         Me.pbxRpm = New System.Windows.Forms.PictureBox()
         Me.pbxGas = New System.Windows.Forms.PictureBox()
         Me.pbxBrake = New System.Windows.Forms.PictureBox()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSpeed, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -107,11 +108,19 @@ Partial Class frmCarSim
         Me.pbxBrake.TabIndex = 1
         Me.pbxBrake.TabStop = False
         '
+        'TextBox2
+        '
+        Me.TextBox2.Location = New System.Drawing.Point(391, 510)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox2.TabIndex = 7
+        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1154, 743)
+        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.pbxStartButton)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.pbxSpeed)
@@ -139,4 +148,5 @@ Partial Class frmCarSim
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents pbxSteeringWheel As PictureBox
     Friend WithEvents pbxStartButton As PictureBox
+    Friend WithEvents TextBox2 As TextBox
 End Class

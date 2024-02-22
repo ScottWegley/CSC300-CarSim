@@ -120,5 +120,6 @@ Public Class frmCarSim
 
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         boolCarOn = Not boolCarOn
+        TextBox2.Text = "Car is " & IIf(boolCarOn, "On", "Off")
     End Sub
 End Class
