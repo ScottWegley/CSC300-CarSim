@@ -18,7 +18,7 @@ Public Class frmCarSim
     Const dblSpeedNeedleMinAngle = 2.25
     Const dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
-    Const intSpeedNeedleXOrigin = 84
+    Const intSpeedNeedleXOrigin = 80
     Const intSpeedNeedleYOrigin = 84
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
@@ -90,7 +90,7 @@ Public Class frmCarSim
         dblSpeedNeedleAngle = dblSpeedNeedleAngle + (dblSpeedIncrease * 0.15)
         If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
         If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
-        TextBox2.Text = Convert.ToInt32((dblSpeedNeedleAngle - 2.15) * 40)
+        TextBox2.Text = Convert.ToInt32((dblSpeedNeedleAngle - 2.25) * 40.5)
 
         grphSheet.Dispose()
         bmpSpeedNeedle.Dispose()
