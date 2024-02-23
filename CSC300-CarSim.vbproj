@@ -154,5 +154,11 @@
   <ItemGroup>
     <None Include="Resources\engine start stop.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ParkingBrake1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ParkingBrakeLight.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

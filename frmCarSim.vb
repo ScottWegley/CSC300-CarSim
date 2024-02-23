@@ -9,6 +9,9 @@ Public Class frmCarSim
     ' This boolean represents whether or not the car is on.
     Dim boolCarOn As Boolean = False
 
+    ' This boolean represents whether the parking break is on or not
+    Dim boolParkingBrake As Boolean = False
+
     ' These represent the current modification the brake is applying to the speed and rpm
     Dim dblBrakeSpeedMod As Double = 0.99
     Dim dblBrakeRpmMod As Double = 0
@@ -121,5 +124,24 @@ Public Class frmCarSim
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         boolCarOn = Not boolCarOn
         TextBox2.Text = "Car is " & IIf(boolCarOn, "On", "Off")
+        If boolCarOn = True Then
+            pbParkingBrakeLight.Visible = boolParkingBrake
+        Else
+            pbParkingBrakeLight.Visible = False
+        End If
+
+
+
+    End Sub
+
+    Private Sub pbParkingBrake_Click(sender As Object, e As EventArgs) Handles pbParkingBrake.Click
+        boolParkingBrake = Not boolParkingBrake
+        If boolCarOn Then
+            pbParkingBrakeLight.Visible = boolParkingBrake
+        End If
+
+        boolBrakeHeld = boolParkingBrake
+
+
     End Sub
 End Class
