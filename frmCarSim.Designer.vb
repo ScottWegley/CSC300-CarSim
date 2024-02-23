@@ -24,6 +24,8 @@ Partial Class frmCarSim
     Private Sub InitializeComponent()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.pbRightTurnSignalLight = New System.Windows.Forms.PictureBox()
+        Me.pbLeftTurnSignalLight = New System.Windows.Forms.PictureBox()
         Me.pbParkingBrakeLight = New System.Windows.Forms.PictureBox()
         Me.pbParkingBrake = New System.Windows.Forms.PictureBox()
         Me.pbxStartButton = New System.Windows.Forms.PictureBox()
@@ -32,6 +34,8 @@ Partial Class frmCarSim
         Me.pbxRpm = New System.Windows.Forms.PictureBox()
         Me.pbxGas = New System.Windows.Forms.PictureBox()
         Me.pbxBrake = New System.Windows.Forms.PictureBox()
+        CType(Me.pbRightTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbLeftTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbParkingBrakeLight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbParkingBrake, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -55,6 +59,28 @@ Partial Class frmCarSim
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 7
+        '
+        'pbRightTurnSignalLight
+        '
+        Me.pbRightTurnSignalLight.Image = Global.CSC300_CarSim.My.Resources.Resources.RightTurnSignal
+        Me.pbRightTurnSignalLight.Location = New System.Drawing.Point(333, 193)
+        Me.pbRightTurnSignalLight.Name = "pbRightTurnSignalLight"
+        Me.pbRightTurnSignalLight.Size = New System.Drawing.Size(30, 28)
+        Me.pbRightTurnSignalLight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbRightTurnSignalLight.TabIndex = 11
+        Me.pbRightTurnSignalLight.TabStop = False
+        Me.pbRightTurnSignalLight.Visible = False
+        '
+        'pbLeftTurnSignalLight
+        '
+        Me.pbLeftTurnSignalLight.Image = Global.CSC300_CarSim.My.Resources.Resources.LeftTurnSignal
+        Me.pbLeftTurnSignalLight.Location = New System.Drawing.Point(128, 195)
+        Me.pbLeftTurnSignalLight.Name = "pbLeftTurnSignalLight"
+        Me.pbLeftTurnSignalLight.Size = New System.Drawing.Size(30, 28)
+        Me.pbLeftTurnSignalLight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbLeftTurnSignalLight.TabIndex = 10
+        Me.pbLeftTurnSignalLight.TabStop = False
+        Me.pbLeftTurnSignalLight.Visible = False
         '
         'pbParkingBrakeLight
         '
@@ -146,6 +172,8 @@ Partial Class frmCarSim
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1154, 743)
+        Me.Controls.Add(Me.pbRightTurnSignalLight)
+        Me.Controls.Add(Me.pbLeftTurnSignalLight)
         Me.Controls.Add(Me.pbParkingBrakeLight)
         Me.Controls.Add(Me.pbParkingBrake)
         Me.Controls.Add(Me.TextBox2)
@@ -158,6 +186,8 @@ Partial Class frmCarSim
         Me.Controls.Add(Me.pbxBrake)
         Me.Name = "frmCarSim"
         Me.Text = "Car Simulator"
+        CType(Me.pbRightTurnSignalLight, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbLeftTurnSignalLight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbParkingBrakeLight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbParkingBrake, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).EndInit()
@@ -181,4 +211,6 @@ Partial Class frmCarSim
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents pbParkingBrake As PictureBox
     Friend WithEvents pbParkingBrakeLight As PictureBox
+    Friend WithEvents pbLeftTurnSignalLight As PictureBox
+    Friend WithEvents pbRightTurnSignalLight As PictureBox
 End Class

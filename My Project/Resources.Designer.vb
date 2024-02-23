@@ -143,6 +143,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property LeftTurnSignal() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("LeftTurnSignal", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property ParkingBrake() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ParkingBrake", resourceCulture)
@@ -156,6 +166,16 @@ Namespace My.Resources
         Friend ReadOnly Property ParkingBrakeLight() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ParkingBrakeLight", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property RightTurnSignal() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("RightTurnSignal", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

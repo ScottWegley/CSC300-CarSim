@@ -160,5 +160,11 @@
   <ItemGroup>
     <None Include="Resources\ParkingBrakeLight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LeftTurnSignal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RightTurnSignal.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
