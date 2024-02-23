@@ -1,6 +1,7 @@
 ﻿Imports System.Xml.Schema
 
 Public Class frmCarSim
+    Const deltaTime = 100
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblSpeedIncrease As Double = 0
@@ -13,6 +14,23 @@ Public Class frmCarSim
     Private WithEvents tmrPedals As Timer = New Timer()
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
+
+    Const dblHorsepower As Double = 200
+    Const dblVehicleMass As Double = 1500
+    Const dblDragCoefficient As Double = 0.03
+    Const dblRollingResistanceCoefficient As Double = 0.01
+
+    Dim dblRPM As Double = 0
+    Dim dblMaxRPM As Double = 4000
+    Dim dblEngineTorque As Double = 0
+    Dim dblMaxEngineTorque As Double = 350
+
+    Dim dblDragForce As Double = 0
+    Dim dblRollingResistanceForce As Double = 0
+
+    Dim dblNetForce As Double = 0
+    Dim dblAcceleration As Double = 0
+    Dim dblVelocity As Double = 0
 
     Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
@@ -45,37 +63,41 @@ Public Class frmCarSim
         tmrPedals.Interval = 5
 
         tmrNeedleUpdate = New Timer()
-        tmrNeedleUpdate.Interval = 5 ' Update interval in milliseconds
+        tmrNeedleUpdate.Interval = deltaTime ' Update interval in milliseconds
         tmrNeedleUpdate.Start()
         tmrPedals.Start()
     End Sub
 
 
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
-        If boolBrakeHeld Then
-
-        Else
-
-        End If
-
         If boolGasHeld Then
-            dblSpeedIncrease = dblSpeedIncrease + 0.003
-            dblRpmIncrease = dblRpmIncrease + 0.003
-
-            If dblSpeedIncrease > 0.05 Then
-                dblSpeedIncrease = 0.05
-                dblRpmIncrease = 0.05
+            dblRPM = dblRPM + 100
+            If dblRPM > dblMaxRPM Then
+                dblRPM = dblMaxRPM
             End If
+
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM)
         Else
-            dblSpeedIncrease = dblSpeedIncrease - 0.002
-            dblRpmIncrease = dblRpmIncrease - 0.002
+            'dblRPM = dblRPM - 0.01
 
-            If dblSpeedIncrease < -0.074 Then
-                dblSpeedIncrease = -0.075
-                dblRpmIncrease = -0.075
-            End If
+            'If dblRPM < 0 Then
+            '    dblRPM = 0
+            'End If
+
+            dblEngineTorque = 0
         End If
-        TextBox1.Text = dblSpeedIncrease
+
+        dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
+        dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
+        dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
+        dblAcceleration = dblNetForce / dblVehicleMass
+        dblVelocity = dblVelocity + dblAcceleration
+
+        If dblVelocity < 0 Then
+            dblVelocity = 0
+        End If
+
+        TextBox1.Text = Convert.ToInt32(dblVelocity)
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -101,13 +123,12 @@ Public Class frmCarSim
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
-        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
-        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
+        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * intNeedleLength))
+        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32((Math.Sin((dblVelocity / 40.5) - 4) * intNeedleLength))
 
-        dblSpeedNeedleAngle = dblSpeedNeedleAngle + (dblSpeedIncrease * 0.15)
         If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
         If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
-        TextBox2.Text = Convert.ToInt32((dblSpeedNeedleAngle - 2.25) * 40.5)
+        TextBox2.Text = Convert.ToInt32(dblSpeedNeedleAngle)
 
         dblRpmNeedleAngle = dblRpmNeedleAngle + (dblRpmIncrease * 0.15)
         intRpmNeedleXEnd = intRpmNeedleXOrigin + Convert.ToInt32(Math.Cos(dblRpmNeedleAngle) * intRpmNeedleLength)
