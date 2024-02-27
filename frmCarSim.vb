@@ -5,7 +5,11 @@ Public Class frmCarSim
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblSpeedIncrease As Double = 0
-    Dim dblRpmIncrease As Double = 0
+    Dim dblRpmIncrease As Double = 100
+    Const maxRpmIncreaseFactor As Double = 10000
+    Const sigmoidMidpoint As Double = 0.8 ' Midpoint where the increase starts slowing down
+    Const steepness As Double = 10 ' Steepness of the sigmoid curve
+
 
     ' These represent the current modification the brake is applying to the speed and rpm
     Dim dblBrakeSpeedMod As Double = 0
@@ -15,18 +19,19 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
-    Const dblHorsepower As Double = 200
-    Const dblVehicleMass As Double = 1500
-    Const dblDragCoefficient As Double = 0.3
-    Const dblRollingResistanceCoefficient As Double = 0.01
+    Const dblVehicleMass As Double = 2000 ' In pounds
 
     Dim gear As Integer = 1 'First gear
-    Dim gearRatio As Double = 2.97 ' First gear gear ratio
-    Dim dblRPM As Double = 0
-    Dim dblMaxRPM As Double = 6000
-    Dim dblEngineTorque As Double = 0
-    Dim dblMaxEngineTorque As Double = 1000
+    Dim gearRatio As Double = 1 / 2.97 ' First gear gear ratio
 
+    Dim dblRPM As Double = 0
+    Dim dblMaxRPM As Double = 6000 ' Fairly standard max RPM
+
+    Dim dblEngineTorque As Double = 0
+    Dim dblMaxEngineTorque As Double = 2000 ' Mostly used to make all the other values make sense while being realistic
+
+    Const dblDragCoefficient As Double = 0.3
+    Const dblRollingResistanceCoefficient As Double = 0.01
     Dim dblDragForce As Double = 0
     Dim dblRollingResistanceForce As Double = 0
 
@@ -72,26 +77,32 @@ Public Class frmCarSim
 
 
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
-        ' Gear ratio values from https://www.newworldencyclopedia.org/entry/Gear_ratio
         If gear = 1 Then
-            gearRatio = 1 / 2.97
+            gearRatio = 1 / 4
         ElseIf gear = 2 Then
-            gearRatio = 1 / 2.07
+            gearRatio = 1 / 3
         ElseIf gear = 3 Then
-            gearRatio = 1 / 1.43
+            gearRatio = 1 / 2
         ElseIf gear = 4 Then
+            gearRatio = 1 / 1.5
+        ElseIf gear = 5 Then
+            gearRatio = 1 / 1.25
+        ElseIf gear = 6 Then
             gearRatio = 1
         End If
 
         If boolGasHeld Then
+            ' Calculate the increase factor using a sigmoid function
+            ' dblRpmIncrease = maxRpmIncreaseFactor / (1 + Math.Exp(-steepness * (dblRPM / dblMaxRPM - sigmoidMidpoint)))
+
             ' Calculate RPM based on gear ratio and throttle
-            dblRPM = Math.Min(dblMaxRPM, dblRPM + 100 * gearRatio)
+            dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * gearRatio))
 
             ' Calculate engine torque based on RPM and gear ratio
             dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
 
             ' Check if it's time to shift gears
-            If gear < 4 AndAlso dblRPM >= dblMaxRPM Then
+            If gear < 6 AndAlso dblRPM >= dblMaxRPM Then
                 gear += 1
                 ' Reset RPM to prevent overshooting the next gear's RPM range
                 dblRPM = dblMaxRPM * 0.5
