@@ -125,10 +125,10 @@ Partial Class frmCarSim
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(586, 45)
+        Me.TextBox3.Location = New System.Drawing.Point(66, 380)
         Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(100, 26)
-        Me.TextBox3.TabIndex = 8
+        Me.TextBox3.Size = New System.Drawing.Size(148, 26)
+        Me.TextBox3.TabIndex = 9
         '
         'frmCarSim
         '

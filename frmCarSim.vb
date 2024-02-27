@@ -17,13 +17,15 @@ Public Class frmCarSim
 
     Const dblHorsepower As Double = 200
     Const dblVehicleMass As Double = 1500
-    Const dblDragCoefficient As Double = 0.03
+    Const dblDragCoefficient As Double = 0.3
     Const dblRollingResistanceCoefficient As Double = 0.01
 
+    Dim gear As Integer = 1 'First gear
+    Dim gearRatio As Double = 2.97 ' First gear gear ratio
     Dim dblRPM As Double = 0
-    Dim dblMaxRPM As Double = 4000
+    Dim dblMaxRPM As Double = 6000
     Dim dblEngineTorque As Double = 0
-    Dim dblMaxEngineTorque As Double = 350
+    Dim dblMaxEngineTorque As Double = 1000
 
     Dim dblDragForce As Double = 0
     Dim dblRollingResistanceForce As Double = 0
@@ -70,25 +72,48 @@ Public Class frmCarSim
 
 
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
+        ' Gear ratio values from https://www.newworldencyclopedia.org/entry/Gear_ratio
+        If gear = 1 Then
+            gearRatio = 1 / 2.97
+        ElseIf gear = 2 Then
+            gearRatio = 1 / 2.07
+        ElseIf gear = 3 Then
+            gearRatio = 1 / 1.43
+        ElseIf gear = 4 Then
+            gearRatio = 1
+        End If
+
         If boolGasHeld Then
-            dblRPM = dblRPM + 100
-            If dblRPM > dblMaxRPM Then
-                dblRPM = dblMaxRPM
+            ' Calculate RPM based on gear ratio and throttle
+            dblRPM = Math.Min(dblMaxRPM, dblRPM + 100 * gearRatio)
+
+            ' Calculate engine torque based on RPM and gear ratio
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
+
+            ' Check if it's time to shift gears
+            If gear < 4 AndAlso dblRPM >= dblMaxRPM Then
+                gear += 1
+                ' Reset RPM to prevent overshooting the next gear's RPM range
+                dblRPM = dblMaxRPM * 0.5
             End If
-
-            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM)
         Else
-            'dblRPM = dblRPM - 0.01
+            ' If gas not held, gradually reduce RPM
+            dblRPM = Math.Max(0, dblRPM - 100 * gearRatio)
 
-            'If dblRPM < 0 Then
-            '    dblRPM = 0
-            'End If
+            ' Set a base engine torque to simulate engine braking
+            dblEngineTorque = 100 * gearRatio
 
-            dblEngineTorque = 0
+            ' Check if it's time to downshift
+            If gear > 1 AndAlso dblRPM < dblMaxRPM * 0.25 Then
+                gear -= 1
+                ' Reset RPM to prevent undershooting the next gear's RPM range
+                dblRPM = dblMaxRPM * 0.5
+            End If
         End If
 
         dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
         dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
+
         dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
         dblAcceleration = dblNetForce / dblVehicleMass
         dblVelocity = dblVelocity + dblAcceleration
@@ -98,6 +123,8 @@ Public Class frmCarSim
         End If
 
         TextBox1.Text = Convert.ToInt32(dblVelocity)
+        TextBox2.Text = dblRPM
+        TextBox3.Text = gear
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -128,11 +155,10 @@ Public Class frmCarSim
 
         If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
         If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
-        TextBox2.Text = Convert.ToInt32(dblSpeedNeedleAngle)
 
         dblRpmNeedleAngle = dblRpmNeedleAngle + (dblRpmIncrease * 0.15)
-        intRpmNeedleXEnd = intRpmNeedleXOrigin + Convert.ToInt32(Math.Cos(dblRpmNeedleAngle) * intRpmNeedleLength)
-        intRpmNeedleYEnd = intRpmNeedleYOrigin + Convert.ToInt32(Math.Sin(dblRpmNeedleAngle) * intRpmNeedleLength)
+        intRpmNeedleXEnd = intRpmNeedleXOrigin + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
+        intRpmNeedleYEnd = intRpmNeedleYOrigin + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
 
         If dblRpmNeedleAngle < dblRpmNeedleMinAngle Then dblRpmNeedleAngle = dblRpmNeedleMinAngle
         If dblRpmNeedleAngle > dblRpmNeedleMaxAngle Then dblRpmNeedleAngle = dblRpmNeedleMaxAngle
