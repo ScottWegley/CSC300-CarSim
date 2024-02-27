@@ -120,7 +120,7 @@ Partial Class frmCarSim
         Me.pbxSpeed.InitialImage = Global.CSC300_CarSim.My.Resources.Resources.BlankSpeedometer
         Me.pbxSpeed.Location = New System.Drawing.Point(76, 54)
         Me.pbxSpeed.Name = "pbxSpeed"
-        Me.pbxSpeed.Size = New System.Drawing.Size(108, 106)
+        Me.pbxSpeed.Size = New System.Drawing.Size(108, 108)
         Me.pbxSpeed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.pbxSpeed.TabIndex = 0
         Me.pbxSpeed.TabStop = False

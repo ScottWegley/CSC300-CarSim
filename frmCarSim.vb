@@ -22,12 +22,12 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
-    Const intNeedleLength = 94
+    Const intNeedleLength = 50
     Const dblSpeedNeedleMinAngle = 2.25
     Const dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
-    Const intSpeedNeedleXOrigin = 80
-    Const intSpeedNeedleYOrigin = 90
+    Const intSpeedNeedleXOrigin = 54
+    Const intSpeedNeedleYOrigin = 59
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
 
