@@ -24,6 +24,7 @@ Partial Class frmCarSim
     Private Sub InitializeComponent()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.pbxTurnSignalStock = New System.Windows.Forms.PictureBox()
         Me.pbRightTurnSignalLight = New System.Windows.Forms.PictureBox()
         Me.pbLeftTurnSignalLight = New System.Windows.Forms.PictureBox()
         Me.pbParkingBrakeLight = New System.Windows.Forms.PictureBox()
@@ -34,6 +35,7 @@ Partial Class frmCarSim
         Me.pbxRpm = New System.Windows.Forms.PictureBox()
         Me.pbxGas = New System.Windows.Forms.PictureBox()
         Me.pbxBrake = New System.Windows.Forms.PictureBox()
+        CType(Me.pbxTurnSignalStock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbRightTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbLeftTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbParkingBrakeLight, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -59,6 +61,16 @@ Partial Class frmCarSim
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 7
+        '
+        'pbxTurnSignalStock
+        '
+        Me.pbxTurnSignalStock.Image = Global.CSC300_CarSim.My.Resources.Resources.TurnStock
+        Me.pbxTurnSignalStock.Location = New System.Drawing.Point(27, 327)
+        Me.pbxTurnSignalStock.Name = "pbxTurnSignalStock"
+        Me.pbxTurnSignalStock.Size = New System.Drawing.Size(131, 60)
+        Me.pbxTurnSignalStock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxTurnSignalStock.TabIndex = 12
+        Me.pbxTurnSignalStock.TabStop = False
         '
         'pbRightTurnSignalLight
         '
@@ -127,6 +139,7 @@ Partial Class frmCarSim
         '
         'pbxSteeringWheel
         '
+        Me.pbxSteeringWheel.BackColor = System.Drawing.Color.Transparent
         Me.pbxSteeringWheel.Image = Global.CSC300_CarSim.My.Resources.Resources.SteeringWheel
         Me.pbxSteeringWheel.Location = New System.Drawing.Point(76, 229)
         Me.pbxSteeringWheel.Name = "pbxSteeringWheel"
@@ -171,21 +184,24 @@ Partial Class frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 743)
+        Me.Controls.Add(Me.TextBox2)
+        Me.Controls.Add(Me.pbxStartButton)
+        Me.Controls.Add(Me.pbxSteeringWheel)
         Me.Controls.Add(Me.pbRightTurnSignalLight)
         Me.Controls.Add(Me.pbLeftTurnSignalLight)
         Me.Controls.Add(Me.pbParkingBrakeLight)
         Me.Controls.Add(Me.pbParkingBrake)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.pbxStartButton)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.pbxSpeed)
-        Me.Controls.Add(Me.pbxSteeringWheel)
         Me.Controls.Add(Me.pbxRpm)
         Me.Controls.Add(Me.pbxGas)
         Me.Controls.Add(Me.pbxBrake)
+        Me.Controls.Add(Me.pbxTurnSignalStock)
         Me.Name = "frmCarSim"
         Me.Text = "Car Simulator"
+        CType(Me.pbxTurnSignalStock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbRightTurnSignalLight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbLeftTurnSignalLight, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbParkingBrakeLight, System.ComponentModel.ISupportInitialize).EndInit()
@@ -213,4 +229,5 @@ Partial Class frmCarSim
     Friend WithEvents pbParkingBrakeLight As PictureBox
     Friend WithEvents pbLeftTurnSignalLight As PictureBox
     Friend WithEvents pbRightTurnSignalLight As PictureBox
+    Friend WithEvents pbxTurnSignalStock As PictureBox
 End Class

@@ -88,6 +88,7 @@ Public Class frmCarSim
     Dim bmpSpeedNeedle As New Bitmap(216, 216)
     Dim grphSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
 
+
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
 
         ' Apply the increase/decreate to the angle, limit the angle to the ends of the gauge
@@ -126,6 +127,7 @@ Public Class frmCarSim
         TextBox2.Text = "Car is " & IIf(boolCarOn, "On", "Off")
         If boolCarOn = True Then
             pbParkingBrakeLight.Visible = boolParkingBrake
+
         Else
             pbParkingBrakeLight.Visible = False
         End If
@@ -143,5 +145,45 @@ Public Class frmCarSim
         boolBrakeHeld = boolParkingBrake
 
 
+    End Sub
+
+    Dim MousePosition1 As Point
+    Dim TurnSignalsOn As Boolean
+
+    Private Sub pbxTurnSignalStock_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseDown
+        MousePosition1 = Cursor.Position
+
+    End Sub
+
+    Private Sub pbxTurnSignalStock_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseUp
+        Dim MousePosition2 As Point
+        Dim interval As Integer
+        MousePosition2 = Cursor.Position
+        If MousePosition1.Y > MousePosition2.Y Then
+            pbRightTurnSignalLight.Visible = True
+            pbLeftTurnSignalLight.Visible = False
+            'For index As Integer = 0 To 100 Step 1
+            'interval = interval + 1
+            'If interval Mod 2 = 0 Then
+            'pbRightTurnSignalLight.Visible = True
+            'Else
+            'pbRightTurnSignalLight.Visible = False
+            'End If
+            'Next
+            TurnSignalsOn = True
+
+        ElseIf MousePosition1.Y < MousePosition2.Y Then
+            pbLeftTurnSignalLight.Visible = True
+            pbRightTurnSignalLight.Visible = False
+            TurnSignalsOn = True
+        End If
+    End Sub
+
+    Private Sub pbxTurnSignalStock_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStock.Click
+        If TurnSignalsOn Then
+            TurnSignalsOn = False
+            pbRightTurnSignalLight.Visible = TurnSignalsOn
+            pbLeftTurnSignalLight.Visible = TurnSignalsOn
+        End If
     End Sub
 End Class
