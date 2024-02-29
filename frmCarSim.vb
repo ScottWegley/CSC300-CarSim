@@ -4,12 +4,7 @@ Public Class frmCarSim
     Const deltaTime = 100
 
     ' These represent the current change being applied to the speed and rpm
-    Dim dblSpeedIncrease As Double = 0
-    Dim dblRpmIncrease As Double = 200
-    Const maxRpmIncreaseFactor As Double = 10000
-    Const sigmoidMidpoint As Double = 0.8 ' Midpoint where the increase starts slowing down
-    Const steepness As Double = 10 ' Steepness of the sigmoid curve
-
+    Dim dblRpmIncrease As Double = 400
 
     ' These represent the current modification the brake is applying to the speed and rpm
     Dim dblBrakeSpeedMod As Double = 0
@@ -19,16 +14,16 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
-    Const dblVehicleMass As Double = 2000 ' In pounds
+    Const dblVehicleMass As Double = 2000 ' Weight of vehicle pounds
 
     Dim gear As Integer = 1 'First gear
-    Dim gearRatio As Double = 1 / 2.97 ' First gear gear ratio
+    Dim gearRatio As Double = 1 / 4 ' First gear gear ratio
 
     Dim dblRPM As Double = 0
-    Dim dblMaxRPM As Double = 6000 ' Fairly standard max RPM
+    Const dblMaxRPM As Double = 6000 ' Fairly standard max RPM
 
     Dim dblEngineTorque As Double = 0
-    Dim dblMaxEngineTorque As Double = 2000 ' Mostly used to make all the other values make sense while being realistic
+    Const dblMaxEngineTorque As Double = 2000 ' Mostly arbitrary (similar to horsepower). Allows other variables to have realistic values.
 
     Const dblDragCoefficient As Double = 0.3
     Const dblRollingResistanceCoefficient As Double = 0.01
@@ -75,7 +70,7 @@ Public Class frmCarSim
         tmrPedals.Start()
     End Sub
 
-
+    ' Speed is dictated by RPM instead of the other way around.
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
         If gear = 1 Then
             gearRatio = 1 / 4
@@ -98,29 +93,24 @@ Public Class frmCarSim
         End If
 
         If boolGasHeld Then
-            ' Calculate the increase factor using a sigmoid function
-            ' dblRpmIncrease = maxRpmIncreaseFactor / (1 + Math.Exp(-steepness * (dblRPM / dblMaxRPM - sigmoidMidpoint)))
-
-            ' Calculate RPM based on gear ratio and throttle
             dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * gearRatio))
 
-            ' Calculate engine torque based on RPM and gear ratio
             dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
 
-            ' Check if it's time to shift gears
+            ' Upshift
             If gear < 6 AndAlso dblRPM >= dblMaxRPM Then
                 gear += 1
                 ' Reset RPM to prevent overshooting the next gear's RPM range
                 dblRPM = dblMaxRPM * gearRatio
             End If
         Else
-            ' If gas not held, gradually reduce RPM
-            dblRPM = Math.Max(0, dblRPM - ((dblRpmIncrease * gearRatio) / 10))
+            ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
+            dblRPM = Math.Max(0, dblRPM - gearRatio)
 
-            ' Idle engine speed
+            ' Idle engine power
             dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
 
-            ' Check if it's time to downshift
+            ' Downshift
             If gear > 1 AndAlso dblRPM < dblMaxRPM * gearRatio Then
                 gear -= 1
                 ' Reset RPM to prevent undershooting the next gear's RPM range
@@ -139,9 +129,9 @@ Public Class frmCarSim
             dblVelocity = 0
         End If
 
-        TextBox1.Text = Convert.ToInt32(dblVelocity)
-        TextBox2.Text = dblRPM
-        TextBox3.Text = gear
+        TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
+        TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
+        TextBox3.Text = "Current Gear: " & gear
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -170,16 +160,9 @@ Public Class frmCarSim
         intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * intNeedleLength))
         intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32((Math.Sin((dblVelocity / 40.5) - 4) * intNeedleLength))
 
-        If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
-        If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
-
         dblRpmNeedleAngle = dblRpmNeedleAngle + (dblRpmIncrease * 0.15)
         intRpmNeedleXEnd = intRpmNeedleXOrigin + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
         intRpmNeedleYEnd = intRpmNeedleYOrigin + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
-
-        If dblRpmNeedleAngle < dblRpmNeedleMinAngle Then dblRpmNeedleAngle = dblRpmNeedleMinAngle
-        If dblRpmNeedleAngle > dblRpmNeedleMaxAngle Then dblRpmNeedleAngle = dblRpmNeedleMaxAngle
-        TextBox3.Text = dblRpmNeedleAngle
 
         speedSheet.Dispose()
         rpmSheet.Dispose()
@@ -206,10 +189,5 @@ Public Class frmCarSim
     Private Sub frmCarSim_PaintRpmNeedle(sender As Object, e As PaintEventArgs) Handles pbxRpm.Paint
         rpmSheet.DrawLine(New Pen(Color.Yellow, 3), intRpmNeedleXOrigin, intRpmNeedleYOrigin, intRpmNeedleXEnd, intRpmNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
-    End Sub
-
-
-    Private Sub pbxGas_Click(sender As Object, e As EventArgs) Handles pbxGas.Click
-        'go vroom
     End Sub
 End Class
