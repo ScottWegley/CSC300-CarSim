@@ -111,7 +111,7 @@ Public Class frmCarSim
             If gear < 6 AndAlso dblRPM >= dblMaxRPM Then
                 gear += 1
                 ' Reset RPM to prevent overshooting the next gear's RPM range
-                dblRPM = dblMaxRPM * 0.5
+                dblRPM = dblMaxRPM * gearRatio
             End If
         Else
             ' If gas not held, gradually reduce RPM
