@@ -5,7 +5,7 @@ Public Class frmCarSim
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblSpeedIncrease As Double = 0
-    Dim dblRpmIncrease As Double = 100
+    Dim dblRpmIncrease As Double = 200
     Const maxRpmIncreaseFactor As Double = 10000
     Const sigmoidMidpoint As Double = 0.8 ' Midpoint where the increase starts slowing down
     Const steepness As Double = 10 ' Steepness of the sigmoid curve
@@ -79,16 +79,22 @@ Public Class frmCarSim
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
         If gear = 1 Then
             gearRatio = 1 / 4
+            dblRpmIncrease = 400
         ElseIf gear = 2 Then
             gearRatio = 1 / 3
+            dblRpmIncrease = 200
         ElseIf gear = 3 Then
             gearRatio = 1 / 2
+            dblRpmIncrease = 100
         ElseIf gear = 4 Then
             gearRatio = 1 / 1.5
+            dblRpmIncrease = 50
         ElseIf gear = 5 Then
             gearRatio = 1 / 1.25
+            dblRpmIncrease = 25
         ElseIf gear = 6 Then
             gearRatio = 1
+            dblRpmIncrease = 12.5
         End If
 
         If boolGasHeld Then
