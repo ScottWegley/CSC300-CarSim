@@ -115,16 +115,16 @@ Public Class frmCarSim
             End If
         Else
             ' If gas not held, gradually reduce RPM
-            dblRPM = Math.Max(0, dblRPM - 100 * gearRatio)
+            dblRPM = Math.Max(0, dblRPM - ((dblRpmIncrease * gearRatio) / 10))
 
-            ' Set a base engine torque to simulate engine braking
-            dblEngineTorque = 100 * gearRatio
+            ' Idle engine speed
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
 
             ' Check if it's time to downshift
-            If gear > 1 AndAlso dblRPM < dblMaxRPM * 0.25 Then
+            If gear > 1 AndAlso dblRPM < dblMaxRPM * gearRatio Then
                 gear -= 1
                 ' Reset RPM to prevent undershooting the next gear's RPM range
-                dblRPM = dblMaxRPM * 0.5
+                dblRPM = dblMaxRPM * gearRatio
             End If
         End If
 
