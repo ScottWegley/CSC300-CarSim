@@ -1,10 +1,11 @@
 ﻿Imports System.Xml.Schema
 
 Public Class frmCarSim
+    Const deltaTime = 100
 
     ' These represent the current change being applied to the speed and rpm
+    Dim dblRpmIncrease As Double = 400
     Dim dblSpeedIncrease As Double
-    Dim dblRpmIncrease As Double = 0
 
     ' This boolean represents whether or not the car is on.
     Dim boolCarOn As Boolean = False
@@ -28,8 +29,44 @@ Public Class frmCarSim
     Dim dblSpeedNeedleAngle = 2.15
     Const intSpeedNeedleXOrigin = 54
     Const intSpeedNeedleYOrigin = 59
+    Const dblVehicleMass As Double = 2000 ' Weight of vehicle pounds
+
+    Dim gear As Integer = 1 'First gear
+    Dim gearRatio As Double = 1 / 4 ' First gear gear ratio
+
+    Dim dblRPM As Double = 0
+    Const dblMaxRPM As Double = 6000 ' Fairly standard max RPM
+
+    Dim dblEngineTorque As Double = 0
+    Const dblMaxEngineTorque As Double = 2000 ' Mostly arbitrary (similar to horsepower). Allows other variables to have realistic values.
+
+    Const dblDragCoefficient As Double = 0.3
+    Const dblRollingResistanceCoefficient As Double = 0.01
+    Dim dblDragForce As Double = 0
+    Dim dblRollingResistanceForce As Double = 0
+
+    Dim dblNetForce As Double = 0
+    Dim dblAcceleration As Double = 0
+    Dim dblVelocity As Double = 0
+
+    Const intNeedleLength = 75
+
+    Const dblSpeedNeedleMinAngle = 2.25
+    Const dblSpeedNeedleMaxAngle = 7.2
+    Dim dblSpeedNeedleAngle = 2.15
+    Const intSpeedNeedleXOrigin = 80
+    Const intSpeedNeedleYOrigin = 84
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
+
+    Const intRpmNeedleLength = 60
+    Const dblRpmNeedleMinAngle = 2.25
+    Const dblRpmNeedleMaxAngle = 7.2
+    Dim dblRpmNeedleAngle = 2.25
+    Const intRpmNeedleXOrigin = 90
+    Const intRpmNeedleYOrigin = 84
+    Dim intRpmNeedleXEnd = intRpmNeedleXOrigin
+    Dim intRpmNeedleYEnd = intRpmNeedleYOrigin
 
     Private WithEvents tmrNeedleUpdate As Timer
 
@@ -44,26 +81,75 @@ Public Class frmCarSim
         tmrPedals.Interval = 5
 
         tmrNeedleUpdate = New Timer()
-        tmrNeedleUpdate.Interval = 5 ' Update interval in milliseconds
+        tmrNeedleUpdate.Interval = deltaTime ' Update interval in milliseconds
         tmrNeedleUpdate.Start()
         tmrPedals.Start()
     End Sub
 
-
+    ' Speed is dictated by RPM instead of the other way around.
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
+        If gear = 1 Then
+            gearRatio = 1 / 4
+            dblRpmIncrease = 400
+        ElseIf gear = 2 Then
+            gearRatio = 1 / 3
+            dblRpmIncrease = 200
+        ElseIf gear = 3 Then
+            gearRatio = 1 / 2
+            dblRpmIncrease = 100
+        ElseIf gear = 4 Then
+            gearRatio = 1 / 1.5
+            dblRpmIncrease = 50
+        ElseIf gear = 5 Then
+            gearRatio = 1 / 1.25
+            dblRpmIncrease = 25
+        ElseIf gear = 6 Then
+            gearRatio = 1
+            dblRpmIncrease = 12.5
+        End If
+
+
         ' Increase or decrease the speed based on the gas, with upper and lower limits
         If boolGasHeld Then
-            dblSpeedIncrease = dblSpeedIncrease + 0.003
-            If dblSpeedIncrease > 0.05 Then
-                dblSpeedIncrease = 0.05
+            dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * gearRatio))
+
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
+
+            ' Upshift
+            If gear < 6 AndAlso dblRPM >= dblMaxRPM Then
+                gear += 1
+                ' Reset RPM to prevent overshooting the next gear's RPM range
+                dblRPM = dblMaxRPM * gearRatio
             End If
         Else
-            dblSpeedIncrease = dblSpeedIncrease - 0.002
-            If dblSpeedIncrease < -0.074 Then
-                dblSpeedIncrease = -0.074
+            ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
+            dblRPM = Math.Max(0, dblRPM - gearRatio)
+
+            ' Idle engine power
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
+
+            ' Downshift
+            If gear > 1 AndAlso dblRPM < dblMaxRPM * gearRatio Then
+                gear -= 1
+                ' Reset RPM to prevent undershooting the next gear's RPM range
+                dblRPM = dblMaxRPM * gearRatio
             End If
         End If
-        TextBox1.Text = dblSpeedIncrease
+
+        dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
+        dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
+
+        dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
+        dblAcceleration = dblNetForce / dblVehicleMass
+        dblVelocity = dblVelocity + dblAcceleration
+
+        If dblVelocity < 0 Then
+            dblVelocity = 0
+        End If
+
+        TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
+        TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
+        TextBox3.Text = "Current Gear: " & gear
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -84,42 +170,46 @@ Public Class frmCarSim
         boolGasHeld = False
     End Sub
 
-    ' Create a blank overlay to store the speedneedle on
-    Dim bmpSpeedNeedle As New Bitmap(216, 216)
-    Dim grphSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
+    Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
+    Dim bmpRpmNeedle As New Bitmap(1024, 1024)
+    Dim speedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
+    Dim rpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
 
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
-
-        ' Apply the increase/decreate to the angle, limit the angle to the ends of the gauge
-        dblSpeedNeedleAngle = dblSpeedNeedleAngle + (dblSpeedIncrease * 0.15)
-        If dblSpeedNeedleAngle < dblSpeedNeedleMinAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMinAngle
-        If dblSpeedNeedleAngle > dblSpeedNeedleMaxAngle Then dblSpeedNeedleAngle = dblSpeedNeedleMaxAngle
-
-        ' Apply the brake if it is held
-        If boolBrakeHeld Then
-            dblSpeedNeedleAngle = dblSpeedNeedleAngle * dblBrakeSpeedMod
-        End If
-
         ' Update end coordinates
-        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32(Math.Cos(dblSpeedNeedleAngle) * intNeedleLength)
-        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32(Math.Sin(dblSpeedNeedleAngle) * intNeedleLength)
+        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * intNeedleLength))
+        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32((Math.Sin((dblVelocity / 40.5) - 4) * intNeedleLength))
 
-        ' Remove the previous needle and put a new blank bitmap over the gauge
-        grphSheet.Dispose()
+        dblRpmNeedleAngle = dblRpmNeedleAngle + (dblRpmIncrease * 0.15)
+        intRpmNeedleXEnd = intRpmNeedleXOrigin + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
+        intRpmNeedleYEnd = intRpmNeedleYOrigin + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
+
+        speedSheet.Dispose()
+        rpmSheet.Dispose()
+
         bmpSpeedNeedle.Dispose()
-        bmpSpeedNeedle = New Bitmap(216, 216)
-        grphSheet = Graphics.FromImage(bmpSpeedNeedle)
+        bmpSpeedNeedle = New Bitmap(1024, 1024)
+
+        bmpRpmNeedle.Dispose()
+        bmpRpmNeedle = New Bitmap(1024, 1024)
+
+        speedSheet = Graphics.FromImage(bmpSpeedNeedle)
+        rpmSheet = Graphics.FromImage(bmpRpmNeedle)
 
         pbxSpeed.Refresh()
+        pbxRpm.Refresh()
     End Sub
 
 
-    Private Sub frmCarSim_Paint(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
-        ' Draw the needle onto the graphics sheet from the bitmap.
-        grphSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
-        ' Draw the bitmap on top of the gauge
+    Private Sub frmCarSim_PaintSpeedNeedle(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
+        speedSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
         e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
+    End Sub
+
+    Private Sub frmCarSim_PaintRpmNeedle(sender As Object, e As PaintEventArgs) Handles pbxRpm.Paint
+        rpmSheet.DrawLine(New Pen(Color.Yellow, 3), intRpmNeedleXOrigin, intRpmNeedleYOrigin, intRpmNeedleXEnd, intRpmNeedleYEnd)
+        e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
     End Sub
 
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
