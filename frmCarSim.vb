@@ -10,6 +10,9 @@ Public Class frmCarSim
     ' This boolean represents whether or not the car is on.
     Dim boolCarOn As Boolean = False
 
+    ' This boolean represents whether the parking break is on or not
+    Dim boolParkingBrake As Boolean = False
+
     ' These represent the current modification the brake is applying to the speed and rpm
     Dim dblBrakeSpeedMod As Double = 0.99
     Dim dblBrakeRpmMod As Double = 0
@@ -20,6 +23,12 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
+    Const intNeedleLength = 50
+    Const dblSpeedNeedleMinAngle = 2.25
+    Const dblSpeedNeedleMaxAngle = 7.2
+    Dim dblSpeedNeedleAngle = 2.15
+    Const intSpeedNeedleXOrigin = 54
+    Const intSpeedNeedleYOrigin = 59
     Const dblVehicleMass As Double = 2000 ' Weight of vehicle pounds
 
     Dim gear As Integer = 1 'First gear
@@ -166,6 +175,7 @@ Public Class frmCarSim
     Dim speedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
     Dim rpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
 
+
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
         intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * intNeedleLength))
@@ -205,5 +215,65 @@ Public Class frmCarSim
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         boolCarOn = Not boolCarOn
         TextBox2.Text = "Car is " & IIf(boolCarOn, "On", "Off")
+        If boolCarOn = True Then
+            pbParkingBrakeLight.Visible = boolParkingBrake
+
+        Else
+            pbParkingBrakeLight.Visible = False
+        End If
+
+
+
+    End Sub
+
+    Private Sub pbParkingBrake_Click(sender As Object, e As EventArgs) Handles pbParkingBrake.Click
+        boolParkingBrake = Not boolParkingBrake
+        If boolCarOn Then
+            pbParkingBrakeLight.Visible = boolParkingBrake
+        End If
+
+        boolBrakeHeld = boolParkingBrake
+
+
+    End Sub
+
+    Dim MousePosition1 As Point
+    Dim TurnSignalsOn As Boolean
+
+    Private Sub pbxTurnSignalStock_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseDown
+        MousePosition1 = Cursor.Position
+
+    End Sub
+
+    Private Sub pbxTurnSignalStock_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseUp
+        Dim MousePosition2 As Point
+        Dim interval As Integer
+        MousePosition2 = Cursor.Position
+        If MousePosition1.Y > MousePosition2.Y Then
+            pbRightTurnSignalLight.Visible = True
+            pbLeftTurnSignalLight.Visible = False
+            'For index As Integer = 0 To 100 Step 1
+            'interval = interval + 1
+            'If interval Mod 2 = 0 Then
+            'pbRightTurnSignalLight.Visible = True
+            'Else
+            'pbRightTurnSignalLight.Visible = False
+            'End If
+            'Next
+            TurnSignalsOn = True
+
+        ElseIf MousePosition1.Y < MousePosition2.Y Then
+            pbLeftTurnSignalLight.Visible = True
+            pbRightTurnSignalLight.Visible = False
+            TurnSignalsOn = True
+        End If
+    End Sub
+
+    Private Sub pbxTurnSignalStock_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStock.Click
+        If TurnSignalsOn Then
+            TurnSignalsOn = False
+            pbRightTurnSignalLight.Visible = TurnSignalsOn
+            pbLeftTurnSignalLight.Visible = TurnSignalsOn
+        End If
     End Sub
 End Class
