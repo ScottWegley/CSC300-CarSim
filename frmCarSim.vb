@@ -200,6 +200,7 @@ Public Class frmCarSim
     Private Sub frmCarSim_PaintRpmNeedle(sender As Object, e As PaintEventArgs) Handles pbxRpm.Paint
         rpmSheet.DrawLine(New Pen(Color.Yellow, 3), intRpmNeedleXOrigin, intRpmNeedleYOrigin, intRpmNeedleXEnd, intRpmNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
+    End Sub
 
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         boolCarOn = Not boolCarOn
