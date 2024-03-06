@@ -23,12 +23,12 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
-    Const intNeedleLength = 50
+    Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
     Const dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
-    Const intSpeedNeedleXOrigin = 54
-    Const intSpeedNeedleYOrigin = 59
+    Const intSpeedNeedleXOrigin = 80
+    Const intSpeedNeedleYOrigin = 90
     Const dblVehicleMass As Double = 2000 ' Weight of vehicle pounds
 
     Dim gear As Integer = 1 'First gear
@@ -49,13 +49,6 @@ Public Class frmCarSim
     Dim dblAcceleration As Double = 0
     Dim dblVelocity As Double = 0
 
-    Const intNeedleLength = 75
-
-    Const dblSpeedNeedleMinAngle = 2.25
-    Const dblSpeedNeedleMaxAngle = 7.2
-    Dim dblSpeedNeedleAngle = 2.15
-    Const intSpeedNeedleXOrigin = 80
-    Const intSpeedNeedleYOrigin = 84
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
 
@@ -233,8 +226,6 @@ Public Class frmCarSim
         End If
 
         boolBrakeHeld = boolParkingBrake
-
-
     End Sub
 
     Dim MousePosition1 As Point
