@@ -5,12 +5,18 @@ Public Class frmCarSim
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblRpmIncrease As Double = 400
+    Dim dblSpeedIncrease As Double
+
+    ' This boolean represents whether or not the car is on.
+    Dim boolCarOn As Boolean = False
 
     ' These represent the current modification the brake is applying to the speed and rpm
-    Dim dblBrakeSpeedMod As Double = 0
+    Dim dblBrakeSpeedMod As Double = 0.99
     Dim dblBrakeRpmMod As Double = 0
 
     Private WithEvents tmrPedals As Timer = New Timer()
+
+    ' These booleans represent the current state of the gas pedal and the brake pedal
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
@@ -35,6 +41,7 @@ Public Class frmCarSim
     Dim dblVelocity As Double = 0
 
     Const intNeedleLength = 75
+
     Const dblSpeedNeedleMinAngle = 2.25
     Const dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
@@ -92,6 +99,8 @@ Public Class frmCarSim
             dblRpmIncrease = 12.5
         End If
 
+
+        ' Increase or decrease the speed based on the gas, with upper and lower limits
         If boolGasHeld Then
             dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * gearRatio))
 
@@ -135,7 +144,8 @@ Public Class frmCarSim
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
-        boolBrakeHeld = True
+        ' The AND means this will only work if the car is on
+        boolBrakeHeld = True And boolCarOn
     End Sub
 
     Private Sub pbxBrake_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseUp
@@ -143,7 +153,8 @@ Public Class frmCarSim
     End Sub
 
     Private Sub pbxGas_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseDown
-        boolGasHeld = True
+        ' The AND means this will only work if the car is on
+        boolGasHeld = True And boolCarOn
     End Sub
 
     Private Sub pbxGas_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseUp
@@ -189,5 +200,9 @@ Public Class frmCarSim
     Private Sub frmCarSim_PaintRpmNeedle(sender As Object, e As PaintEventArgs) Handles pbxRpm.Paint
         rpmSheet.DrawLine(New Pen(Color.Yellow, 3), intRpmNeedleXOrigin, intRpmNeedleYOrigin, intRpmNeedleXEnd, intRpmNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
+
+    Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
+        boolCarOn = Not boolCarOn
+        TextBox2.Text = "Car is " & IIf(boolCarOn, "On", "Off")
     End Sub
 End Class
