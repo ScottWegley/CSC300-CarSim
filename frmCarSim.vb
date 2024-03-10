@@ -81,68 +81,71 @@ Public Class frmCarSim
 
     ' Speed is dictated by RPM instead of the other way around.
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
-        If gear = 1 Then
-            gearRatio = 1 / 4
-            dblRpmIncrease = 400
-        ElseIf gear = 2 Then
-            gearRatio = 1 / 3
-            dblRpmIncrease = 200
-        ElseIf gear = 3 Then
-            gearRatio = 1 / 2
-            dblRpmIncrease = 100
-        ElseIf gear = 4 Then
-            gearRatio = 1 / 1.5
-            dblRpmIncrease = 50
-        ElseIf gear = 5 Then
-            gearRatio = 1 / 1.25
-            dblRpmIncrease = 25
-        ElseIf gear = 6 Then
-            gearRatio = 1
-            dblRpmIncrease = 12.5
-        End If
-
-
-        ' Increase or decrease the speed based on the gas, with upper and lower limits
-        If boolGasHeld Then
-            dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * gearRatio))
-
-            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
-
-            ' Upshift
-            If gear < 6 AndAlso dblRPM >= dblMaxRPM Then
-                gear += 1
-                ' Reset RPM to prevent overshooting the next gear's RPM range
-                dblRPM = dblMaxRPM * gearRatio
+        If boolBrakeHeld.Equals(False) Then
+            If gear = 1 Then
+                gearRatio = 1 / 4
+                dblRpmIncrease = 400
+            ElseIf gear = 2 Then
+                gearRatio = 1 / 3
+                dblRpmIncrease = 200
+            ElseIf gear = 3 Then
+                gearRatio = 1 / 2
+                dblRpmIncrease = 100
+            ElseIf gear = 4 Then
+                gearRatio = 1 / 1.5
+                dblRpmIncrease = 50
+            ElseIf gear = 5 Then
+                gearRatio = 1 / 1.25
+                dblRpmIncrease = 25
+            ElseIf gear = 6 Then
+                gearRatio = 1
+                dblRpmIncrease = 12.5
             End If
-        Else
-            ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
-            dblRPM = Math.Max(0, dblRPM - gearRatio)
 
-            ' Idle engine power
-            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
 
-            ' Downshift
-            If gear > 1 AndAlso dblRPM < dblMaxRPM * gearRatio Then
-                gear -= 1
-                ' Reset RPM to prevent undershooting the next gear's RPM range
-                dblRPM = dblMaxRPM * gearRatio
+            ' Increase or decrease the speed based on the gas, with upper and lower limits
+            If boolGasHeld Then
+                dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * gearRatio))
+
+                dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
+
+                ' Upshift
+                If gear < 6 AndAlso dblRPM >= dblMaxRPM Then
+                    gear += 1
+                    ' Reset RPM to prevent overshooting the next gear's RPM range
+                    dblRPM = dblMaxRPM * gearRatio
+                End If
+            Else
+                ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
+                dblRPM = Math.Max(0, dblRPM - gearRatio)
+
+                ' Idle engine power
+                dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
+
+                ' Downshift
+                If gear > 1 AndAlso dblRPM < dblMaxRPM * gearRatio Then
+                    gear -= 1
+                    ' Reset RPM to prevent undershooting the next gear's RPM range
+                    dblRPM = dblMaxRPM * gearRatio
+                End If
             End If
+
+            dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
+            dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
+
+            dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
+            dblAcceleration = dblNetForce / dblVehicleMass
+            dblVelocity = dblVelocity + dblAcceleration
+
+            If dblVelocity < 0 Then
+                dblVelocity = 0
+            End If
+
+            TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
+            TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
+            TextBox3.Text = "Current Gear: " & gear
         End If
 
-        dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
-        dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
-
-        dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
-        dblAcceleration = dblNetForce / dblVehicleMass
-        dblVelocity = dblVelocity + dblAcceleration
-
-        If dblVelocity < 0 Then
-            dblVelocity = 0
-        End If
-
-        TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
-        TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Current Gear: " & gear
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -230,6 +233,7 @@ Public Class frmCarSim
 
     Dim MousePosition1 As Point
     Dim TurnSignalsOn As Boolean
+    Dim rightturnsignal As Boolean
 
     Private Sub pbxTurnSignalStock_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseDown
         MousePosition1 = Cursor.Position
@@ -243,6 +247,10 @@ Public Class frmCarSim
         If MousePosition1.Y > MousePosition2.Y Then
             pbRightTurnSignalLight.Visible = True
             pbLeftTurnSignalLight.Visible = False
+            pbxTurnSignalStock.Visible = False
+            pbxTurnSignalStockUp.Visible = True
+            rightturnsignal = True
+
             'For index As Integer = 0 To 100 Step 1
             'interval = interval + 1
             'If interval Mod 2 = 0 Then
@@ -256,15 +264,29 @@ Public Class frmCarSim
         ElseIf MousePosition1.Y < MousePosition2.Y Then
             pbLeftTurnSignalLight.Visible = True
             pbRightTurnSignalLight.Visible = False
+            pbxTurnSignalStock.Visible = False
+            pbxturnsignalstockdown.Visible = True
             TurnSignalsOn = True
         End If
     End Sub
 
-    Private Sub pbxTurnSignalStock_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStock.Click
+    Private Sub pbxTurnSignalStock_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStockUp.Click
         If TurnSignalsOn Then
             TurnSignalsOn = False
             pbRightTurnSignalLight.Visible = TurnSignalsOn
             pbLeftTurnSignalLight.Visible = TurnSignalsOn
+            pbxTurnSignalStock.Visible = True
+            pbxTurnSignalStockUp.Visible = False
+        End If
+    End Sub
+
+    Private Sub pbxturnsignalstockdown_Click(sender As Object, e As EventArgs) Handles pbxturnsignalstockdown.Click
+        If TurnSignalsOn Then
+            TurnSignalsOn = False
+            pbRightTurnSignalLight.Visible = TurnSignalsOn
+            pbLeftTurnSignalLight.Visible = TurnSignalsOn
+            pbxTurnSignalStock.Visible = True
+            pbxturnsignalstockdown.Visible = False
         End If
     End Sub
 End Class
