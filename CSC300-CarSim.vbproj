@@ -169,5 +169,11 @@
   <ItemGroup>
     <None Include="Resources\TurnStock.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurnSignalStockUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TurnSignalStockDown.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

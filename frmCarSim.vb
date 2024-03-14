@@ -1,7 +1,7 @@
 ﻿Imports System.Xml.Schema
 
 Public Class frmCarSim
-    Const deltaTime = 100
+    Const intDeltaTime = 100
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblRpmIncrease As Double = 400
@@ -19,10 +19,13 @@ Public Class frmCarSim
 
     Private WithEvents tmrPedals As Timer = New Timer()
 
+    Private WithEvents tmrBlinkers As Timer = New Timer()
+
     ' These booleans represent the current state of the gas pedal and the brake pedal
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
+    ' Config variables for speed needle
     Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
     Const dblSpeedNeedleMaxAngle = 7.2
@@ -31,8 +34,8 @@ Public Class frmCarSim
     Const intSpeedNeedleYOrigin = 90
     Const dblVehicleMass As Double = 2000 ' Weight of vehicle pounds
 
-    Dim gear As Integer = 1 'First gear
-    Dim gearRatio As Double = 1 / 4 ' First gear gear ratio
+    Dim intGear As Integer = 1 'First gear
+    Dim dblGearRation As Double = 1 / 4 ' First gear gear ratio
 
     Dim dblRPM As Double = 0
     Const dblMaxRPM As Double = 6000 ' Fairly standard max RPM
@@ -52,6 +55,7 @@ Public Class frmCarSim
     Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
     Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
 
+    ' Config variables for rpm needle
     Const intRpmNeedleLength = 60
     Const dblRpmNeedleMinAngle = 2.25
     Const dblRpmNeedleMaxAngle = 7.2
@@ -72,79 +76,93 @@ Public Class frmCarSim
 
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
         tmrPedals.Interval = 5
+        tmrBlinkers.Interval = 500
 
         tmrNeedleUpdate = New Timer()
-        tmrNeedleUpdate.Interval = deltaTime ' Update interval in milliseconds
+        tmrNeedleUpdate.Interval = intDeltaTime ' Update interval in milliseconds
         tmrNeedleUpdate.Start()
         tmrPedals.Start()
     End Sub
 
     ' Speed is dictated by RPM instead of the other way around.
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
-        If gear = 1 Then
-            gearRatio = 1 / 4
-            dblRpmIncrease = 400
-        ElseIf gear = 2 Then
-            gearRatio = 1 / 3
-            dblRpmIncrease = 200
-        ElseIf gear = 3 Then
-            gearRatio = 1 / 2
-            dblRpmIncrease = 100
-        ElseIf gear = 4 Then
-            gearRatio = 1 / 1.5
-            dblRpmIncrease = 50
-        ElseIf gear = 5 Then
-            gearRatio = 1 / 1.25
-            dblRpmIncrease = 25
-        ElseIf gear = 6 Then
-            gearRatio = 1
-            dblRpmIncrease = 12.5
-        End If
-
-
-        ' Increase or decrease the speed based on the gas, with upper and lower limits
-        If boolGasHeld Then
-            dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * gearRatio))
-
-            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
-
-            ' Upshift
-            If gear < 6 AndAlso dblRPM >= dblMaxRPM Then
-                gear += 1
-                ' Reset RPM to prevent overshooting the next gear's RPM range
-                dblRPM = dblMaxRPM * gearRatio
+        If boolBrakeHeld.Equals(False) Then
+            If intGear = 1 Then
+                dblGearRation = 1 / 4
+                dblRpmIncrease = 400
+            ElseIf intGear = 2 Then
+                dblGearRation = 1 / 3
+                dblRpmIncrease = 200
+            ElseIf intGear = 3 Then
+                dblGearRation = 1 / 2
+                dblRpmIncrease = 100
+            ElseIf intGear = 4 Then
+                dblGearRation = 1 / 1.5
+                dblRpmIncrease = 50
+            ElseIf intGear = 5 Then
+                dblGearRation = 1 / 1.25
+                dblRpmIncrease = 25
+            ElseIf intGear = 6 Then
+                dblGearRation = 1
+                dblRpmIncrease = 12.5
             End If
-        Else
-            ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
-            dblRPM = Math.Max(0, dblRPM - gearRatio)
 
-            ' Idle engine power
-            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * gearRatio
 
-            ' Downshift
-            If gear > 1 AndAlso dblRPM < dblMaxRPM * gearRatio Then
-                gear -= 1
-                ' Reset RPM to prevent undershooting the next gear's RPM range
-                dblRPM = dblMaxRPM * gearRatio
+            ' Increase or decrease the speed based on the gas, with upper and lower limits
+            If boolGasHeld Then
+                dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRation))
+
+                dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRation
+
+                ' Upshift
+                If intGear < 6 AndAlso dblRPM >= dblMaxRPM Then
+                    intGear += 1
+                    ' Reset RPM to prevent overshooting the next gear's RPM range
+                    dblRPM = dblMaxRPM * dblGearRation
+                End If
+            Else
+                ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
+                dblRPM = Math.Max(0, dblRPM - dblGearRation)
+
+                ' Idle engine power
+                dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRation
+
+                ' Downshift
+                If intGear > 1 AndAlso dblRPM < dblMaxRPM * dblGearRation Then
+                    intGear -= 1
+                    ' Reset RPM to prevent undershooting the next gear's RPM range
+                    dblRPM = dblMaxRPM * dblGearRation
+                End If
             End If
+
+            dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
+            dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
+
+            dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
+            dblAcceleration = dblNetForce / dblVehicleMass
+            dblVelocity = dblVelocity + dblAcceleration
+
+            If dblVelocity < 0 Then
+                dblVelocity = 0
+            End If
+
+            TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
+            TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
+            TextBox3.Text = "Current Gear: " & intGear
         End If
 
-        dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
-        dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
-
-        dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
-        dblAcceleration = dblNetForce / dblVehicleMass
-        dblVelocity = dblVelocity + dblAcceleration
-
-        If dblVelocity < 0 Then
-            dblVelocity = 0
-        End If
-
-        TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
-        TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Current Gear: " & gear
     End Sub
 
+    Private Sub tmrBlinkers_Tick(sender As Object, e As EventArgs) Handles tmrBlinkers.Tick
+        If boolLeftSignalOn Then
+            pbxLeftTurnSignalLight.Visible = Not pbxLeftTurnSignalLight.Visible
+        ElseIf boolRightSignalOn Then
+            pbxRightTurnSignalLight.Visible = Not pbxRightTurnSignalLight.Visible
+        Else
+            pbxLeftTurnSignalLight.Visible = False
+            pbxRightTurnSignalLight.Visible = False
+        End If
+    End Sub
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
         ' The AND means this will only work if the car is on
         boolBrakeHeld = True And boolCarOn
@@ -165,8 +183,8 @@ Public Class frmCarSim
 
     Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
     Dim bmpRpmNeedle As New Bitmap(1024, 1024)
-    Dim speedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
-    Dim rpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
+    Dim grphSpeedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
+    Dim grphRpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
 
 
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
@@ -178,8 +196,8 @@ Public Class frmCarSim
         intRpmNeedleXEnd = intRpmNeedleXOrigin + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
         intRpmNeedleYEnd = intRpmNeedleYOrigin + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
 
-        speedSheet.Dispose()
-        rpmSheet.Dispose()
+        grphSpeedSheet.Dispose()
+        grphRpmSheet.Dispose()
 
         bmpSpeedNeedle.Dispose()
         bmpSpeedNeedle = New Bitmap(1024, 1024)
@@ -187,8 +205,8 @@ Public Class frmCarSim
         bmpRpmNeedle.Dispose()
         bmpRpmNeedle = New Bitmap(1024, 1024)
 
-        speedSheet = Graphics.FromImage(bmpSpeedNeedle)
-        rpmSheet = Graphics.FromImage(bmpRpmNeedle)
+        grphSpeedSheet = Graphics.FromImage(bmpSpeedNeedle)
+        grphRpmSheet = Graphics.FromImage(bmpRpmNeedle)
 
         pbxSpeed.Refresh()
         pbxRpm.Refresh()
@@ -196,75 +214,83 @@ Public Class frmCarSim
 
 
     Private Sub frmCarSim_PaintSpeedNeedle(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
-        speedSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
+        grphSpeedSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
         e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
     End Sub
 
     Private Sub frmCarSim_PaintRpmNeedle(sender As Object, e As PaintEventArgs) Handles pbxRpm.Paint
-        rpmSheet.DrawLine(New Pen(Color.Yellow, 3), intRpmNeedleXOrigin, intRpmNeedleYOrigin, intRpmNeedleXEnd, intRpmNeedleYEnd)
+        grphRpmSheet.DrawLine(New Pen(Color.Yellow, 3), intRpmNeedleXOrigin, intRpmNeedleYOrigin, intRpmNeedleXEnd, intRpmNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
     End Sub
 
+    ' Turns the car on/off
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         boolCarOn = Not boolCarOn
-        TextBox2.Text = "Car is " & IIf(boolCarOn, "On", "Off")
         If boolCarOn = True Then
-            pbParkingBrakeLight.Visible = boolParkingBrake
+            pbxParkingBrakeLight.Visible = boolParkingBrake
 
         Else
-            pbParkingBrakeLight.Visible = False
+            pbxRightTurnSignalLight.Visible = False
+            pbxParkingBrakeLight.Visible = False
+            pbxLeftTurnSignalLight.Visible = False
+            pbxTurnSignalStock.Visible = True
+            pbxTurnSignalStockDown.Visible = False
+            pbxTurnSignalStockUp.Visible = False
         End If
-
-
-
     End Sub
 
+    ' Throw the parking brake
     Private Sub pbParkingBrake_Click(sender As Object, e As EventArgs) Handles pbParkingBrake.Click
         boolParkingBrake = Not boolParkingBrake
-        If boolCarOn Then
-            pbParkingBrakeLight.Visible = boolParkingBrake
-        End If
-
+        pbxParkingBrakeLight.Visible = boolParkingBrake And boolCarOn
         boolBrakeHeld = boolParkingBrake
     End Sub
 
+    ' Logging for the turn stock interactions
     Dim MousePosition1 As Point
-    Dim TurnSignalsOn As Boolean
-
+    ' Grab the first position on click
+    Dim boolLeftSignalOn As Boolean = False
+    Dim boolRightSignalOn As Boolean = False
     Private Sub pbxTurnSignalStock_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseDown
-        MousePosition1 = Cursor.Position
-
-    End Sub
-
-    Private Sub pbxTurnSignalStock_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseUp
-        Dim MousePosition2 As Point
-        Dim interval As Integer
-        MousePosition2 = Cursor.Position
-        If MousePosition1.Y > MousePosition2.Y Then
-            pbRightTurnSignalLight.Visible = True
-            pbLeftTurnSignalLight.Visible = False
-            'For index As Integer = 0 To 100 Step 1
-            'interval = interval + 1
-            'If interval Mod 2 = 0 Then
-            'pbRightTurnSignalLight.Visible = True
-            'Else
-            'pbRightTurnSignalLight.Visible = False
-            'End If
-            'Next
-            TurnSignalsOn = True
-
-        ElseIf MousePosition1.Y < MousePosition2.Y Then
-            pbLeftTurnSignalLight.Visible = True
-            pbRightTurnSignalLight.Visible = False
-            TurnSignalsOn = True
+        If boolCarOn Then
+            MousePosition1 = Cursor.Position
         End If
     End Sub
 
-    Private Sub pbxTurnSignalStock_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStock.Click
-        If TurnSignalsOn Then
-            TurnSignalsOn = False
-            pbRightTurnSignalLight.Visible = TurnSignalsOn
-            pbLeftTurnSignalLight.Visible = TurnSignalsOn
+    Private Sub pbxTurnSignalStock_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseUp
+        If boolCarOn Then
+            tmrBlinkers.Start()
+            ' Log the second position, 
+            Dim MousePosition2 As Point
+            MousePosition2 = Cursor.Position
+            If MousePosition1.Y >= MousePosition2.Y Then
+                pbxRightTurnSignalLight.Visible = True
+                pbxLeftTurnSignalLight.Visible = False
+                pbxTurnSignalStock.Visible = False
+                pbxTurnSignalStockUp.Visible = True
+                boolRightSignalOn = True
+                boolLeftSignalOn = False
+            ElseIf MousePosition1.Y < MousePosition2.Y Then
+                pbxLeftTurnSignalLight.Visible = True
+                pbxRightTurnSignalLight.Visible = False
+                pbxTurnSignalStock.Visible = False
+                pbxTurnSignalStockDown.Visible = True
+                boolLeftSignalOn = True
+                boolRightSignalOn = False
+            End If
+        End If
+    End Sub
+
+    Private Sub pbxTurnSignalAlt_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStockUp.Click, pbxTurnSignalStockDown.Click
+        If (boolLeftSignalOn Or boolRightSignalOn) And boolCarOn Then
+            tmrBlinkers.Stop()
+            pbxRightTurnSignalLight.Visible = False
+            pbxLeftTurnSignalLight.Visible = False
+            pbxTurnSignalStock.Visible = True
+            pbxTurnSignalStockUp.Visible = False
+            pbxTurnSignalStockDown.Visible = False
+            boolLeftSignalOn = False
+            boolRightSignalOn = False
         End If
     End Sub
 End Class
