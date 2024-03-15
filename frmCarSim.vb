@@ -159,7 +159,10 @@ Public Class frmCarSim
     End Sub
 
     Private Sub tmrBlinkers_Tick(sender As Object, e As EventArgs) Handles tmrBlinkers.Tick
-        If boolLeftSignalOn Then
+        If boolHazardLights Then
+            pbxLeftTurnSignalLight.Visible = Not pbxLeftTurnSignalLight.Visible
+            pbxRightTurnSignalLight.Visible = Not pbxRightTurnSignalLight.Visible
+        ElseIf boolLeftSignalOn Then
             pbxLeftTurnSignalLight.Visible = Not pbxLeftTurnSignalLight.Visible
         ElseIf boolRightSignalOn Then
             pbxRightTurnSignalLight.Visible = Not pbxRightTurnSignalLight.Visible
@@ -330,13 +333,13 @@ Public Class frmCarSim
 
     Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click
         boolHazardLights = Not boolHazardLights
-        If boolCarOn And boolHazardLights.Equals(True) Then
-            tmrBlinkers.Start()
+        If boolCarOn And boolHazardLights Then
             pbxRightTurnSignalLight.Visible = True
             boolRightSignalOn = True
             pbxLeftTurnSignalLight.Visible = True
             boolLeftSignalOn = True
-        ElseIf boolCarOn And boolHazardLights.Equals(False) Then
+            tmrBlinkers.Start()
+        ElseIf boolCarOn And Not boolHazardLights Then
             tmrBlinkers.Stop()
             pbxRightTurnSignalLight.Visible = False
             pbxLeftTurnSignalLight.Visible = False
