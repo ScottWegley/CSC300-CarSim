@@ -25,6 +25,11 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
+    Dim boolLowBeam As Boolean = False
+    Dim boolHighBeam As Boolean = False
+    Dim boolFogLights As Boolean = False
+    Dim boolHazardLights As Boolean = False
+
     ' Config variables for speed needle
     Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
@@ -236,14 +241,22 @@ Public Class frmCarSim
             pbxTurnSignalStock.Visible = True
             pbxTurnSignalStockDown.Visible = False
             pbxTurnSignalStockUp.Visible = False
+            pbxLowBeamIndicator.Visible = False
+            pbxHighBeamIndicator.Visible = False
+            pbxFogLightIndicator.Visible = False
+            boolFogLights = False
+            boolLowBeam = False
+            boolHighBeam = False
         End If
     End Sub
 
     ' Throw the parking brake
     Private Sub pbParkingBrake_Click(sender As Object, e As EventArgs) Handles pbParkingBrake.Click
-        boolParkingBrake = Not boolParkingBrake
-        pbxParkingBrakeLight.Visible = boolParkingBrake And boolCarOn
-        boolBrakeHeld = boolParkingBrake
+        If boolCarOn Then
+            boolParkingBrake = Not boolParkingBrake
+            pbxParkingBrakeLight.Visible = boolParkingBrake
+            boolBrakeHeld = boolParkingBrake
+        End If
     End Sub
 
     ' Logging for the turn stock interactions
@@ -292,5 +305,44 @@ Public Class frmCarSim
             boolLeftSignalOn = False
             boolRightSignalOn = False
         End If
+    End Sub
+
+    Private Sub pbxLowBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxLowBeamSwitch.Click
+        If boolCarOn Then
+            boolLowBeam = Not boolLowBeam
+            pbxLowBeamIndicator.Visible = boolLowBeam
+        End If
+    End Sub
+
+    Private Sub pbxHighBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxHighBeamSwitch.Click
+        If boolCarOn Then
+            boolHighBeam = Not boolHighBeam
+            pbxHighBeamIndicator.Visible = boolHighBeam
+        End If
+    End Sub
+
+    Private Sub pbxFogLightSwitch_Click(sender As Object, e As EventArgs) Handles pbxFogLightSwitch.Click
+        If boolCarOn Then
+            boolFogLights = Not boolFogLights
+            pbxFogLightIndicator.Visible = boolFogLights
+        End If
+    End Sub
+
+    Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click
+        boolHazardLights = Not boolHazardLights
+        If boolCarOn And boolHazardLights.Equals(True) Then
+            tmrBlinkers.Start()
+            pbxRightTurnSignalLight.Visible = True
+            boolRightSignalOn = True
+            pbxLeftTurnSignalLight.Visible = True
+            boolLeftSignalOn = True
+        ElseIf boolCarOn And boolHazardLights.Equals(False) Then
+            tmrBlinkers.Stop()
+            pbxRightTurnSignalLight.Visible = False
+            pbxLeftTurnSignalLight.Visible = False
+            boolLeftSignalOn = False
+            boolRightSignalOn = False
+        End If
+
     End Sub
 End Class
