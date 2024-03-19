@@ -130,12 +130,16 @@ Public Class frmCarSim
 
             If Not boolBrakeHeld Then
                 ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
-                dblRPM = Math.Max(0, dblRPM - dblGearRatio)
+                If boolCarOn Then
+                    dblRPM = Math.Max(1500, dblRPM - dblGearRatio)
+                Else
+                    dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
+                End If
 
                 ' Idle engine power
                 dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+                End If
             End If
-        End If
 
         If boolBrakeHeld Then
             'dblRPM = Math.Min(dblMaxRPM, dblRPM - (dblRpmBrakeDecrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
@@ -235,7 +239,9 @@ Public Class frmCarSim
         boolCarOn = Not boolCarOn
         If boolCarOn = True Then
             pbxParkingBrakeLight.Visible = boolParkingBrake
-
+            'If dblRPM < 1500 Then
+            '    dblRPM = 1500
+            'End If
         Else
             pbxRightTurnSignalLight.Visible = False
             pbxParkingBrakeLight.Visible = False
