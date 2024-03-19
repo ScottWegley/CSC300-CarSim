@@ -45,6 +45,11 @@ Partial Class frmCarSim
         Me.pbxLowBeamSwitch = New System.Windows.Forms.PictureBox()
         Me.pbxHighBeamSwitch = New System.Windows.Forms.PictureBox()
         Me.pbxHazardSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxParkingButton = New System.Windows.Forms.PictureBox()
+        Me.pbxReverseButton = New System.Windows.Forms.PictureBox()
+        Me.pbxNuetralButton = New System.Windows.Forms.PictureBox()
+        Me.pbxDriveButton = New System.Windows.Forms.PictureBox()
+        Me.lblDriveSelecterIndicator = New System.Windows.Forms.Label()
         CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,6 +70,10 @@ Partial Class frmCarSim
         CType(Me.pbxLowBeamSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxHighBeamSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxHazardSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxParkingButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TextBox1
@@ -104,9 +113,9 @@ Partial Class frmCarSim
         'pbxStartButton
         '
         Me.pbxStartButton.Image = Global.CSC300_CarSim.My.Resources.Resources.engine_start_stop
-        Me.pbxStartButton.Location = New System.Drawing.Point(362, 472)
+        Me.pbxStartButton.Location = New System.Drawing.Point(399, 445)
         Me.pbxStartButton.Name = "pbxStartButton"
-        Me.pbxStartButton.Size = New System.Drawing.Size(74, 65)
+        Me.pbxStartButton.Size = New System.Drawing.Size(77, 70)
         Me.pbxStartButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.pbxStartButton.TabIndex = 6
         Me.pbxStartButton.TabStop = False
@@ -150,7 +159,7 @@ Partial Class frmCarSim
         '
         Me.pbxParkingBrakeLight.Enabled = False
         Me.pbxParkingBrakeLight.Image = Global.CSC300_CarSim.My.Resources.Resources.ParkingBrakeLight
-        Me.pbxParkingBrakeLight.Location = New System.Drawing.Point(256, 188)
+        Me.pbxParkingBrakeLight.Location = New System.Drawing.Point(271, 188)
         Me.pbxParkingBrakeLight.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxParkingBrakeLight.Name = "pbxParkingBrakeLight"
         Me.pbxParkingBrakeLight.Size = New System.Drawing.Size(27, 19)
@@ -238,7 +247,7 @@ Partial Class frmCarSim
         'pbxHighBeamIndicator
         '
         Me.pbxHighBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.HighBeamIndicator
-        Me.pbxHighBeamIndicator.Location = New System.Drawing.Point(180, 189)
+        Me.pbxHighBeamIndicator.Location = New System.Drawing.Point(176, 189)
         Me.pbxHighBeamIndicator.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxHighBeamIndicator.Name = "pbxHighBeamIndicator"
         Me.pbxHighBeamIndicator.Size = New System.Drawing.Size(20, 18)
@@ -250,7 +259,7 @@ Partial Class frmCarSim
         'pbxLowBeamIndicator
         '
         Me.pbxLowBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.Low_Beam_Indicator
-        Me.pbxLowBeamIndicator.Location = New System.Drawing.Point(215, 189)
+        Me.pbxLowBeamIndicator.Location = New System.Drawing.Point(209, 189)
         Me.pbxLowBeamIndicator.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxLowBeamIndicator.Name = "pbxLowBeamIndicator"
         Me.pbxLowBeamIndicator.Size = New System.Drawing.Size(20, 18)
@@ -262,7 +271,7 @@ Partial Class frmCarSim
         'pbxFogLightIndicator
         '
         Me.pbxFogLightIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.Fog_Light_Indicator
-        Me.pbxFogLightIndicator.Location = New System.Drawing.Point(301, 189)
+        Me.pbxFogLightIndicator.Location = New System.Drawing.Point(310, 189)
         Me.pbxFogLightIndicator.Margin = New System.Windows.Forms.Padding(2)
         Me.pbxFogLightIndicator.Name = "pbxFogLightIndicator"
         Me.pbxFogLightIndicator.Size = New System.Drawing.Size(20, 18)
@@ -311,12 +320,69 @@ Partial Class frmCarSim
         Me.pbxHazardSwitch.TabIndex = 21
         Me.pbxHazardSwitch.TabStop = False
         '
+        'pbxParkingButton
+        '
+        Me.pbxParkingButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Parking_Button
+        Me.pbxParkingButton.Location = New System.Drawing.Point(407, 517)
+        Me.pbxParkingButton.Name = "pbxParkingButton"
+        Me.pbxParkingButton.Size = New System.Drawing.Size(57, 31)
+        Me.pbxParkingButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxParkingButton.TabIndex = 22
+        Me.pbxParkingButton.TabStop = False
+        '
+        'pbxReverseButton
+        '
+        Me.pbxReverseButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Reverse_Button
+        Me.pbxReverseButton.Location = New System.Drawing.Point(407, 554)
+        Me.pbxReverseButton.Name = "pbxReverseButton"
+        Me.pbxReverseButton.Size = New System.Drawing.Size(57, 41)
+        Me.pbxReverseButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxReverseButton.TabIndex = 23
+        Me.pbxReverseButton.TabStop = False
+        '
+        'pbxNuetralButton
+        '
+        Me.pbxNuetralButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Nuetral_Button
+        Me.pbxNuetralButton.Location = New System.Drawing.Point(407, 601)
+        Me.pbxNuetralButton.Name = "pbxNuetralButton"
+        Me.pbxNuetralButton.Size = New System.Drawing.Size(57, 31)
+        Me.pbxNuetralButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxNuetralButton.TabIndex = 24
+        Me.pbxNuetralButton.TabStop = False
+        '
+        'pbxDriveButton
+        '
+        Me.pbxDriveButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Drive_Button
+        Me.pbxDriveButton.Location = New System.Drawing.Point(407, 638)
+        Me.pbxDriveButton.Name = "pbxDriveButton"
+        Me.pbxDriveButton.Size = New System.Drawing.Size(57, 45)
+        Me.pbxDriveButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxDriveButton.TabIndex = 25
+        Me.pbxDriveButton.TabStop = False
+        '
+        'lblDriveSelecterIndicator
+        '
+        Me.lblDriveSelecterIndicator.AutoSize = True
+        Me.lblDriveSelecterIndicator.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDriveSelecterIndicator.Location = New System.Drawing.Point(240, 185)
+        Me.lblDriveSelecterIndicator.Name = "lblDriveSelecterIndicator"
+        Me.lblDriveSelecterIndicator.Size = New System.Drawing.Size(23, 24)
+        Me.lblDriveSelecterIndicator.TabIndex = 26
+        Me.lblDriveSelecterIndicator.Text = "P"
+        Me.lblDriveSelecterIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblDriveSelecterIndicator.Visible = False
+        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.lblDriveSelecterIndicator)
+        Me.Controls.Add(Me.pbxDriveButton)
+        Me.Controls.Add(Me.pbxNuetralButton)
+        Me.Controls.Add(Me.pbxReverseButton)
+        Me.Controls.Add(Me.pbxParkingButton)
         Me.Controls.Add(Me.pbxHazardSwitch)
         Me.Controls.Add(Me.pbxHighBeamSwitch)
         Me.Controls.Add(Me.pbxLowBeamSwitch)
@@ -362,6 +428,10 @@ Partial Class frmCarSim
         CType(Me.pbxLowBeamSwitch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxHighBeamSwitch, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxHazardSwitch, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxParkingButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -390,4 +460,9 @@ Partial Class frmCarSim
     Friend WithEvents pbxLowBeamSwitch As PictureBox
     Friend WithEvents pbxHighBeamSwitch As PictureBox
     Friend WithEvents pbxHazardSwitch As PictureBox
+    Friend WithEvents pbxParkingButton As PictureBox
+    Friend WithEvents pbxReverseButton As PictureBox
+    Friend WithEvents pbxNuetralButton As PictureBox
+    Friend WithEvents pbxDriveButton As PictureBox
+    Friend WithEvents lblDriveSelecterIndicator As Label
 End Class
