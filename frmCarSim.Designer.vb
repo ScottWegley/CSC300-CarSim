@@ -22,9 +22,7 @@ Partial Class frmCarSim
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.pbxTurnSignalStockDown = New System.Windows.Forms.PictureBox()
         Me.pbxStartButton = New System.Windows.Forms.PictureBox()
         Me.pbxSteeringWheel = New System.Windows.Forms.PictureBox()
@@ -50,6 +48,8 @@ Partial Class frmCarSim
         Me.pbxNuetralButton = New System.Windows.Forms.PictureBox()
         Me.pbxDriveButton = New System.Windows.Forms.PictureBox()
         Me.lblDriveSelecterIndicator = New System.Windows.Forms.Label()
+        Me.lblMPH = New System.Windows.Forms.Label()
+        Me.lblGear = New System.Windows.Forms.Label()
         CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -76,13 +76,6 @@ Partial Class frmCarSim
         CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(407, 29)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox1.TabIndex = 4
-        '
         'TextBox2
         '
         Me.TextBox2.Location = New System.Drawing.Point(407, 52)
@@ -90,14 +83,6 @@ Partial Class frmCarSim
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 7
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Location = New System.Drawing.Point(407, 73)
-        Me.TextBox3.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox3.TabIndex = 9
         '
         'pbxTurnSignalStockDown
         '
@@ -372,12 +357,42 @@ Partial Class frmCarSim
         Me.lblDriveSelecterIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.lblDriveSelecterIndicator.Visible = False
         '
+        'lblMPH
+        '
+        Me.lblMPH.AutoSize = True
+        Me.lblMPH.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.lblMPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblMPH.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.lblMPH.Location = New System.Drawing.Point(56, 141)
+        Me.lblMPH.Name = "lblMPH"
+        Me.lblMPH.Size = New System.Drawing.Size(45, 15)
+        Me.lblMPH.TabIndex = 27
+        Me.lblMPH.Text = "0 MPH"
+        Me.lblMPH.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblMPH.Visible = False
+        '
+        'lblGear
+        '
+        Me.lblGear.AutoSize = True
+        Me.lblGear.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.lblGear.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblGear.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.lblGear.Location = New System.Drawing.Point(238, 126)
+        Me.lblGear.Name = "lblGear"
+        Me.lblGear.Size = New System.Drawing.Size(14, 15)
+        Me.lblGear.TabIndex = 28
+        Me.lblGear.Text = "1"
+        Me.lblGear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblGear.Visible = False
+        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.lblGear)
+        Me.Controls.Add(Me.lblMPH)
         Me.Controls.Add(Me.lblDriveSelecterIndicator)
         Me.Controls.Add(Me.pbxDriveButton)
         Me.Controls.Add(Me.pbxNuetralButton)
@@ -390,7 +405,6 @@ Partial Class frmCarSim
         Me.Controls.Add(Me.pbxFogLightIndicator)
         Me.Controls.Add(Me.pbxLowBeamIndicator)
         Me.Controls.Add(Me.pbxHighBeamIndicator)
-        Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.pbxStartButton)
         Me.Controls.Add(Me.pbxSteeringWheel)
@@ -398,7 +412,6 @@ Partial Class frmCarSim
         Me.Controls.Add(Me.pbxLeftTurnSignalLight)
         Me.Controls.Add(Me.pbxParkingBrakeLight)
         Me.Controls.Add(Me.pbParkingBrake)
-        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.pbxSpeed)
         Me.Controls.Add(Me.pbxRpm)
         Me.Controls.Add(Me.pbxGas)
@@ -441,7 +454,6 @@ Partial Class frmCarSim
     Friend WithEvents pbxBrake As PictureBox
     Friend WithEvents pbxGas As PictureBox
     Friend WithEvents pbxRpm As PictureBox
-    Friend WithEvents TextBox1 As TextBox
     Friend WithEvents pbxSteeringWheel As PictureBox
     Friend WithEvents pbxStartButton As PictureBox
     Friend WithEvents TextBox2 As TextBox
@@ -450,7 +462,6 @@ Partial Class frmCarSim
     Friend WithEvents pbxLeftTurnSignalLight As PictureBox
     Friend WithEvents pbxRightTurnSignalLight As PictureBox
     Friend WithEvents pbxTurnSignalStock As PictureBox
-    Friend WithEvents TextBox3 As TextBox
     Friend WithEvents pbxTurnSignalStockUp As PictureBox
     Friend WithEvents pbxTurnSignalStockDown As PictureBox
     Friend WithEvents pbxHighBeamIndicator As PictureBox
@@ -465,4 +476,6 @@ Partial Class frmCarSim
     Friend WithEvents pbxNuetralButton As PictureBox
     Friend WithEvents pbxDriveButton As PictureBox
     Friend WithEvents lblDriveSelecterIndicator As Label
+    Friend WithEvents lblMPH As Label
+    Friend WithEvents lblGear As Label
 End Class

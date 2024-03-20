@@ -179,9 +179,9 @@ Public Class frmCarSim
             dblVelocity = 0
         End If
 
-        TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
+        lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Current Gear: " & intGear
+        lblGear.Text = intGear
 
     End Sub
 
@@ -269,6 +269,7 @@ Public Class frmCarSim
         If boolCarOn = True Then
             pbxParkingBrakeLight.Visible = boolParkingBrake
             lblDriveSelecterIndicator.Visible = True
+            lblMPH.Visible = True
             'If dblRPM < 1500 Then
             '    dblRPM = 1500
             'End If
@@ -286,6 +287,7 @@ Public Class frmCarSim
             boolLowBeam = False
             boolHighBeam = False
             lblDriveSelecterIndicator.Visible = False
+            lblMPH.Visible = False
         End If
     End Sub
 
@@ -396,6 +398,7 @@ Public Class frmCarSim
             boolNuetral = False
             boolReverse = False
             lblDriveSelecterIndicator.Text = "P"
+            lblGear.Visible = False
         End If
     End Sub
 
@@ -406,6 +409,7 @@ Public Class frmCarSim
             boolNuetral = False
             boolReverse = True
             lblDriveSelecterIndicator.Text = "R"
+            lblGear.Visible = False
         End If
     End Sub
 
@@ -416,6 +420,7 @@ Public Class frmCarSim
             boolNuetral = True
             boolReverse = False
             lblDriveSelecterIndicator.Text = "N"
+            lblGear.Visible = False
         End If
     End Sub
 
@@ -426,6 +431,7 @@ Public Class frmCarSim
             boolNuetral = False
             boolReverse = False
             lblDriveSelecterIndicator.Text = "D"
+            lblGear.Visible = True
         End If
     End Sub
 End Class
