@@ -5,6 +5,7 @@ Public Class frmCarSim
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblRpmIncrease As Double = 400
+    Dim dblRpmDecrese As Double = 400
     Dim dblRpmBrakeDecrease As Double = 10
     Dim dblSpeedIncrease As Double
 
@@ -34,7 +35,7 @@ Public Class frmCarSim
     ' Config variables for speed needle
     Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
-    Const dblSpeedNeedleMaxAngle = 7.2
+    Dim dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
     Const intSpeedNeedleXOrigin = 80
     Const intSpeedNeedleYOrigin = 90
@@ -95,21 +96,27 @@ Public Class frmCarSim
         If intGear = 1 Then
             dblGearRatio = 1 / 4
             dblRpmIncrease = 400
+            dblRpmDecrese = 100
         ElseIf intGear = 2 Then
             dblGearRatio = 1 / 3
             dblRpmIncrease = 200
+            dblRpmDecrese = 120
         ElseIf intGear = 3 Then
             dblGearRatio = 1 / 2
             dblRpmIncrease = 100
+            dblRpmDecrese = 130
         ElseIf intGear = 4 Then
             dblGearRatio = 1 / 1.5
             dblRpmIncrease = 50
+            dblRpmDecrese = 140
         ElseIf intGear = 5 Then
             dblGearRatio = 1 / 1.25
             dblRpmIncrease = 25
+            dblRpmDecrese = 150
         ElseIf intGear = 6 Then
             dblGearRatio = 1
             dblRpmIncrease = 12.5
+            dblRpmDecrese = 125
         End If
 
 
@@ -125,28 +132,34 @@ Public Class frmCarSim
                 ' Reset RPM to prevent overshooting the next gear's RPM range
                 dblRPM = dblMaxRPM * dblGearRatio
             End If
-            'ElseIf boolGasHeld And boolPark Then
-            ' dblRPM = Math.Min(dblMaxRPM, dblRPM + (400 * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * 1))
-            ' dblVelocity = 0
+        ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
+            dblRPM = Math.Min(dblMaxRPM, dblRPM + (400 * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * 1))
+            dblSpeedNeedleMaxAngle = 2.25
         Else
             ' Downshift
-            If intGear > 1 AndAlso dblRPM < dblMaxRPM * dblGearRatio Then
+            If intGear > 1 AndAlso dblRPM < (2700 - dblRpmIncrease) Then
                 intGear -= 1
                 ' Reset RPM to prevent undershooting the next gear's RPM range
-                dblRPM = dblMaxRPM * dblGearRatio
+                'dblRPM = (dblMaxRPM * dblGearRatio) + 1500
+                'dblRPM = dblRPM + 1000 + dblRpmIncrease
+                dblRPM = dblMaxRPM - (intGear * 200)
             End If
 
             If Not boolBrakeHeld Then
                 ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
                 If boolCarOn Then
-                    dblRPM = Math.Max(1000, dblRPM - dblGearRatio)
+                    dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * dblGearRatio))
+                    'dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
                 Else
                     dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
                 End If
 
                 ' Idle engine power
-                dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+                If boolPark.Equals(False) Then
+                    dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
                 End If
+
+            End If
             End If
 
         If boolBrakeHeld Then
@@ -377,7 +390,7 @@ Public Class frmCarSim
     Dim boolNuetral As Boolean
     Dim boolReverse As Boolean
     Private Sub pbxParkingButton_Click(sender As Object, e As EventArgs) Handles pbxParkingButton.Click
-        If boolCarOn Then
+        If boolCarOn And (dblVelocity < 1) Then
             boolPark = True
             boolDrive = False
             boolNuetral = False
@@ -387,7 +400,7 @@ Public Class frmCarSim
     End Sub
 
     Private Sub pbxReverseButton_Click(sender As Object, e As EventArgs) Handles pbxReverseButton.Click
-        If boolCarOn Then
+        If boolCarOn And (dblVelocity < 1) Then
             boolPark = False
             boolDrive = False
             boolNuetral = False
@@ -407,7 +420,7 @@ Public Class frmCarSim
     End Sub
 
     Private Sub pbxDriveButton_Click(sender As Object, e As EventArgs) Handles pbxDriveButton.Click
-        If boolCarOn Then
+        If boolCarOn And (dblVelocity < 1) Then
             boolPark = False
             boolDrive = True
             boolNuetral = False
