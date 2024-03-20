@@ -156,7 +156,7 @@ Public Class frmCarSim
 
                 ' Idle engine power
                 If boolPark.Equals(False) Then
-                    dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+                    dblEngineTorque = -(dblMaxEngineTorque / 60) * (dblRPM / dblMaxRPM) / dblGearRatio
                 End If
 
             End If
