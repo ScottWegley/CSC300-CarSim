@@ -121,7 +121,7 @@ Public Class frmCarSim
 
 
         ' Increase or decrease the speed based on the gas, with upper and lower limits
-        If boolGasHeld And boolDrive Then
+        If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) Then
             dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
 
             dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
@@ -135,6 +135,10 @@ Public Class frmCarSim
         ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
             dblRPM = Math.Min(dblMaxRPM, dblRPM + (400 * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * 1))
             dblSpeedNeedleMaxAngle = 2.25
+        ElseIf boolGasHeld And boolReverse And boolParkingBrake.Equals(False) Then
+            dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+            intGear = 1
         Else
             ' Downshift
             If intGear > 1 AndAlso dblRPM < (2700 - dblRpmIncrease) Then
@@ -267,12 +271,11 @@ Public Class frmCarSim
         End If
 
         If boolCarOn = True Then
-            pbxParkingBrakeLight.Visible = boolParkingBrake
+            pbxParkingBrakeLight.Visible = True
             lblDriveSelecterIndicator.Visible = True
             lblMPH.Visible = True
-            'If dblRPM < 1500 Then
-            '    dblRPM = 1500
-            'End If
+            boolParkingBrake = True
+
         Else
             pbxRightTurnSignalLight.Visible = False
             pbxParkingBrakeLight.Visible = False
