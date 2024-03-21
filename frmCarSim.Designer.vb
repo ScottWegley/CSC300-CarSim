@@ -38,6 +38,7 @@ Partial Class frmCarSim
         Me.pbxBrake = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStock = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStockUp = New System.Windows.Forms.PictureBox()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
         CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -221,12 +222,20 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStockUp.TabStop = False
         Me.pbxTurnSignalStockUp.Visible = False
         '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(407, 98)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox4.TabIndex = 15
+        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.pbxStartButton)
@@ -279,4 +288,5 @@ Partial Class frmCarSim
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents pbxTurnSignalStockUp As PictureBox
     Friend WithEvents pbxTurnSignalStockDown As PictureBox
+    Friend WithEvents TextBox4 As TextBox
 End Class
