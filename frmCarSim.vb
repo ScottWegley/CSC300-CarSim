@@ -1,13 +1,12 @@
-﻿Imports System.Xml.Schema
+﻿Imports System.Security.Authentication.ExtendedProtection
+Imports System.Xml.Schema
 
 Public Class frmCarSim
     Const intDeltaTime = 100
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblRpmIncrease As Double = 400
-    Dim dblRpmDecrese As Double = 400
-    Dim dblRpmBrakeDecrease As Double = 10
-    Dim dblSpeedIncrease As Double
+    Dim dblRpmBrakeDecrease As Double = 200
 
     ' This boolean represents whether or not the car is on.
     Dim boolCarOn As Boolean = False
@@ -16,8 +15,7 @@ Public Class frmCarSim
     Dim boolParkingBrake As Boolean = False
 
     ' These represent the current modification the brake is applying to the speed and rpm
-    Dim dblBrakeSpeedMod As Double = 0.99
-    Dim dblBrakeRpmMod As Double = 0
+    Dim dblBrakeForce As Double = 1000
 
     Private WithEvents tmrPedals As Timer = New Timer()
 
@@ -39,18 +37,19 @@ Public Class frmCarSim
     Dim dblSpeedNeedleAngle = 2.15
     Const intSpeedNeedleXOrigin = 80
     Const intSpeedNeedleYOrigin = 90
-    Const dblVehicleMass As Double = 2000 ' Weight of vehicle pounds
+    Const dblVehicleMass As Double = 1000 ' Weight of vehicle in kilograms
 
     Dim intGear As Integer = 1 'First gear
     Dim dblGearRatio As Double = 1 / 4 ' First gear gear ratio
 
     Dim dblRPM As Double = 0
-    Const dblMaxRPM As Double = 6000 ' Fairly standard max RPM
+    Const dblMinRPM As Double = 800
+    Const dblMaxRPM As Double = 3500 ' Fairly standard RPM shift point
 
     Dim dblEngineTorque As Double = 0
-    Const dblMaxEngineTorque As Double = 2000 ' Mostly arbitrary (similar to horsepower). Allows other variables to have realistic values.
+    Const dblMaxEngineTorque As Double = 500 ' This variable is probably incorrectly named. Not sure what to rename it
 
-    Const dblDragCoefficient As Double = 0.3
+    Const dblDragCoefficient As Double = 0.05
     Const dblRollingResistanceCoefficient As Double = 0.01
     Dim dblDragForce As Double = 0
     Dim dblRollingResistanceForce As Double = 0
@@ -95,28 +94,22 @@ Public Class frmCarSim
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
         If intGear = 1 Then
             dblGearRatio = 1 / 4
-            dblRpmIncrease = 400
-            dblRpmDecrese = 100
+            dblRpmIncrease = 200
         ElseIf intGear = 2 Then
             dblGearRatio = 1 / 3
-            dblRpmIncrease = 200
-            dblRpmDecrese = 120
+            dblRpmIncrease = 100
         ElseIf intGear = 3 Then
             dblGearRatio = 1 / 2
-            dblRpmIncrease = 100
-            dblRpmDecrese = 130
+            dblRpmIncrease = 50
         ElseIf intGear = 4 Then
             dblGearRatio = 1 / 1.5
-            dblRpmIncrease = 50
-            dblRpmDecrese = 140
+            dblRpmIncrease = 25
         ElseIf intGear = 5 Then
             dblGearRatio = 1 / 1.25
-            dblRpmIncrease = 25
-            dblRpmDecrese = 150
+            dblRpmIncrease = 12.5
         ElseIf intGear = 6 Then
             dblGearRatio = 1
-            dblRpmIncrease = 12.5
-            dblRpmDecrese = 125
+            dblRpmIncrease = 6.25
         End If
 
 
@@ -150,32 +143,34 @@ Public Class frmCarSim
             End If
 
             If Not boolBrakeHeld Then
-                ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
+                ' If gas not held, gradually reduce RPM
                 If boolCarOn Then
-                    dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * dblGearRatio))
-                    'dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
+                    dblRPM = Math.Max(dblMinRPM, dblRPM - (dblGearRatio * 2)) ' Gear ratio is just acting as a small decay that is tied to current gear
+                    dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio ' Idle engine power
                 Else
                     dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
-                End If
-
+                    dblEngineTorque = 0
                 ' Idle engine power
                 If boolPark.Equals(False) Then
                     dblEngineTorque = -(dblMaxEngineTorque / 60) * (dblRPM / dblMaxRPM) / dblGearRatio
+
                 End If
 
             End If
             End If
-
-        If boolBrakeHeld Then
-            'dblRPM = Math.Min(dblMaxRPM, dblRPM - (dblRpmBrakeDecrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
-            dblRPM = Math.Max(1000, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
-            dblEngineTorque = -(dblMaxEngineTorque / 10) * (dblRPM / dblMaxRPM) / dblGearRatio
         End If
 
-        dblDragForce = 0.5 * dblDragCoefficient * dblVelocity ^ 2
-        dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass * 9.81
+        ' Resistance forces must grow faster than Engine Torque in order to prevent infinite velocity increase
+        dblDragForce = dblDragCoefficient * (dblVelocity ^ 2)
+        dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass
 
-        dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
+        If boolBrakeHeld Then
+            dblRPM = Math.Max(dblMinRPM, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
+            dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce - dblBrakeForce
+        Else
+            dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
+        End If
+
         dblAcceleration = dblNetForce / dblVehicleMass
         dblVelocity = dblVelocity + dblAcceleration
 
@@ -185,6 +180,8 @@ Public Class frmCarSim
 
         lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
+        TextBox3.Text = "Current Gear: " & intGear
+        TextBox4.Text = "Power: " & Convert.ToInt32(dblEngineTorque)
         lblGear.Text = intGear
 
     End Sub
@@ -271,11 +268,11 @@ Public Class frmCarSim
         End If
 
         If boolCarOn = True Then
+
             pbxParkingBrakeLight.Visible = True
             lblDriveSelecterIndicator.Visible = True
             lblMPH.Visible = True
             boolParkingBrake = True
-
         Else
             pbxRightTurnSignalLight.Visible = False
             pbxParkingBrakeLight.Visible = False

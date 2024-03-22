@@ -36,6 +36,7 @@ Partial Class frmCarSim
         Me.pbxBrake = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStock = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStockUp = New System.Windows.Forms.PictureBox()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.pbxHighBeamIndicator = New System.Windows.Forms.PictureBox()
         Me.pbxLowBeamIndicator = New System.Windows.Forms.PictureBox()
         Me.pbxFogLightIndicator = New System.Windows.Forms.PictureBox()
@@ -229,6 +230,12 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStockUp.TabStop = False
         Me.pbxTurnSignalStockUp.Visible = False
         '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(407, 98)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox4.TabIndex = 15
         'pbxHighBeamIndicator
         '
         Me.pbxHighBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.HighBeamIndicator
@@ -391,6 +398,8 @@ Partial Class frmCarSim
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.TextBox4)
+        Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.lblGear)
         Me.Controls.Add(Me.lblMPH)
         Me.Controls.Add(Me.lblDriveSelecterIndicator)
@@ -464,6 +473,7 @@ Partial Class frmCarSim
     Friend WithEvents pbxTurnSignalStock As PictureBox
     Friend WithEvents pbxTurnSignalStockUp As PictureBox
     Friend WithEvents pbxTurnSignalStockDown As PictureBox
+    Friend WithEvents TextBox4 As TextBox
     Friend WithEvents pbxHighBeamIndicator As PictureBox
     Friend WithEvents pbxLowBeamIndicator As PictureBox
     Friend WithEvents pbxFogLightIndicator As PictureBox
