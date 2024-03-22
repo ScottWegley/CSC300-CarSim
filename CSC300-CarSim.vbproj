@@ -175,5 +175,26 @@
   <ItemGroup>
     <None Include="Resources\TurnSignalStockDown.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fog Light Switch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LowBeam Switch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HighBeam Switch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HazardLights Switch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Low Beam Indicator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HighBeamIndicator.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fog Light Indicator.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

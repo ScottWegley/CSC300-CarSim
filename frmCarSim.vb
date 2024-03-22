@@ -6,7 +6,7 @@ Public Class frmCarSim
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblRpmIncrease As Double = 400
-    Dim dblRpmBrakeDecrease As Double = 20
+    Dim dblRpmBrakeDecrease As Double = 200
 
     ' This boolean represents whether or not the car is on.
     Dim boolCarOn As Boolean = False
@@ -25,10 +25,15 @@ Public Class frmCarSim
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
 
+    Dim boolLowBeam As Boolean = False
+    Dim boolHighBeam As Boolean = False
+    Dim boolFogLights As Boolean = False
+    Dim boolHazardLights As Boolean = False
+
     ' Config variables for speed needle
     Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
-    Const dblSpeedNeedleMaxAngle = 7.2
+    Dim dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
     Const intSpeedNeedleXOrigin = 80
     Const intSpeedNeedleYOrigin = 90
@@ -109,7 +114,7 @@ Public Class frmCarSim
 
 
         ' Increase or decrease the speed based on the gas, with upper and lower limits
-        If boolGasHeld Then
+        If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) Then
             dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
 
             dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
@@ -120,12 +125,21 @@ Public Class frmCarSim
                 ' Reset RPM to prevent overshooting the next gear's RPM range
                 dblRPM = dblMaxRPM * dblGearRatio
             End If
-        ElseIf Not boolGasHeld Then
+        ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
+            dblRPM = Math.Min(dblMaxRPM, dblRPM + (400 * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * 1))
+            dblSpeedNeedleMaxAngle = 2.25
+        ElseIf boolGasHeld And boolReverse And boolParkingBrake.Equals(False) Then
+            dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+            intGear = 1
+        Else
             ' Downshift
-            If intGear > 1 AndAlso dblRPM < dblMaxRPM * dblGearRatio Then
+            If intGear > 1 AndAlso dblRPM < (2700 - dblRpmIncrease) Then
                 intGear -= 1
                 ' Reset RPM to prevent undershooting the next gear's RPM range
-                dblRPM = dblMaxRPM * dblGearRatio
+                'dblRPM = (dblMaxRPM * dblGearRatio) + 1500
+                'dblRPM = dblRPM + 1000 + dblRpmIncrease
+                dblRPM = dblMaxRPM - (intGear * 200)
             End If
 
             If Not boolBrakeHeld Then
@@ -136,7 +150,13 @@ Public Class frmCarSim
                 Else
                     dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
                     dblEngineTorque = 0
+                ' Idle engine power
+                If boolPark.Equals(False) Then
+                    dblEngineTorque = -(dblMaxEngineTorque / 60) * (dblRPM / dblMaxRPM) / dblGearRatio
+
                 End If
+
+            End If
             End If
         End If
 
@@ -158,15 +178,19 @@ Public Class frmCarSim
             dblVelocity = 0
         End If
 
-        TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
+        lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
         TextBox3.Text = "Current Gear: " & intGear
         TextBox4.Text = "Power: " & Convert.ToInt32(dblEngineTorque)
+        lblGear.Text = intGear
 
     End Sub
 
     Private Sub tmrBlinkers_Tick(sender As Object, e As EventArgs) Handles tmrBlinkers.Tick
-        If boolLeftSignalOn Then
+        If boolHazardLights Then
+            pbxLeftTurnSignalLight.Visible = Not pbxLeftTurnSignalLight.Visible
+            pbxRightTurnSignalLight.Visible = Not pbxRightTurnSignalLight.Visible
+        ElseIf boolLeftSignalOn Then
             pbxLeftTurnSignalLight.Visible = Not pbxLeftTurnSignalLight.Visible
         ElseIf boolRightSignalOn Then
             pbxRightTurnSignalLight.Visible = Not pbxRightTurnSignalLight.Visible
@@ -237,9 +261,18 @@ Public Class frmCarSim
 
     ' Turns the car on/off
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
-        boolCarOn = Not boolCarOn
+        If boolPark.Equals(True) Or boolNuetral.Equals(True) Then
+            boolCarOn = Not boolCarOn
+        ElseIf boolCarOn.Equals(True) And boolPark.Equals(False) And boolNuetral.Equals(False) Then
+            MsgBox("Put Vehicle in PARK (P) or NUETRAL (N)" & Environment.NewLine & Environment.NewLine & "Cannot Turn Vehicle Off When in Drive (D) or Reverse (R)", MsgBoxStyle.Exclamation, "Stop Vehicle Error")
+        End If
+
         If boolCarOn = True Then
-            pbxParkingBrakeLight.Visible = boolParkingBrake
+
+            pbxParkingBrakeLight.Visible = True
+            lblDriveSelecterIndicator.Visible = True
+            lblMPH.Visible = True
+            boolParkingBrake = True
         Else
             pbxRightTurnSignalLight.Visible = False
             pbxParkingBrakeLight.Visible = False
@@ -247,14 +280,24 @@ Public Class frmCarSim
             pbxTurnSignalStock.Visible = True
             pbxTurnSignalStockDown.Visible = False
             pbxTurnSignalStockUp.Visible = False
+            pbxLowBeamIndicator.Visible = False
+            pbxHighBeamIndicator.Visible = False
+            pbxFogLightIndicator.Visible = False
+            boolFogLights = False
+            boolLowBeam = False
+            boolHighBeam = False
+            lblDriveSelecterIndicator.Visible = False
+            lblMPH.Visible = False
         End If
     End Sub
 
     ' Throw the parking brake
     Private Sub pbParkingBrake_Click(sender As Object, e As EventArgs) Handles pbParkingBrake.Click
-        boolParkingBrake = Not boolParkingBrake
-        pbxParkingBrakeLight.Visible = boolParkingBrake And boolCarOn
-        boolBrakeHeld = boolParkingBrake
+        If boolCarOn Then
+            boolParkingBrake = Not boolParkingBrake
+            pbxParkingBrakeLight.Visible = boolParkingBrake
+            boolBrakeHeld = boolParkingBrake
+        End If
     End Sub
 
     ' Logging for the turn stock interactions
@@ -302,6 +345,93 @@ Public Class frmCarSim
             pbxTurnSignalStockDown.Visible = False
             boolLeftSignalOn = False
             boolRightSignalOn = False
+        End If
+    End Sub
+
+    Private Sub pbxLowBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxLowBeamSwitch.Click
+        If boolCarOn Then
+            boolLowBeam = Not boolLowBeam
+            pbxLowBeamIndicator.Visible = boolLowBeam
+        End If
+    End Sub
+
+    Private Sub pbxHighBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxHighBeamSwitch.Click
+        If boolCarOn Then
+            boolHighBeam = Not boolHighBeam
+            pbxHighBeamIndicator.Visible = boolHighBeam
+        End If
+    End Sub
+
+    Private Sub pbxFogLightSwitch_Click(sender As Object, e As EventArgs) Handles pbxFogLightSwitch.Click
+        If boolCarOn Then
+            boolFogLights = Not boolFogLights
+            pbxFogLightIndicator.Visible = boolFogLights
+        End If
+    End Sub
+
+    Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click
+        boolHazardLights = Not boolHazardLights
+        If boolCarOn And boolHazardLights Then
+            pbxRightTurnSignalLight.Visible = True
+            boolRightSignalOn = True
+            pbxLeftTurnSignalLight.Visible = True
+            boolLeftSignalOn = True
+            tmrBlinkers.Start()
+        ElseIf boolCarOn And Not boolHazardLights Then
+            tmrBlinkers.Stop()
+            pbxRightTurnSignalLight.Visible = False
+            pbxLeftTurnSignalLight.Visible = False
+            boolLeftSignalOn = False
+            boolRightSignalOn = False
+        End If
+
+    End Sub
+
+    Dim boolPark As Boolean = True
+    Dim boolDrive As Boolean
+    Dim boolNuetral As Boolean
+    Dim boolReverse As Boolean
+    Private Sub pbxParkingButton_Click(sender As Object, e As EventArgs) Handles pbxParkingButton.Click
+        If boolCarOn And (dblVelocity < 1) Then
+            boolPark = True
+            boolDrive = False
+            boolNuetral = False
+            boolReverse = False
+            lblDriveSelecterIndicator.Text = "P"
+            lblGear.Visible = False
+        End If
+    End Sub
+
+    Private Sub pbxReverseButton_Click(sender As Object, e As EventArgs) Handles pbxReverseButton.Click
+        If boolCarOn And (dblVelocity < 1) Then
+            boolPark = False
+            boolDrive = False
+            boolNuetral = False
+            boolReverse = True
+            lblDriveSelecterIndicator.Text = "R"
+            lblGear.Visible = False
+        End If
+    End Sub
+
+    Private Sub pbxNuetralButton_Click(sender As Object, e As EventArgs) Handles pbxNuetralButton.Click
+        If boolCarOn Then
+            boolPark = False
+            boolDrive = False
+            boolNuetral = True
+            boolReverse = False
+            lblDriveSelecterIndicator.Text = "N"
+            lblGear.Visible = False
+        End If
+    End Sub
+
+    Private Sub pbxDriveButton_Click(sender As Object, e As EventArgs) Handles pbxDriveButton.Click
+        If boolCarOn And (dblVelocity < 1) Then
+            boolPark = False
+            boolDrive = True
+            boolNuetral = False
+            boolReverse = False
+            lblDriveSelecterIndicator.Text = "D"
+            lblGear.Visible = True
         End If
     End Sub
 End Class
