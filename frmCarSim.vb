@@ -5,6 +5,7 @@ Public Class frmCarSim
 
     ' These represent the current change being applied to the speed and rpm
     Dim dblRpmIncrease As Double = 400
+    Dim dblRpmDecrese As Double = 400
     Dim dblRpmBrakeDecrease As Double = 10
     Dim dblSpeedIncrease As Double
 
@@ -34,7 +35,7 @@ Public Class frmCarSim
     ' Config variables for speed needle
     Const intNeedleLength = 75
     Const dblSpeedNeedleMinAngle = 2.25
-    Const dblSpeedNeedleMaxAngle = 7.2
+    Dim dblSpeedNeedleMaxAngle = 7.2
     Dim dblSpeedNeedleAngle = 2.15
     Const intSpeedNeedleXOrigin = 80
     Const intSpeedNeedleYOrigin = 90
@@ -95,26 +96,32 @@ Public Class frmCarSim
         If intGear = 1 Then
             dblGearRatio = 1 / 4
             dblRpmIncrease = 400
+            dblRpmDecrese = 100
         ElseIf intGear = 2 Then
             dblGearRatio = 1 / 3
             dblRpmIncrease = 200
+            dblRpmDecrese = 120
         ElseIf intGear = 3 Then
             dblGearRatio = 1 / 2
             dblRpmIncrease = 100
+            dblRpmDecrese = 130
         ElseIf intGear = 4 Then
             dblGearRatio = 1 / 1.5
             dblRpmIncrease = 50
+            dblRpmDecrese = 140
         ElseIf intGear = 5 Then
             dblGearRatio = 1 / 1.25
             dblRpmIncrease = 25
+            dblRpmDecrese = 150
         ElseIf intGear = 6 Then
             dblGearRatio = 1
             dblRpmIncrease = 12.5
+            dblRpmDecrese = 125
         End If
 
 
         ' Increase or decrease the speed based on the gas, with upper and lower limits
-        If boolGasHeld Then
+        If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) Then
             dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
 
             dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
@@ -125,30 +132,43 @@ Public Class frmCarSim
                 ' Reset RPM to prevent overshooting the next gear's RPM range
                 dblRPM = dblMaxRPM * dblGearRatio
             End If
+        ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
+            dblRPM = Math.Min(dblMaxRPM, dblRPM + (400 * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * 1))
+            dblSpeedNeedleMaxAngle = 2.25
+        ElseIf boolGasHeld And boolReverse And boolParkingBrake.Equals(False) Then
+            dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
+            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+            intGear = 1
         Else
             ' Downshift
-            If intGear > 1 AndAlso dblRPM < dblMaxRPM * dblGearRatio Then
+            If intGear > 1 AndAlso dblRPM < (2700 - dblRpmIncrease) Then
                 intGear -= 1
                 ' Reset RPM to prevent undershooting the next gear's RPM range
-                dblRPM = dblMaxRPM * dblGearRatio
+                'dblRPM = (dblMaxRPM * dblGearRatio) + 1500
+                'dblRPM = dblRPM + 1000 + dblRpmIncrease
+                dblRPM = dblMaxRPM - (intGear * 200)
             End If
 
             If Not boolBrakeHeld Then
                 ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
                 If boolCarOn Then
-                    dblRPM = Math.Max(1500, dblRPM - dblGearRatio)
+                    dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * dblGearRatio))
+                    'dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
                 Else
                     dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
                 End If
 
                 ' Idle engine power
-                dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+                If boolPark.Equals(False) Then
+                    dblEngineTorque = -(dblMaxEngineTorque / 60) * (dblRPM / dblMaxRPM) / dblGearRatio
                 End If
+
+            End If
             End If
 
         If boolBrakeHeld Then
             'dblRPM = Math.Min(dblMaxRPM, dblRPM - (dblRpmBrakeDecrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
-            dblRPM = Math.Max(0, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
+            dblRPM = Math.Max(1000, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
             dblEngineTorque = -(dblMaxEngineTorque / 10) * (dblRPM / dblMaxRPM) / dblGearRatio
         End If
 
@@ -163,9 +183,9 @@ Public Class frmCarSim
             dblVelocity = 0
         End If
 
-        TextBox1.Text = "Speed: " & Convert.ToInt32(dblVelocity) & " mph"
+        lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Current Gear: " & intGear
+        lblGear.Text = intGear
 
     End Sub
 
@@ -244,12 +264,18 @@ Public Class frmCarSim
 
     ' Turns the car on/off
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
-        boolCarOn = Not boolCarOn
+        If boolPark.Equals(True) Or boolNuetral.Equals(True) Then
+            boolCarOn = Not boolCarOn
+        ElseIf boolCarOn.Equals(True) And boolPark.Equals(False) And boolNuetral.Equals(False) Then
+            MsgBox("Put Vehicle in PARK (P) or NUETRAL (N)" & Environment.NewLine & Environment.NewLine & "Cannot Turn Vehicle Off When in Drive (D) or Reverse (R)", MsgBoxStyle.Exclamation, "Stop Vehicle Error")
+        End If
+
         If boolCarOn = True Then
-            pbxParkingBrakeLight.Visible = boolParkingBrake
-            'If dblRPM < 1500 Then
-            '    dblRPM = 1500
-            'End If
+            pbxParkingBrakeLight.Visible = True
+            lblDriveSelecterIndicator.Visible = True
+            lblMPH.Visible = True
+            boolParkingBrake = True
+
         Else
             pbxRightTurnSignalLight.Visible = False
             pbxParkingBrakeLight.Visible = False
@@ -263,6 +289,8 @@ Public Class frmCarSim
             boolFogLights = False
             boolLowBeam = False
             boolHighBeam = False
+            lblDriveSelecterIndicator.Visible = False
+            lblMPH.Visible = False
         End If
     End Sub
 
@@ -360,5 +388,53 @@ Public Class frmCarSim
             boolRightSignalOn = False
         End If
 
+    End Sub
+
+    Dim boolPark As Boolean = True
+    Dim boolDrive As Boolean
+    Dim boolNuetral As Boolean
+    Dim boolReverse As Boolean
+    Private Sub pbxParkingButton_Click(sender As Object, e As EventArgs) Handles pbxParkingButton.Click
+        If boolCarOn And (dblVelocity < 1) Then
+            boolPark = True
+            boolDrive = False
+            boolNuetral = False
+            boolReverse = False
+            lblDriveSelecterIndicator.Text = "P"
+            lblGear.Visible = False
+        End If
+    End Sub
+
+    Private Sub pbxReverseButton_Click(sender As Object, e As EventArgs) Handles pbxReverseButton.Click
+        If boolCarOn And (dblVelocity < 1) Then
+            boolPark = False
+            boolDrive = False
+            boolNuetral = False
+            boolReverse = True
+            lblDriveSelecterIndicator.Text = "R"
+            lblGear.Visible = False
+        End If
+    End Sub
+
+    Private Sub pbxNuetralButton_Click(sender As Object, e As EventArgs) Handles pbxNuetralButton.Click
+        If boolCarOn Then
+            boolPark = False
+            boolDrive = False
+            boolNuetral = True
+            boolReverse = False
+            lblDriveSelecterIndicator.Text = "N"
+            lblGear.Visible = False
+        End If
+    End Sub
+
+    Private Sub pbxDriveButton_Click(sender As Object, e As EventArgs) Handles pbxDriveButton.Click
+        If boolCarOn And (dblVelocity < 1) Then
+            boolPark = False
+            boolDrive = True
+            boolNuetral = False
+            boolReverse = False
+            lblDriveSelecterIndicator.Text = "D"
+            lblGear.Visible = True
+        End If
     End Sub
 End Class
