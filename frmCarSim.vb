@@ -146,17 +146,17 @@ Public Class frmCarSim
                 ' If gas not held, gradually reduce RPM
                 If boolCarOn Then
                     dblRPM = Math.Max(dblMinRPM, dblRPM - (dblGearRatio * 2)) ' Gear ratio is just acting as a small decay that is tied to current gear
-                    dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio ' Idle engine power
+                    'dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio ' Idle engine power
+                    dblEngineTorque = 0
                 Else
                     dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
                     dblEngineTorque = 0
-                ' Idle engine power
-                If boolPark.Equals(False) Then
-                    dblEngineTorque = -(dblMaxEngineTorque / 60) * (dblRPM / dblMaxRPM) / dblGearRatio
+                    ' Idle engine power
+                    If boolPark.Equals(False) Then
+                        dblEngineTorque = -(dblMaxEngineTorque / 60) * (dblRPM / dblMaxRPM) / dblGearRatio
 
+                    End If
                 End If
-
-            End If
             End If
         End If
 

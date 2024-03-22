@@ -51,6 +51,7 @@ Partial Class frmCarSim
         Me.lblDriveSelecterIndicator = New System.Windows.Forms.Label()
         Me.lblMPH = New System.Windows.Forms.Label()
         Me.lblGear = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
         CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -236,6 +237,7 @@ Partial Class frmCarSim
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(100, 20)
         Me.TextBox4.TabIndex = 15
+        '
         'pbxHighBeamIndicator
         '
         Me.pbxHighBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.HighBeamIndicator
@@ -392,14 +394,21 @@ Partial Class frmCarSim
         Me.lblGear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.lblGear.Visible = False
         '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(407, 77)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox3.TabIndex = 29
+        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
-        Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.TextBox3)
+        Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.lblGear)
         Me.Controls.Add(Me.lblMPH)
         Me.Controls.Add(Me.lblDriveSelecterIndicator)
@@ -488,4 +497,5 @@ Partial Class frmCarSim
     Friend WithEvents lblDriveSelecterIndicator As Label
     Friend WithEvents lblMPH As Label
     Friend WithEvents lblGear As Label
+    Friend WithEvents TextBox3 As TextBox
 End Class
