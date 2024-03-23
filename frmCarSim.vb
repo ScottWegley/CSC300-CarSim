@@ -18,45 +18,45 @@ Public Class frmCarSim
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
         ' Car brakes on
-        car.BrakesOn()
+        car.getRPMSystem().BrakesOn()
     End Sub
 
     Private Sub pbxBrake_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseUp
         ' Car brakes off
-        car.BrakesOff()
+        car.getRPMSystem().BrakesOff()
     End Sub
 
     Private Sub pbxGas_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseDown
         ' Car gas on
-        car.GasOn()
+        car.getRPMSystem().GasOn()
     End Sub
 
     Private Sub pbxGas_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxGas.MouseUp
         ' Car gas off
-        car.GasOff()
+        car.getRPMSystem().GasOff()
     End Sub
 
 
     Private Sub frmCarSim_PaintSpeedNeedle(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
         ' Draw Speed
-        car.DrawSpeed(e)
+        car.getRPMSystem().DrawSpeed(e)
     End Sub
 
     Private Sub frmCarSim_PaintRpmNeedle(sender As Object, e As PaintEventArgs) Handles pbxRpm.Paint
         'Draw Rpm
-        car.DrawRPM(e)
+        car.getRPMSystem().DrawRPM(e)
     End Sub
 
     ' Turns the car on/off
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         ' Toggle Car On
-        car.ToggleCarOn()
+        car.getRPMSystem().ToggleCarOn()
     End Sub
 
     ' Throw the parking brake
     Private Sub pbParkingBrake_Click(sender As Object, e As EventArgs) Handles pbParkingBrake.Click
         ' Toggle Parking Brake
-        car.ToggleParkingBrake()
+        car.getRPMSystem().ToggleParkingBrake()
     End Sub
 
     ' Logging for the turn stock interactions
@@ -77,49 +77,57 @@ Public Class frmCarSim
             MousePosition2 = Cursor.Position
             If MousePosition1.Y >= MousePosition2.Y Then
                 ' Right Turn Signal On
-                car.RightTurnSignalOn()
+                car.getBlinkers().RightTurnSignalOn()
             ElseIf MousePosition1.Y < MousePosition2.Y Then
                 ' Left Turn Signal On
-                car.LeftTurnSignalOn()
+                car.getBlinkers().LeftTurnSignalOn()
             End If
         End If
     End Sub
 
     Private Sub pbxTurnSignalAlt_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStockUp.Click, pbxTurnSignalStockDown.Click
         ' Turn Signal Off
-        car.ResetTurnSignals()
+        car.getBlinkers().ForceSignalsOff()
     End Sub
 
     Private Sub pbxLowBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxLowBeamSwitch.Click
-        car.LowBeamToggle()
+        If (car.isOn()) Then
+            car.getLights().lowBeamToggle()
+        End If
     End Sub
 
     Private Sub pbxHighBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxHighBeamSwitch.Click
-        car.HighBeamToggle()
+        If (car.isOn()) Then
+            car.getLights().highBeamToggle()
+        End If
     End Sub
 
     Private Sub pbxFogLightSwitch_Click(sender As Object, e As EventArgs) Handles pbxFogLightSwitch.Click
-        car.FogLightToggle()
+        If (car.isOn()) Then
+            car.getLights().fogLightToggle()
+        End If
     End Sub
 
     Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click
-        car.HazardsToggle()
+        If (car.isOn()) Then
+            car.getBlinkers().HazardsToggle()
+        End If
     End Sub
 
 
     Private Sub pbxParkingButton_Click(sender As Object, e As EventArgs) Handles pbxParkingButton.Click
-        car.ParkingBrakeToggle()
+        car.getRPMSystem().ParkingBrakeToggle()
     End Sub
 
     Private Sub pbxReverseButton_Click(sender As Object, e As EventArgs) Handles pbxReverseButton.Click
-        car.ReverseButtonClick()
+        car.getRPMSystem().ReverseButtonClick()
     End Sub
 
     Private Sub pbxNuetralButton_Click(sender As Object, e As EventArgs) Handles pbxNuetralButton.Click
-        car.NuetralButtonClick()
+        car.getRPMSystem().NuetralButtonClick()
     End Sub
 
     Private Sub pbxDriveButton_Click(sender As Object, e As EventArgs) Handles pbxDriveButton.Click
-        car.DriveButtonClick()
+        car.getRPMSystem().DriveButtonClick()
     End Sub
 End Class
