@@ -5,6 +5,7 @@ Public Class Car
 
 #Region "Subsystems"
     Private blinkers As Blinkers
+    Private lights As Lights
 #End Region
 
 #Region "RPM System Variables"
@@ -46,10 +47,6 @@ Public Class Car
     ' These booleans represent the current state of the gas pedal and the brake pedal
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
-
-    Dim boolLowBeam As Boolean = False
-    Dim boolHighBeam As Boolean = False
-    Dim boolFogLights As Boolean = False
 
     Dim boolPark As Boolean = True
     Dim boolDrive As Boolean
@@ -102,15 +99,11 @@ Public Class Car
     Dim pbxParkingBrakeLight As PictureBox
     Dim lblDriveSelecterIndicator As Label
 
-    Dim pbxLowBeamIndicator As PictureBox
-    Dim pbxHighBeamIndicator As PictureBox
-    Dim pbxFogLightIndicator As PictureBox
-
     Public Function isOn()
         Return boolCarOn
     End Function
 
-    Public Sub New(ByRef lblMPH_IN As Label, ByRef lblGear_IN As Label, ByRef TextBox2_IN As System.Windows.Forms.TextBox, ByRef TextBox3_IN As System.Windows.Forms.TextBox, ByRef TextBox4_IN As System.Windows.Forms.TextBox, ByRef SPEED As PictureBox, ByRef RPM As PictureBox, ByRef PARKINGBRAKELIGHT As PictureBox, ByRef DRIVESELECTORINDICATOR As Label, ByRef RIGHTLIGHT As PictureBox, ByRef LEFTLIGHT As PictureBox, ByRef TURN As PictureBox, ByRef TURNDOWN As PictureBox, ByRef TURNUP As PictureBox, ByRef LOW As PictureBox, ByRef HIGH As PictureBox, ByRef FOG As PictureBox)
+    Public Sub New(ByRef lblMPH_IN As Label, ByRef lblGear_IN As Label, ByRef TextBox2_IN As System.Windows.Forms.TextBox, ByRef TextBox3_IN As System.Windows.Forms.TextBox, ByRef TextBox4_IN As System.Windows.Forms.TextBox, ByRef SPEED As PictureBox, ByRef RPM As PictureBox, ByRef PARKINGBRAKELIGHT As PictureBox, ByRef DRIVESELECTORINDICATOR As Label, ByRef RightBlinker As PictureBox, ByRef LeftBlinker As PictureBox, ByRef TurnStockDefault As PictureBox, ByRef TurnStockDown As PictureBox, ByRef TurnStockUp As PictureBox, ByRef LowBeams As PictureBox, ByRef HighBeams As PictureBox, ByRef FogLights As PictureBox)
         tmrPedals.Interval = 5
         tmrNeedleUpdate = New Timer()
         tmrNeedleUpdate.Interval = TIMER_INTERVAL ' Update interval in milliseconds
@@ -127,11 +120,8 @@ Public Class Car
         pbxParkingBrakeLight = PARKINGBRAKELIGHT
         lblDriveSelecterIndicator = DRIVESELECTORINDICATOR
 
-        pbxLowBeamIndicator = LOW
-        pbxHighBeamIndicator = HIGH
-        pbxFogLightIndicator = FOG
-
-        blinkers = New Blinkers(RIGHTLIGHT, LEFTLIGHT, TURN, TURNUP, TURNDOWN)
+        lights = New Lights(LowBeams, HighBeams, FogLights)
+        blinkers = New Blinkers(RightBlinker, LeftBlinker, TurnStockDefault, TurnStockUp, TurnStockDown)
     End Sub
 
     ' Speed is dictated by RPM instead of the other way around.
@@ -286,12 +276,7 @@ Public Class Car
             boolParkingBrake = True
         Else
             pbxParkingBrakeLight.Visible = False
-            pbxLowBeamIndicator.Visible = False
-            pbxHighBeamIndicator.Visible = False
-            pbxFogLightIndicator.Visible = False
-            boolFogLights = False
-            boolLowBeam = False
-            boolHighBeam = False
+            ' Put all lights off here
             lblDriveSelecterIndicator.Visible = False
             lblMPH.Visible = False
         End If
@@ -302,27 +287,6 @@ Public Class Car
             boolParkingBrake = Not boolParkingBrake
             pbxParkingBrakeLight.Visible = boolParkingBrake
             boolBrakeHeld = boolParkingBrake
-        End If
-    End Sub
-
-    Public Sub LowBeamToggle()
-        If boolCarOn Then
-            boolLowBeam = Not boolLowBeam
-            pbxLowBeamIndicator.Visible = boolLowBeam
-        End If
-    End Sub
-
-    Public Sub HighBeamToggle()
-        If boolCarOn Then
-            boolHighBeam = Not boolHighBeam
-            pbxHighBeamIndicator.Visible = boolHighBeam
-        End If
-    End Sub
-
-    Public Sub FogLightToggle()
-        If boolCarOn Then
-            boolFogLights = Not boolFogLights
-            pbxFogLightIndicator.Visible = boolFogLights
         End If
     End Sub
 
@@ -393,5 +357,9 @@ Public Class Car
 
     Public Function getBlinkers() As Blinkers
         Return blinkers
+    End Function
+
+    Public Function getLights() As Lights
+        Return lights
     End Function
 End Class

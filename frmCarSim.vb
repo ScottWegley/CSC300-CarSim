@@ -91,15 +91,21 @@ Public Class frmCarSim
     End Sub
 
     Private Sub pbxLowBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxLowBeamSwitch.Click
-        car.LowBeamToggle()
+        If (car.isOn()) Then
+            car.getLights().lowBeamToggle()
+        End If
     End Sub
 
     Private Sub pbxHighBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxHighBeamSwitch.Click
-        car.HighBeamToggle()
+        If (car.isOn()) Then
+            car.getLights().highBeamToggle()
+        End If
     End Sub
 
     Private Sub pbxFogLightSwitch_Click(sender As Object, e As EventArgs) Handles pbxFogLightSwitch.Click
-        car.FogLightToggle()
+        If (car.isOn()) Then
+            car.getLights().fogLightToggle()
+        End If
     End Sub
 
     Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click

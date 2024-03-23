@@ -35,7 +35,7 @@
         End If
     End Sub
 
-    Public Sub RightTurnSignalOn()
+    Public Sub rightTurnSignalOn()
         tmrBlinkers.Start()
         pbxRightTurnSignalLight.Visible = True
         pbxLeftTurnSignalLight.Visible = False
@@ -45,7 +45,7 @@
         boolLeftSignalOn = False
     End Sub
 
-    Public Sub LeftTurnSignalOn()
+    Public Sub leftTurnSignalOn()
         tmrBlinkers.Start()
         pbxLeftTurnSignalLight.Visible = True
         pbxRightTurnSignalLight.Visible = False
@@ -55,7 +55,7 @@
         boolRightSignalOn = False
     End Sub
 
-    Public Sub HazardsToggle()
+    Public Sub hazardsToggle()
         boolHazardLights = Not boolHazardLights
         If boolHazardLights Then
             pbxRightTurnSignalLight.Visible = True
@@ -72,7 +72,7 @@
         End If
     End Sub
 
-    Public Sub ForceSignalsOff()
+    Public Sub forceSignalsOff()
         tmrBlinkers.Stop()
         pbxRightTurnSignalLight.Visible = False
         pbxLeftTurnSignalLight.Visible = False
