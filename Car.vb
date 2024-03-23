@@ -1,24 +1,46 @@
 ﻿Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class Car
-    Const intDeltaTime = 100
+    Const TIMER_INTERVAL = 100
+
+#Region "RPM System Variables"
+
     ' These represent the current change being applied to the speed and rpm
-    Dim dblRpmIncrease As Double = 400
-    Dim dblRpmBrakeDecrease As Double = 200
+    Private dblRpmIncrease As Double = 400
+    Private dblRpmBrakeDecrease As Double = 200
 
-    ' This boolean represents whether or not the car is on.
-    Dim boolCarOn As Boolean = False
 
-    ' This boolean represents whether the parking break is on or not
-    Dim boolParkingBrake As Boolean = False
+    Private dblRPM As Double = 0
+    Const MINIMUM_RPM As Double = 800
+    Const MAXIMUM_RPM As Double = 3500 ' Fairly standard RPM shift point
+
+    Private dblEngineTorque As Double = 0
+    Const MAX_ENGINE_TORQUE As Double = 500 ' This variable is probably incorrectly named. Not sure what to rename it
+
+    Const DRAG_COEFFICIENT As Double = 0.05
+    Const ROLLING_RESISTANCE_COEFFICIENT As Double = 0.01
+    Private dblDragForce As Double = 0
+    Private dblRollingResistanceForce As Double = 0
+
+    Private dblNetForce As Double = 0
+    Private dblAcceleration As Double = 0
+    Private dblVelocity As Double = 0
 
     ' These represent the current modification the brake is applying to the speed and rpm
     Dim dblBrakeForce As Double = 1000
 
-    Private WithEvents tmrPedals As Timer = New Timer()
+    Const VEHICLE_MASS As Double = 1000 ' Weight of vehicle in kilograms
 
-    Private WithEvents tmrBlinkers As Timer = New Timer()
+    Dim intGear As Integer = 1 'First gear
+    Dim dblGearRatio As Double = 1 / 4 ' First gear gear ratio
+#End Region
 
+
+#Region "Vehicle State Tracking"
+    ' This boolean represents whether or not the car is on.
+    Dim boolCarOn As Boolean = False
+    ' This boolean represents whether the parking break is on or not
+    Dim boolParkingBrake As Boolean = False
     ' These booleans represent the current state of the gas pedal and the brake pedal
     Dim boolGasHeld As Boolean = False
     Dim boolBrakeHeld As Boolean = False
@@ -32,47 +54,46 @@ Public Class Car
     Dim boolDrive As Boolean
     Dim boolNuetral As Boolean
     Dim boolReverse As Boolean
+#End Region
 
+#Region "Gauge Variables"
     ' Config variables for speed needle
-    Const intNeedleLength = 75
-    Const dblSpeedNeedleMinAngle = 2.25
-    Dim dblSpeedNeedleMaxAngle = 7.2
-    Dim dblSpeedNeedleAngle = 2.15
-    Const intSpeedNeedleXOrigin = 80
-    Const intSpeedNeedleYOrigin = 90
-    Const dblVehicleMass As Double = 1000 ' Weight of vehicle in kilograms
+    Const SPEED_NEEDLE_LENGTH = 75
+    Const SPEED_NEEDLE_MIN_ANGLE = 2.25
+    Private dblSpeedNeedleMaxAngle = 7.2
+    Private dblSpeedNeedleAngle = 2.15
 
-    Dim intGear As Integer = 1 'First gear
-    Dim dblGearRatio As Double = 1 / 4 ' First gear gear ratio
+    Const SPEED_NEEDLE_X_ORIGIN = 80
+    Const SPEED_NEEDLE_Y_ORIGIN = 90
 
-    Dim dblRPM As Double = 0
-    Const dblMinRPM As Double = 800
-    Const dblMaxRPM As Double = 3500 ' Fairly standard RPM shift point
 
-    Dim dblEngineTorque As Double = 0
-    Const dblMaxEngineTorque As Double = 500 ' This variable is probably incorrectly named. Not sure what to rename it
-
-    Const dblDragCoefficient As Double = 0.05
-    Const dblRollingResistanceCoefficient As Double = 0.01
-    Dim dblDragForce As Double = 0
-    Dim dblRollingResistanceForce As Double = 0
-
-    Dim dblNetForce As Double = 0
-    Dim dblAcceleration As Double = 0
-    Dim dblVelocity As Double = 0
-
-    Dim intSpeedNeedleXEnd = intSpeedNeedleXOrigin
-    Dim intSpeedNeedleYEnd = intSpeedNeedleYOrigin
+    Private intSpeedNeedleXEnd = SPEED_NEEDLE_X_ORIGIN
+    Private intSpeedNeedleYEnd = SPEED_NEEDLE_Y_ORIGIN
 
     ' Config variables for rpm needle
-    Const intRpmNeedleLength = 60
-    Const dblRpmNeedleMinAngle = 2.25
-    Const dblRpmNeedleMaxAngle = 7.2
-    Dim dblRpmNeedleAngle = 2.25
-    Const intRpmNeedleXOrigin = 90
-    Const intRpmNeedleYOrigin = 84
-    Dim intRpmNeedleXEnd = intRpmNeedleXOrigin
-    Dim intRpmNeedleYEnd = intRpmNeedleYOrigin
+    Const RPM_NEEDLE_LENGTH = 60
+
+    Const RPM_NEEDLE_MIN_ANGLE = 2.25
+    Const RPM_NEEDLE_MAX_ANGLE = 7.2
+    Private dblRpmNeedleAngle = 2.25
+
+    Const RPM_NEEDLE_X_ORIGIN = 90
+    Const RPM_NEEDLE_Y_ORIGIN = 84
+    Private intRpmNeedleXEnd = RPM_NEEDLE_X_ORIGIN
+    Private intRpmNeedleYEnd = RPM_NEEDLE_Y_ORIGIN
+
+    ' Config variables for drawing on Gauges
+    Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
+    Dim bmpRpmNeedle As New Bitmap(1024, 1024)
+    Dim grphSpeedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
+    Dim grphRpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
+#End Region
+
+
+
+    Private WithEvents tmrPedals As Timer = New Timer()
+
+    Private WithEvents tmrBlinkers As Timer = New Timer()
 
     Private WithEvents tmrNeedleUpdate As Timer
     Private WithEvents lblMPH As Label
@@ -105,7 +126,7 @@ Public Class Car
         tmrPedals.Interval = 5
         tmrBlinkers.Interval = 500
         tmrNeedleUpdate = New Timer()
-        tmrNeedleUpdate.Interval = intDeltaTime ' Update interval in milliseconds
+        tmrNeedleUpdate.Interval = TIMER_INTERVAL ' Update interval in milliseconds
         tmrNeedleUpdate.Start()
         tmrPedals.Start()
 
@@ -153,22 +174,22 @@ Public Class Car
 
         ' Increase or decrease the speed based on the gas, with upper and lower limits
         If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) Then
-            dblRPM = Math.Min(dblMaxRPM, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
+            dblRPM = Math.Min(MAXIMUM_RPM, dblRPM + (dblRpmIncrease * ((MAXIMUM_RPM - (dblRPM - 1000)) / (MAXIMUM_RPM - 1000)) * dblGearRatio))
 
-            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+            dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAXIMUM_RPM) * dblGearRatio
 
             ' Upshift
-            If intGear < 6 AndAlso dblRPM >= dblMaxRPM Then
+            If intGear < 6 AndAlso dblRPM >= MAXIMUM_RPM Then
                 intGear += 1
                 ' Reset RPM to prevent overshooting the next gear's RPM range
-                dblRPM = dblMaxRPM * dblGearRatio
+                dblRPM = MAXIMUM_RPM * dblGearRatio
             End If
         ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
-            dblRPM = Math.Min(dblMaxRPM, dblRPM + (400 * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * 1))
+            dblRPM = Math.Min(MAXIMUM_RPM, dblRPM + (400 * ((MAXIMUM_RPM - (dblRPM - 1000)) / (MAXIMUM_RPM - 1000)) * 1))
             dblSpeedNeedleMaxAngle = 2.25
         ElseIf boolGasHeld And boolReverse And boolParkingBrake.Equals(False) Then
-            dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
-            dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio
+            dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((MAXIMUM_RPM - (dblRPM - 1000)) / (MAXIMUM_RPM - 1000)) * dblGearRatio))
+            dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAXIMUM_RPM) * dblGearRatio
             intGear = 1
         Else
             ' Downshift
@@ -177,13 +198,13 @@ Public Class Car
                 ' Reset RPM to prevent undershooting the next gear's RPM range
                 'dblRPM = (dblMaxRPM * dblGearRatio) + 1500
                 'dblRPM = dblRPM + 1000 + dblRpmIncrease
-                dblRPM = dblMaxRPM - (intGear * 200)
+                dblRPM = MAXIMUM_RPM - (intGear * 200)
             End If
 
             If Not boolBrakeHeld Then
                 ' If gas not held, gradually reduce RPM
                 If boolCarOn Then
-                    dblRPM = Math.Max(dblMinRPM, dblRPM - (dblGearRatio * 2)) ' Gear ratio is just acting as a small decay that is tied to current gear
+                    dblRPM = Math.Max(MINIMUM_RPM, dblRPM - (dblGearRatio * 2)) ' Gear ratio is just acting as a small decay that is tied to current gear
                     'dblEngineTorque = dblMaxEngineTorque * (dblRPM / dblMaxRPM) * dblGearRatio ' Idle engine power
                     dblEngineTorque = 0
                 Else
@@ -191,7 +212,7 @@ Public Class Car
                     dblEngineTorque = 0
                     ' Idle engine power
                     If boolPark.Equals(False) Then
-                        dblEngineTorque = -(dblMaxEngineTorque / 60) * (dblRPM / dblMaxRPM) / dblGearRatio
+                        dblEngineTorque = -(MAX_ENGINE_TORQUE / 60) * (dblRPM / MAXIMUM_RPM) / dblGearRatio
 
                     End If
                 End If
@@ -199,17 +220,17 @@ Public Class Car
         End If
 
         ' Resistance forces must grow faster than Engine Torque in order to prevent infinite velocity increase
-        dblDragForce = dblDragCoefficient * (dblVelocity ^ 2)
-        dblRollingResistanceForce = dblRollingResistanceCoefficient * dblVehicleMass
+        dblDragForce = DRAG_COEFFICIENT * (dblVelocity ^ 2)
+        dblRollingResistanceForce = ROLLING_RESISTANCE_COEFFICIENT * VEHICLE_MASS
 
         If boolBrakeHeld Then
-            dblRPM = Math.Max(dblMinRPM, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
+            dblRPM = Math.Max(MINIMUM_RPM, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
             dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce - dblBrakeForce
         Else
             dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
         End If
 
-        dblAcceleration = dblNetForce / dblVehicleMass
+        dblAcceleration = dblNetForce / VEHICLE_MASS
         dblVelocity = dblVelocity + dblAcceleration
 
         If dblVelocity < 0 Then
@@ -241,20 +262,14 @@ Public Class Car
         boolGasHeld = False
     End Sub
 
-    Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
-    Dim bmpRpmNeedle As New Bitmap(1024, 1024)
-    Dim grphSpeedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
-    Dim grphRpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
-
-
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
-        intSpeedNeedleXEnd = intSpeedNeedleXOrigin + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * intNeedleLength))
-        intSpeedNeedleYEnd = intSpeedNeedleYOrigin + Convert.ToInt32((Math.Sin((dblVelocity / 40.5) - 4) * intNeedleLength))
+        intSpeedNeedleXEnd = SPEED_NEEDLE_X_ORIGIN + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * SPEED_NEEDLE_LENGTH))
+        intSpeedNeedleYEnd = SPEED_NEEDLE_Y_ORIGIN + Convert.ToInt32((Math.Sin((dblVelocity / 40.5) - 4) * SPEED_NEEDLE_LENGTH))
 
         dblRpmNeedleAngle = dblRpmNeedleAngle + (dblRpmIncrease * 0.15)
-        intRpmNeedleXEnd = intRpmNeedleXOrigin + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
-        intRpmNeedleYEnd = intRpmNeedleYOrigin + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * intRpmNeedleLength)
+        intRpmNeedleXEnd = RPM_NEEDLE_X_ORIGIN + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * RPM_NEEDLE_LENGTH)
+        intRpmNeedleYEnd = RPM_NEEDLE_Y_ORIGIN + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * RPM_NEEDLE_LENGTH)
 
         grphSpeedSheet.Dispose()
         grphRpmSheet.Dispose()
@@ -269,7 +284,7 @@ Public Class Car
         grphRpmSheet = Graphics.FromImage(bmpRpmNeedle)
 
         pbxSpeed.Refresh()
-        pbxRpm.Refresh()
+        pbxRPM.Refresh()
     End Sub
 
     Private Sub tmrBlinkers_Tick(sender As Object, e As EventArgs) Handles tmrBlinkers.Tick
@@ -451,12 +466,12 @@ Public Class Car
     End Sub
 
     Public Sub DrawSpeed(e As PaintEventArgs)
-        grphSpeedSheet.DrawLine(New Pen(Color.Red, 3), intSpeedNeedleXOrigin, intSpeedNeedleYOrigin, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
+        grphSpeedSheet.DrawLine(New Pen(Color.Red, 3), SPEED_NEEDLE_X_ORIGIN, SPEED_NEEDLE_Y_ORIGIN, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
         e.Graphics.DrawImage(bmpSpeedNeedle, 0, 0)
     End Sub
 
     Public Sub DrawRPM(e As PaintEventArgs)
-        grphRpmSheet.DrawLine(New Pen(Color.Yellow, 3), intRpmNeedleXOrigin, intRpmNeedleYOrigin, intRpmNeedleXEnd, intRpmNeedleYEnd)
+        grphRpmSheet.DrawLine(New Pen(Color.Yellow, 3), RPM_NEEDLE_X_ORIGIN, RPM_NEEDLE_Y_ORIGIN, intRpmNeedleXEnd, intRpmNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
     End Sub
 End Class
