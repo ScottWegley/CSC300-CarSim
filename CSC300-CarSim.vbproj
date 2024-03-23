@@ -75,6 +75,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blinkers.vb" />
     <Compile Include="Car.vb" />
     <Compile Include="frmCarSim.vb">
       <SubType>Form</SubType>

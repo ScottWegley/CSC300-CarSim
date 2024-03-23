@@ -77,17 +77,17 @@ Public Class frmCarSim
             MousePosition2 = Cursor.Position
             If MousePosition1.Y >= MousePosition2.Y Then
                 ' Right Turn Signal On
-                car.RightTurnSignalOn()
+                car.getBlinkers().RightTurnSignalOn()
             ElseIf MousePosition1.Y < MousePosition2.Y Then
                 ' Left Turn Signal On
-                car.LeftTurnSignalOn()
+                car.getBlinkers().LeftTurnSignalOn()
             End If
         End If
     End Sub
 
     Private Sub pbxTurnSignalAlt_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStockUp.Click, pbxTurnSignalStockDown.Click
         ' Turn Signal Off
-        car.ResetTurnSignals()
+        car.getBlinkers().ForceSignalsOff()
     End Sub
 
     Private Sub pbxLowBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxLowBeamSwitch.Click
@@ -103,7 +103,9 @@ Public Class frmCarSim
     End Sub
 
     Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click
-        car.HazardsToggle()
+        If (car.isOn()) Then
+            car.getBlinkers().HazardsToggle()
+        End If
     End Sub
 
 

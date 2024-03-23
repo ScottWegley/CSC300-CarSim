@@ -3,12 +3,14 @@
 Public Class Car
     Const TIMER_INTERVAL = 100
 
-#Region "RPM System Variables"
+#Region "Subsystems"
+    Private blinkers As Blinkers
+#End Region
 
+#Region "RPM System Variables"
     ' These represent the current change being applied to the speed and rpm
     Private dblRpmIncrease As Double = 400
     Private dblRpmBrakeDecrease As Double = 200
-
 
     Private dblRPM As Double = 0
     Const MINIMUM_RPM As Double = 800
@@ -48,7 +50,6 @@ Public Class Car
     Dim boolLowBeam As Boolean = False
     Dim boolHighBeam As Boolean = False
     Dim boolFogLights As Boolean = False
-    Dim boolHazardLights As Boolean = False
 
     Dim boolPark As Boolean = True
     Dim boolDrive As Boolean
@@ -88,12 +89,7 @@ Public Class Car
     Dim grphSpeedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
     Dim grphRpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
 #End Region
-
-
-
     Private WithEvents tmrPedals As Timer = New Timer()
-
-    Private WithEvents tmrBlinkers As Timer = New Timer()
 
     Private WithEvents tmrNeedleUpdate As Timer
     Private WithEvents lblMPH As Label
@@ -105,18 +101,10 @@ Public Class Car
     Dim pbxRPM As PictureBox
     Dim pbxParkingBrakeLight As PictureBox
     Dim lblDriveSelecterIndicator As Label
-    Dim pbxRightTurnSignalLight As PictureBox
-    Dim pbxLeftTurnSignalLight As PictureBox
-    Dim pbxTurnSignalStock As PictureBox
-    Dim pbxTurnSignalStockDown As PictureBox
-    Dim pbxTurnSignalStockUp As PictureBox
+
     Dim pbxLowBeamIndicator As PictureBox
     Dim pbxHighBeamIndicator As PictureBox
     Dim pbxFogLightIndicator As PictureBox
-
-
-    Dim boolLeftSignalOn As Boolean = False
-    Dim boolRightSignalOn As Boolean = False
 
     Public Function isOn()
         Return boolCarOn
@@ -124,7 +112,6 @@ Public Class Car
 
     Public Sub New(ByRef lblMPH_IN As Label, ByRef lblGear_IN As Label, ByRef TextBox2_IN As System.Windows.Forms.TextBox, ByRef TextBox3_IN As System.Windows.Forms.TextBox, ByRef TextBox4_IN As System.Windows.Forms.TextBox, ByRef SPEED As PictureBox, ByRef RPM As PictureBox, ByRef PARKINGBRAKELIGHT As PictureBox, ByRef DRIVESELECTORINDICATOR As Label, ByRef RIGHTLIGHT As PictureBox, ByRef LEFTLIGHT As PictureBox, ByRef TURN As PictureBox, ByRef TURNDOWN As PictureBox, ByRef TURNUP As PictureBox, ByRef LOW As PictureBox, ByRef HIGH As PictureBox, ByRef FOG As PictureBox)
         tmrPedals.Interval = 5
-        tmrBlinkers.Interval = 500
         tmrNeedleUpdate = New Timer()
         tmrNeedleUpdate.Interval = TIMER_INTERVAL ' Update interval in milliseconds
         tmrNeedleUpdate.Start()
@@ -139,14 +126,12 @@ Public Class Car
         pbxRPM = RPM
         pbxParkingBrakeLight = PARKINGBRAKELIGHT
         lblDriveSelecterIndicator = DRIVESELECTORINDICATOR
-        pbxRightTurnSignalLight = RIGHTLIGHT
-        pbxLeftTurnSignalLight = LEFTLIGHT
-        pbxTurnSignalStock = TURN
-        pbxTurnSignalStockDown = TURNDOWN
-        pbxTurnSignalStockUp = TURNUP
+
         pbxLowBeamIndicator = LOW
         pbxHighBeamIndicator = HIGH
         pbxFogLightIndicator = FOG
+
+        blinkers = New Blinkers(RIGHTLIGHT, LEFTLIGHT, TURN, TURNUP, TURNDOWN)
     End Sub
 
     ' Speed is dictated by RPM instead of the other way around.
@@ -287,39 +272,20 @@ Public Class Car
         pbxRPM.Refresh()
     End Sub
 
-    Private Sub tmrBlinkers_Tick(sender As Object, e As EventArgs) Handles tmrBlinkers.Tick
-        If boolHazardLights Then
-            pbxLeftTurnSignalLight.Visible = Not pbxLeftTurnSignalLight.Visible
-            pbxRightTurnSignalLight.Visible = Not pbxRightTurnSignalLight.Visible
-        ElseIf boolLeftSignalOn Then
-            pbxLeftTurnSignalLight.Visible = Not pbxLeftTurnSignalLight.Visible
-        ElseIf boolRightSignalOn Then
-            pbxRightTurnSignalLight.Visible = Not pbxRightTurnSignalLight.Visible
-        Else
-            pbxLeftTurnSignalLight.Visible = False
-            pbxRightTurnSignalLight.Visible = False
-        End If
-    End Sub
-
     Public Sub ToggleCarOn()
         If boolPark.Equals(True) Or boolNuetral.Equals(True) Then
             boolCarOn = Not boolCarOn
         ElseIf boolCarOn.Equals(True) And boolPark.Equals(False) And boolNuetral.Equals(False) Then
             MsgBox("Put Vehicle in PARK (P) or NUETRAL (N)" & Environment.NewLine & Environment.NewLine & "Cannot Turn Vehicle Off When in Drive (D) or Reverse (R)", MsgBoxStyle.Exclamation, "Stop Vehicle Error")
         End If
-
+        ' MAKE SURE TO TURN BLINKERS OFF HERE
         If boolCarOn = True Then
             pbxParkingBrakeLight.Visible = True
             lblDriveSelecterIndicator.Visible = True
             lblMPH.Visible = True
             boolParkingBrake = True
         Else
-            pbxRightTurnSignalLight.Visible = False
             pbxParkingBrakeLight.Visible = False
-            pbxLeftTurnSignalLight.Visible = False
-            pbxTurnSignalStock.Visible = True
-            pbxTurnSignalStockDown.Visible = False
-            pbxTurnSignalStockUp.Visible = False
             pbxLowBeamIndicator.Visible = False
             pbxHighBeamIndicator.Visible = False
             pbxFogLightIndicator.Visible = False
@@ -336,39 +302,6 @@ Public Class Car
             boolParkingBrake = Not boolParkingBrake
             pbxParkingBrakeLight.Visible = boolParkingBrake
             boolBrakeHeld = boolParkingBrake
-        End If
-    End Sub
-
-    Public Sub RightTurnSignalOn()
-        tmrBlinkers.Start()
-        pbxRightTurnSignalLight.Visible = True
-        pbxLeftTurnSignalLight.Visible = False
-        pbxTurnSignalStock.Visible = False
-        pbxTurnSignalStockUp.Visible = True
-        boolRightSignalOn = True
-        boolLeftSignalOn = False
-    End Sub
-
-    Public Sub LeftTurnSignalOn()
-        tmrBlinkers.Start()
-        pbxLeftTurnSignalLight.Visible = True
-        pbxRightTurnSignalLight.Visible = False
-        pbxTurnSignalStock.Visible = False
-        pbxTurnSignalStockDown.Visible = True
-        boolLeftSignalOn = True
-        boolRightSignalOn = False
-    End Sub
-
-    Public Sub ResetTurnSignals()
-        If (boolLeftSignalOn Or boolRightSignalOn) And boolCarOn Then
-            tmrBlinkers.Stop()
-            pbxRightTurnSignalLight.Visible = False
-            pbxLeftTurnSignalLight.Visible = False
-            pbxTurnSignalStock.Visible = True
-            pbxTurnSignalStockUp.Visible = False
-            pbxTurnSignalStockDown.Visible = False
-            boolLeftSignalOn = False
-            boolRightSignalOn = False
         End If
     End Sub
 
@@ -390,23 +323,6 @@ Public Class Car
         If boolCarOn Then
             boolFogLights = Not boolFogLights
             pbxFogLightIndicator.Visible = boolFogLights
-        End If
-    End Sub
-
-    Public Sub HazardsToggle()
-        boolHazardLights = Not boolHazardLights
-        If boolCarOn And boolHazardLights Then
-            pbxRightTurnSignalLight.Visible = True
-            boolRightSignalOn = True
-            pbxLeftTurnSignalLight.Visible = True
-            boolLeftSignalOn = True
-            tmrBlinkers.Start()
-        ElseIf boolCarOn And Not boolHazardLights Then
-            tmrBlinkers.Stop()
-            pbxRightTurnSignalLight.Visible = False
-            pbxLeftTurnSignalLight.Visible = False
-            boolLeftSignalOn = False
-            boolRightSignalOn = False
         End If
     End Sub
 
@@ -474,4 +390,8 @@ Public Class Car
         grphRpmSheet.DrawLine(New Pen(Color.Yellow, 3), RPM_NEEDLE_X_ORIGIN, RPM_NEEDLE_Y_ORIGIN, intRpmNeedleXEnd, intRpmNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
     End Sub
+
+    Public Function getBlinkers() As Blinkers
+        Return blinkers
+    End Function
 End Class
