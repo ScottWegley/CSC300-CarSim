@@ -200,5 +200,8 @@
   <ItemGroup>
     <None Include="Resources\Fog Light Indicator.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TemoAndFuelGauge.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
