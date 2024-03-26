@@ -64,8 +64,7 @@ Public Class RPMSystem
     Private dblSpeedNeedleAngle = 2.15
 
     Const SPEED_NEEDLE_X_ORIGIN = 80
-    Const SPEED_NEEDLE_Y_ORIGIN = 90
-
+    Const SPEED_NEEDLE_Y_ORIGIN = 80
 
     Private intSpeedNeedleXEnd = SPEED_NEEDLE_X_ORIGIN
     Private intSpeedNeedleYEnd = SPEED_NEEDLE_Y_ORIGIN
