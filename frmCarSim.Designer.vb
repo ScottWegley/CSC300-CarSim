@@ -28,6 +28,8 @@ Partial Class frmCarSim
         Me.lblMPH = New System.Windows.Forms.Label()
         Me.lblGear = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.pbxRadio = New System.Windows.Forms.PictureBox()
+        Me.pbxClock = New System.Windows.Forms.PictureBox()
         Me.pbxFuelandTempGauge = New System.Windows.Forms.PictureBox()
         Me.pbxDriveButton = New System.Windows.Forms.PictureBox()
         Me.pbxNuetralButton = New System.Windows.Forms.PictureBox()
@@ -53,6 +55,8 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStock = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStockUp = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStockDown = New System.Windows.Forms.PictureBox()
+        CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -141,6 +145,26 @@ Partial Class frmCarSim
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 29
+        '
+        'pbxRadio
+        '
+        Me.pbxRadio.Image = Global.CSC300_CarSim.My.Resources.Resources.Radio
+        Me.pbxRadio.Location = New System.Drawing.Point(641, 315)
+        Me.pbxRadio.Name = "pbxRadio"
+        Me.pbxRadio.Size = New System.Drawing.Size(283, 87)
+        Me.pbxRadio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxRadio.TabIndex = 32
+        Me.pbxRadio.TabStop = False
+        '
+        'pbxClock
+        '
+        Me.pbxClock.Image = Global.CSC300_CarSim.My.Resources.Resources.Clock1
+        Me.pbxClock.Location = New System.Drawing.Point(743, 212)
+        Me.pbxClock.Name = "pbxClock"
+        Me.pbxClock.Size = New System.Drawing.Size(75, 66)
+        Me.pbxClock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxClock.TabIndex = 31
+        Me.pbxClock.TabStop = False
         '
         'pbxFuelandTempGauge
         '
@@ -419,6 +443,8 @@ Partial Class frmCarSim
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.pbxRadio)
+        Me.Controls.Add(Me.pbxClock)
         Me.Controls.Add(Me.pbxFuelandTempGauge)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.TextBox4)
@@ -452,6 +478,8 @@ Partial Class frmCarSim
         Me.Controls.Add(Me.pbxTurnSignalStockDown)
         Me.Name = "frmCarSim"
         Me.Text = "Car Simulator"
+        CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).EndInit()
@@ -513,4 +541,6 @@ Partial Class frmCarSim
     Friend WithEvents lblGear As Label
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents pbxFuelandTempGauge As PictureBox
+    Friend WithEvents pbxClock As PictureBox
+    Friend WithEvents pbxRadio As PictureBox
 End Class
