@@ -6,12 +6,12 @@ Public Class RPMSystem
     ' These represent the current change being applied to the speed and rpm
     Private dblRpmIncrease As Double = 400
     Private dblRpmBrakeDecrease As Double = 200
+    Private dblRpmDecrese As Double = 100
 
     Private dblRPM As Double = 0
     Const MINIMUM_RPM As Double = 800
     Const SHIFT_RPM As Double = 3500 ' Fairly standard RPM shift point
     Const MAX_RPM As Double = 6000
-
     Private dblEngineTorque As Double = 0
     Const MAX_ENGINE_TORQUE As Double = 700
 
@@ -95,6 +95,7 @@ Public Class RPMSystem
     Dim lblDriveSelecterIndicator As Label
 
 
+
     Const TIMER_INTERVAL = 100
 
     Public Sub New(ByRef lblMPH_IN As Label, ByRef lblGear_IN As Label, ByRef TextBox2_IN As System.Windows.Forms.TextBox, ByRef TextBox3_IN As System.Windows.Forms.TextBox, TextBox4_IN As System.Windows.Forms.TextBox, ByRef SpeedGauge As PictureBox, ByRef RPMGauge As PictureBox, ByRef ParkingBrakeLight As PictureBox, ByRef DriveIndicator As Label)
@@ -119,47 +120,48 @@ Public Class RPMSystem
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
         If intGear = 1 Then
             dblGearRatio = 1 / 4
-            dblRpmIncrease = 200
+            dblRpmIncrease = 400
+            dblRpmDecrese = 100
         ElseIf intGear = 2 Then
             dblGearRatio = 1 / 3
-            dblRpmIncrease = 100
+            dblRpmIncrease = 200
+            dblRpmDecrese = 120
         ElseIf intGear = 3 Then
             dblGearRatio = 1 / 2
-            dblRpmIncrease = 50
+            dblRpmIncrease = 100
+            dblRpmDecrese = 130
         ElseIf intGear = 4 Then
             dblGearRatio = 1 / 1.5
-            dblRpmIncrease = 25
+            dblRpmIncrease = 50
+            dblRpmDecrese = 140
         ElseIf intGear = 5 Then
             dblGearRatio = 1 / 1.25
-            dblRpmIncrease = 12.5
+            dblRpmIncrease = 25
+            dblRpmDecrese = 150
         ElseIf intGear = 6 Then
             dblGearRatio = 1
-            dblRpmIncrease = 6.25
+            dblRpmIncrease = 12.5
+            dblRpmDecrese = 125
         End If
 
 
         ' Increase or decrease the speed based on the gas, with upper and lower limits
         If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) Then
-            If intGear < 6 Then
-                dblRPM = Math.Min(SHIFT_RPM, dblRPM + (dblRpmIncrease * ((SHIFT_RPM - (dblRPM - 1000)) / (SHIFT_RPM - 1000)) * dblGearRatio))
-            Else
-                dblRPM = Math.Min(MAX_RPM, dblRPM + (dblRpmIncrease) * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * dblGearRatio)
-            End If
+            dblRPM = Math.Min(MAX_RPM, dblRPM + (dblRpmIncrease * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * dblGearRatio))
 
             dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio
 
             ' Upshift
-            If intGear < 6 AndAlso dblRPM >= SHIFT_RPM Then
+            If intGear < 6 AndAlso dblRPM >= MAX_RPM Then
                 intGear += 1
                 ' Reset RPM to prevent overshooting the next gear's RPM range
-                dblRPM = SHIFT_RPM * dblGearRatio
+                dblRPM = MAX_RPM * dblGearRatio
             End If
         ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
-            dblRPM = Math.Min(SHIFT_RPM, dblRPM + (400 * ((SHIFT_RPM - (dblRPM - 1000)) / (SHIFT_RPM - 1000)) * 1))
+            dblRPM = Math.Min(MAX_RPM, dblRPM + (400 * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * 1))
             dblSpeedNeedleMaxAngle = 2.25
-
         ElseIf boolGasHeld And boolReverse And boolParkingBrake.Equals(False) Then
-            dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((SHIFT_RPM - (dblRPM - 1000)) / (SHIFT_RPM - 1000)) * dblGearRatio))
+            dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * dblGearRatio))
             dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio
             intGear = 1
         Else
@@ -169,43 +171,36 @@ Public Class RPMSystem
                 ' Reset RPM to prevent undershooting the next gear's RPM range
                 'dblRPM = (dblMaxRPM * dblGearRatio) + 1500
                 'dblRPM = dblRPM + 1000 + dblRpmIncrease
-                dblRPM = SHIFT_RPM - (intGear * 200)
+                dblRPM = MAX_RPM - (intGear * 200)
             End If
 
             If Not boolBrakeHeld Then
-                ' If gas not held, gradually reduce RPM
+                ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
                 If boolCarOn Then
-                    dblRPM = Math.Max(MINIMUM_RPM, dblRPM - (dblGearRatio * 2)) ' Gear ratio is just acting as a small decay that is tied to current gear
-                    If boolDrive Then
-                        dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio ' Idle engine power
-                        If dblEngineTorque < 50 Then
-                            dblEngineTorque = 0
-                        End If
-                    Else
-                        dblEngineTorque = 0
-                    End If
-
-                    'dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
-
-                    'If boolPark.Equals(False) Then
-                    '    dblEngineTorque = -(MAX_ENGINE_TORQUE / 60) * (dblRPM / MAX_RPM) / dblGearRatio
-                    'End If
+                    dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * dblGearRatio))
+                    'dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
+                Else
+                    dblRPM = Math.Max(0, dblRPM - (dblGearRatio * 100))
                 End If
+
+                ' Idle engine power
+                If boolPark.Equals(False) Then
+                    dblEngineTorque = -(MAX_ENGINE_TORQUE / 60) * (dblRPM / MAX_RPM) / dblGearRatio
+                End If
+
             End If
         End If
 
-        ' Resistance forces must grow faster than Engine Torque in order to prevent infinite velocity increase
-        'dblDragForce = Math.Max(MIN_DRAG_FORCE, DRAG_COEFFICIENT * (dblVelocity ^ 2))
-        dblDragForce = DRAG_COEFFICIENT * (dblVelocity ^ 2)
-        dblRollingResistanceForce = ROLLING_RESISTANCE_COEFFICIENT * VEHICLE_MASS
-
         If boolBrakeHeld Then
-            dblRPM = Math.Max(MINIMUM_RPM, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
-            dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce - dblBrakeForce
-        Else
-            dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
+            'dblRPM = Math.Min(dblMaxRPM, dblRPM - (dblRpmBrakeDecrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
+            dblRPM = Math.Max(1000, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
+            dblEngineTorque = -(MAX_ENGINE_TORQUE / 10) * (dblRPM / MAX_RPM) / dblGearRatio
         End If
 
+        dblDragForce = 0.5 * DRAG_COEFFICIENT * dblVelocity ^ 2
+        dblRollingResistanceForce = ROLLING_RESISTANCE_COEFFICIENT * VEHICLE_MASS * 9.81
+
+        dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
         dblAcceleration = dblNetForce / VEHICLE_MASS
         dblVelocity = dblVelocity + dblAcceleration
 
