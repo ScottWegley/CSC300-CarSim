@@ -52,6 +52,7 @@ Partial Class frmCarSim
         Me.lblMPH = New System.Windows.Forms.Label()
         Me.lblGear = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -401,12 +402,20 @@ Partial Class frmCarSim
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 29
         '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(407, 120)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox1.TabIndex = 30
+        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.lblGear)
@@ -498,4 +507,5 @@ Partial Class frmCarSim
     Friend WithEvents lblMPH As Label
     Friend WithEvents lblGear As Label
     Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents TextBox1 As TextBox
 End Class

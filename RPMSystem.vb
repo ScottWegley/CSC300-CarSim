@@ -2,6 +2,13 @@
 
 Public Class RPMSystem
 
+#Region "Fuel System Variables"
+    Const MPG = 20 ' Base MPG. Changes depending on RPM
+    Const MAX_FUEL = 20 ' In gallons
+
+    Dim dblCurrentFuel = MAX_FUEL
+#End Region
+
 #Region "RPM System Variables"
     ' These represent the current change being applied to the speed and rpm
     Private dblRpmIncrease As Double = 400
@@ -89,6 +96,7 @@ Public Class RPMSystem
     Dim TextBox2 As System.Windows.Forms.TextBox
     Dim TextBox3 As System.Windows.Forms.TextBox
     Dim TextBox4 As System.Windows.Forms.TextBox
+    Dim TextBox1 As System.Windows.Forms.TextBox
     Dim pbxSpeed As PictureBox
     Dim pbxRPM As PictureBox
     Dim pbxParkingBrakeLight As PictureBox
@@ -194,6 +202,8 @@ Public Class RPMSystem
             End If
         End If
 
+        dblCurrentFuel = Math.Max(0, dblCurrentFuel - (dblEngineTorque / (MPG * 10000)))
+
         ' Resistance forces must grow faster than Engine Torque in order to prevent infinite velocity increase
         'dblDragForce = Math.Max(MIN_DRAG_FORCE, DRAG_COEFFICIENT * (dblVelocity ^ 2))
         dblDragForce = DRAG_COEFFICIENT * (dblVelocity ^ 2)
@@ -215,7 +225,7 @@ Public Class RPMSystem
 
         lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         Me.TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Current Gear: " & intGear
+        TextBox3.Text = "Fuel: " & dblCurrentFuel
         TextBox4.Text = "Power: " & Convert.ToInt32(dblEngineTorque)
         lblGear.Text = intGear
     End Sub
