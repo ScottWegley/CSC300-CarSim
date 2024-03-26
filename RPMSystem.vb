@@ -13,7 +13,7 @@ Public Class RPMSystem
     Const MAX_RPM As Double = 6000
 
     Private dblEngineTorque As Double = 0
-    Const MAX_ENGINE_TORQUE As Double = 700
+    Const MAX_ENGINE_TORQUE As Double = 2000
 
     Const DRAG_COEFFICIENT As Double = 0.05
     'Const MIN_DRAG_FORCE = 17.5 ' Prevent excessive velocity when idle while stationary
