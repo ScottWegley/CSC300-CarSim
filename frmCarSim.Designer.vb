@@ -23,7 +23,25 @@ Partial Class frmCarSim
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.pbxTurnSignalStockDown = New System.Windows.Forms.PictureBox()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.lblDriveSelecterIndicator = New System.Windows.Forms.Label()
+        Me.lblMPH = New System.Windows.Forms.Label()
+        Me.lblGear = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.pbxRadio = New System.Windows.Forms.PictureBox()
+        Me.pbxClock = New System.Windows.Forms.PictureBox()
+        Me.pbxFuelandTempGauge = New System.Windows.Forms.PictureBox()
+        Me.pbxDriveButton = New System.Windows.Forms.PictureBox()
+        Me.pbxNuetralButton = New System.Windows.Forms.PictureBox()
+        Me.pbxReverseButton = New System.Windows.Forms.PictureBox()
+        Me.pbxParkingButton = New System.Windows.Forms.PictureBox()
+        Me.pbxHazardSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxHighBeamSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxLowBeamSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxFogLightSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxFogLightIndicator = New System.Windows.Forms.PictureBox()
+        Me.pbxLowBeamIndicator = New System.Windows.Forms.PictureBox()
+        Me.pbxHighBeamIndicator = New System.Windows.Forms.PictureBox()
         Me.pbxStartButton = New System.Windows.Forms.PictureBox()
         Me.pbxSteeringWheel = New System.Windows.Forms.PictureBox()
         Me.pbxRightTurnSignalLight = New System.Windows.Forms.PictureBox()
@@ -36,6 +54,21 @@ Partial Class frmCarSim
         Me.pbxBrake = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStock = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStockUp = New System.Windows.Forms.PictureBox()
+        Me.pbxTurnSignalStockDown = New System.Windows.Forms.PictureBox()
+        CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxParkingButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxHazardSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxHighBeamSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxLowBeamSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxFogLightSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxFogLightIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxLowBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxHighBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.pbxHighBeamIndicator = New System.Windows.Forms.PictureBox()
         Me.pbxLowBeamIndicator = New System.Windows.Forms.PictureBox()
@@ -66,37 +99,216 @@ Partial Class frmCarSim
         CType(Me.pbxBrake, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxTurnSignalStock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxTurnSignalStockUp, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxHighBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxLowBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxFogLightIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxFogLightSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxLowBeamSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxHighBeamSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxHazardSwitch, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxParkingButton, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(407, 52)
+        Me.TextBox2.Location = New System.Drawing.Point(621, 537)
         Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 7
         '
-        'pbxTurnSignalStockDown
+        'TextBox4
         '
-        Me.pbxTurnSignalStockDown.Image = Global.CSC300_CarSim.My.Resources.Resources.TurnSignalStockDown
-        Me.pbxTurnSignalStockDown.Location = New System.Drawing.Point(24, 354)
-        Me.pbxTurnSignalStockDown.Name = "pbxTurnSignalStockDown"
-        Me.pbxTurnSignalStockDown.Size = New System.Drawing.Size(115, 48)
-        Me.pbxTurnSignalStockDown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxTurnSignalStockDown.TabIndex = 14
-        Me.pbxTurnSignalStockDown.TabStop = False
-        Me.pbxTurnSignalStockDown.Visible = False
+        Me.TextBox4.Location = New System.Drawing.Point(621, 583)
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox4.TabIndex = 15
+        '
+        'lblDriveSelecterIndicator
+        '
+        Me.lblDriveSelecterIndicator.AutoSize = True
+        Me.lblDriveSelecterIndicator.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDriveSelecterIndicator.Location = New System.Drawing.Point(240, 185)
+        Me.lblDriveSelecterIndicator.Name = "lblDriveSelecterIndicator"
+        Me.lblDriveSelecterIndicator.Size = New System.Drawing.Size(23, 24)
+        Me.lblDriveSelecterIndicator.TabIndex = 26
+        Me.lblDriveSelecterIndicator.Text = "P"
+        Me.lblDriveSelecterIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblDriveSelecterIndicator.Visible = False
+        '
+        'lblMPH
+        '
+        Me.lblMPH.AutoSize = True
+        Me.lblMPH.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.lblMPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblMPH.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.lblMPH.Location = New System.Drawing.Point(56, 141)
+        Me.lblMPH.Name = "lblMPH"
+        Me.lblMPH.Size = New System.Drawing.Size(45, 15)
+        Me.lblMPH.TabIndex = 27
+        Me.lblMPH.Text = "0 MPH"
+        Me.lblMPH.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblMPH.Visible = False
+        '
+        'lblGear
+        '
+        Me.lblGear.AutoSize = True
+        Me.lblGear.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.lblGear.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblGear.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.lblGear.Location = New System.Drawing.Point(238, 126)
+        Me.lblGear.Name = "lblGear"
+        Me.lblGear.Size = New System.Drawing.Size(14, 15)
+        Me.lblGear.TabIndex = 28
+        Me.lblGear.Text = "1"
+        Me.lblGear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblGear.Visible = False
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Location = New System.Drawing.Point(621, 562)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox3.TabIndex = 29
+        '
+        'pbxRadio
+        '
+        Me.pbxRadio.Image = Global.CSC300_CarSim.My.Resources.Resources.Radio
+        Me.pbxRadio.Location = New System.Drawing.Point(641, 315)
+        Me.pbxRadio.Name = "pbxRadio"
+        Me.pbxRadio.Size = New System.Drawing.Size(283, 87)
+        Me.pbxRadio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxRadio.TabIndex = 32
+        Me.pbxRadio.TabStop = False
+        '
+        'pbxClock
+        '
+        Me.pbxClock.Image = Global.CSC300_CarSim.My.Resources.Resources.Clock1
+        Me.pbxClock.Location = New System.Drawing.Point(743, 212)
+        Me.pbxClock.Name = "pbxClock"
+        Me.pbxClock.Size = New System.Drawing.Size(75, 66)
+        Me.pbxClock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxClock.TabIndex = 31
+        Me.pbxClock.TabStop = False
+        '
+        'pbxFuelandTempGauge
+        '
+        Me.pbxFuelandTempGauge.Image = Global.CSC300_CarSim.My.Resources.Resources.TemoAndFuelGauge
+        Me.pbxFuelandTempGauge.Location = New System.Drawing.Point(343, 48)
+        Me.pbxFuelandTempGauge.Name = "pbxFuelandTempGauge"
+        Me.pbxFuelandTempGauge.Size = New System.Drawing.Size(112, 108)
+        Me.pbxFuelandTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxFuelandTempGauge.TabIndex = 30
+        Me.pbxFuelandTempGauge.TabStop = False
+        '
+        'pbxDriveButton
+        '
+        Me.pbxDriveButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Drive_Button
+        Me.pbxDriveButton.Location = New System.Drawing.Point(407, 638)
+        Me.pbxDriveButton.Name = "pbxDriveButton"
+        Me.pbxDriveButton.Size = New System.Drawing.Size(57, 45)
+        Me.pbxDriveButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxDriveButton.TabIndex = 25
+        Me.pbxDriveButton.TabStop = False
+        '
+        'pbxNuetralButton
+        '
+        Me.pbxNuetralButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Nuetral_Button
+        Me.pbxNuetralButton.Location = New System.Drawing.Point(407, 601)
+        Me.pbxNuetralButton.Name = "pbxNuetralButton"
+        Me.pbxNuetralButton.Size = New System.Drawing.Size(57, 31)
+        Me.pbxNuetralButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxNuetralButton.TabIndex = 24
+        Me.pbxNuetralButton.TabStop = False
+        '
+        'pbxReverseButton
+        '
+        Me.pbxReverseButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Reverse_Button
+        Me.pbxReverseButton.Location = New System.Drawing.Point(407, 554)
+        Me.pbxReverseButton.Name = "pbxReverseButton"
+        Me.pbxReverseButton.Size = New System.Drawing.Size(57, 41)
+        Me.pbxReverseButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxReverseButton.TabIndex = 23
+        Me.pbxReverseButton.TabStop = False
+        '
+        'pbxParkingButton
+        '
+        Me.pbxParkingButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Parking_Button
+        Me.pbxParkingButton.Location = New System.Drawing.Point(407, 517)
+        Me.pbxParkingButton.Name = "pbxParkingButton"
+        Me.pbxParkingButton.Size = New System.Drawing.Size(57, 31)
+        Me.pbxParkingButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxParkingButton.TabIndex = 22
+        Me.pbxParkingButton.TabStop = False
+        '
+        'pbxHazardSwitch
+        '
+        Me.pbxHazardSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.HazardLights_Switch
+        Me.pbxHazardSwitch.Location = New System.Drawing.Point(63, 588)
+        Me.pbxHazardSwitch.Name = "pbxHazardSwitch"
+        Me.pbxHazardSwitch.Size = New System.Drawing.Size(28, 50)
+        Me.pbxHazardSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxHazardSwitch.TabIndex = 21
+        Me.pbxHazardSwitch.TabStop = False
+        '
+        'pbxHighBeamSwitch
+        '
+        Me.pbxHighBeamSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.HighBeam_Switch
+        Me.pbxHighBeamSwitch.Location = New System.Drawing.Point(24, 588)
+        Me.pbxHighBeamSwitch.Name = "pbxHighBeamSwitch"
+        Me.pbxHighBeamSwitch.Size = New System.Drawing.Size(28, 50)
+        Me.pbxHighBeamSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxHighBeamSwitch.TabIndex = 20
+        Me.pbxHighBeamSwitch.TabStop = False
+        '
+        'pbxLowBeamSwitch
+        '
+        Me.pbxLowBeamSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.LowBeam_Switch
+        Me.pbxLowBeamSwitch.Location = New System.Drawing.Point(24, 532)
+        Me.pbxLowBeamSwitch.Name = "pbxLowBeamSwitch"
+        Me.pbxLowBeamSwitch.Size = New System.Drawing.Size(28, 50)
+        Me.pbxLowBeamSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxLowBeamSwitch.TabIndex = 19
+        Me.pbxLowBeamSwitch.TabStop = False
+        '
+        'pbxFogLightSwitch
+        '
+        Me.pbxFogLightSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.Fog_Light_Switch
+        Me.pbxFogLightSwitch.Location = New System.Drawing.Point(63, 532)
+        Me.pbxFogLightSwitch.Name = "pbxFogLightSwitch"
+        Me.pbxFogLightSwitch.Size = New System.Drawing.Size(28, 50)
+        Me.pbxFogLightSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxFogLightSwitch.TabIndex = 18
+        Me.pbxFogLightSwitch.TabStop = False
+        '
+        'pbxFogLightIndicator
+        '
+        Me.pbxFogLightIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.Fog_Light_Indicator
+        Me.pbxFogLightIndicator.Location = New System.Drawing.Point(310, 189)
+        Me.pbxFogLightIndicator.Margin = New System.Windows.Forms.Padding(2)
+        Me.pbxFogLightIndicator.Name = "pbxFogLightIndicator"
+        Me.pbxFogLightIndicator.Size = New System.Drawing.Size(20, 18)
+        Me.pbxFogLightIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxFogLightIndicator.TabIndex = 17
+        Me.pbxFogLightIndicator.TabStop = False
+        Me.pbxFogLightIndicator.Visible = False
+        '
+        'pbxLowBeamIndicator
+        '
+        Me.pbxLowBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.Low_Beam_Indicator
+        Me.pbxLowBeamIndicator.Location = New System.Drawing.Point(209, 189)
+        Me.pbxLowBeamIndicator.Margin = New System.Windows.Forms.Padding(2)
+        Me.pbxLowBeamIndicator.Name = "pbxLowBeamIndicator"
+        Me.pbxLowBeamIndicator.Size = New System.Drawing.Size(20, 18)
+        Me.pbxLowBeamIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxLowBeamIndicator.TabIndex = 16
+        Me.pbxLowBeamIndicator.TabStop = False
+        Me.pbxLowBeamIndicator.Visible = False
+        '
+        'pbxHighBeamIndicator
+        '
+        Me.pbxHighBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.HighBeamIndicator
+        Me.pbxHighBeamIndicator.Location = New System.Drawing.Point(176, 189)
+        Me.pbxHighBeamIndicator.Margin = New System.Windows.Forms.Padding(2)
+        Me.pbxHighBeamIndicator.Name = "pbxHighBeamIndicator"
+        Me.pbxHighBeamIndicator.Size = New System.Drawing.Size(20, 18)
+        Me.pbxHighBeamIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxHighBeamIndicator.TabIndex = 15
+        Me.pbxHighBeamIndicator.TabStop = False
+        Me.pbxHighBeamIndicator.Visible = False
         '
         'pbxStartButton
         '
@@ -171,7 +383,7 @@ Partial Class frmCarSim
         '
         Me.pbxSpeed.Image = Global.CSC300_CarSim.My.Resources.Resources.BlankSpeedometer
         Me.pbxSpeed.InitialImage = Global.CSC300_CarSim.My.Resources.Resources.BlankSpeedometer
-        Me.pbxSpeed.Location = New System.Drawing.Point(2, 2)
+        Me.pbxSpeed.Location = New System.Drawing.Point(2, 12)
         Me.pbxSpeed.Name = "pbxSpeed"
         Me.pbxSpeed.Size = New System.Drawing.Size(160, 159)
         Me.pbxSpeed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -232,175 +444,16 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStockUp.TabStop = False
         Me.pbxTurnSignalStockUp.Visible = False
         '
-        'TextBox4
+        'pbxTurnSignalStockDown
         '
-        Me.TextBox4.Location = New System.Drawing.Point(407, 98)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox4.TabIndex = 15
-        '
-        'pbxHighBeamIndicator
-        '
-        Me.pbxHighBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.HighBeamIndicator
-        Me.pbxHighBeamIndicator.Location = New System.Drawing.Point(176, 189)
-        Me.pbxHighBeamIndicator.Margin = New System.Windows.Forms.Padding(2)
-        Me.pbxHighBeamIndicator.Name = "pbxHighBeamIndicator"
-        Me.pbxHighBeamIndicator.Size = New System.Drawing.Size(20, 18)
-        Me.pbxHighBeamIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxHighBeamIndicator.TabIndex = 15
-        Me.pbxHighBeamIndicator.TabStop = False
-        Me.pbxHighBeamIndicator.Visible = False
-        '
-        'pbxLowBeamIndicator
-        '
-        Me.pbxLowBeamIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.Low_Beam_Indicator
-        Me.pbxLowBeamIndicator.Location = New System.Drawing.Point(209, 189)
-        Me.pbxLowBeamIndicator.Margin = New System.Windows.Forms.Padding(2)
-        Me.pbxLowBeamIndicator.Name = "pbxLowBeamIndicator"
-        Me.pbxLowBeamIndicator.Size = New System.Drawing.Size(20, 18)
-        Me.pbxLowBeamIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxLowBeamIndicator.TabIndex = 16
-        Me.pbxLowBeamIndicator.TabStop = False
-        Me.pbxLowBeamIndicator.Visible = False
-        '
-        'pbxFogLightIndicator
-        '
-        Me.pbxFogLightIndicator.Image = Global.CSC300_CarSim.My.Resources.Resources.Fog_Light_Indicator
-        Me.pbxFogLightIndicator.Location = New System.Drawing.Point(310, 189)
-        Me.pbxFogLightIndicator.Margin = New System.Windows.Forms.Padding(2)
-        Me.pbxFogLightIndicator.Name = "pbxFogLightIndicator"
-        Me.pbxFogLightIndicator.Size = New System.Drawing.Size(20, 18)
-        Me.pbxFogLightIndicator.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxFogLightIndicator.TabIndex = 17
-        Me.pbxFogLightIndicator.TabStop = False
-        Me.pbxFogLightIndicator.Visible = False
-        '
-        'pbxFogLightSwitch
-        '
-        Me.pbxFogLightSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.Fog_Light_Switch
-        Me.pbxFogLightSwitch.Location = New System.Drawing.Point(63, 532)
-        Me.pbxFogLightSwitch.Name = "pbxFogLightSwitch"
-        Me.pbxFogLightSwitch.Size = New System.Drawing.Size(28, 50)
-        Me.pbxFogLightSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxFogLightSwitch.TabIndex = 18
-        Me.pbxFogLightSwitch.TabStop = False
-        '
-        'pbxLowBeamSwitch
-        '
-        Me.pbxLowBeamSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.LowBeam_Switch
-        Me.pbxLowBeamSwitch.Location = New System.Drawing.Point(24, 532)
-        Me.pbxLowBeamSwitch.Name = "pbxLowBeamSwitch"
-        Me.pbxLowBeamSwitch.Size = New System.Drawing.Size(28, 50)
-        Me.pbxLowBeamSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxLowBeamSwitch.TabIndex = 19
-        Me.pbxLowBeamSwitch.TabStop = False
-        '
-        'pbxHighBeamSwitch
-        '
-        Me.pbxHighBeamSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.HighBeam_Switch
-        Me.pbxHighBeamSwitch.Location = New System.Drawing.Point(24, 588)
-        Me.pbxHighBeamSwitch.Name = "pbxHighBeamSwitch"
-        Me.pbxHighBeamSwitch.Size = New System.Drawing.Size(28, 50)
-        Me.pbxHighBeamSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxHighBeamSwitch.TabIndex = 20
-        Me.pbxHighBeamSwitch.TabStop = False
-        '
-        'pbxHazardSwitch
-        '
-        Me.pbxHazardSwitch.Image = Global.CSC300_CarSim.My.Resources.Resources.HazardLights_Switch
-        Me.pbxHazardSwitch.Location = New System.Drawing.Point(63, 588)
-        Me.pbxHazardSwitch.Name = "pbxHazardSwitch"
-        Me.pbxHazardSwitch.Size = New System.Drawing.Size(28, 50)
-        Me.pbxHazardSwitch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxHazardSwitch.TabIndex = 21
-        Me.pbxHazardSwitch.TabStop = False
-        '
-        'pbxParkingButton
-        '
-        Me.pbxParkingButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Parking_Button
-        Me.pbxParkingButton.Location = New System.Drawing.Point(407, 517)
-        Me.pbxParkingButton.Name = "pbxParkingButton"
-        Me.pbxParkingButton.Size = New System.Drawing.Size(57, 31)
-        Me.pbxParkingButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxParkingButton.TabIndex = 22
-        Me.pbxParkingButton.TabStop = False
-        '
-        'pbxReverseButton
-        '
-        Me.pbxReverseButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Reverse_Button
-        Me.pbxReverseButton.Location = New System.Drawing.Point(407, 554)
-        Me.pbxReverseButton.Name = "pbxReverseButton"
-        Me.pbxReverseButton.Size = New System.Drawing.Size(57, 41)
-        Me.pbxReverseButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxReverseButton.TabIndex = 23
-        Me.pbxReverseButton.TabStop = False
-        '
-        'pbxNuetralButton
-        '
-        Me.pbxNuetralButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Nuetral_Button
-        Me.pbxNuetralButton.Location = New System.Drawing.Point(407, 601)
-        Me.pbxNuetralButton.Name = "pbxNuetralButton"
-        Me.pbxNuetralButton.Size = New System.Drawing.Size(57, 31)
-        Me.pbxNuetralButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxNuetralButton.TabIndex = 24
-        Me.pbxNuetralButton.TabStop = False
-        '
-        'pbxDriveButton
-        '
-        Me.pbxDriveButton.Image = Global.CSC300_CarSim.My.Resources.Resources.Drive_Button
-        Me.pbxDriveButton.Location = New System.Drawing.Point(407, 638)
-        Me.pbxDriveButton.Name = "pbxDriveButton"
-        Me.pbxDriveButton.Size = New System.Drawing.Size(57, 45)
-        Me.pbxDriveButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxDriveButton.TabIndex = 25
-        Me.pbxDriveButton.TabStop = False
-        '
-        'lblDriveSelecterIndicator
-        '
-        Me.lblDriveSelecterIndicator.AutoSize = True
-        Me.lblDriveSelecterIndicator.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblDriveSelecterIndicator.Location = New System.Drawing.Point(240, 185)
-        Me.lblDriveSelecterIndicator.Name = "lblDriveSelecterIndicator"
-        Me.lblDriveSelecterIndicator.Size = New System.Drawing.Size(23, 24)
-        Me.lblDriveSelecterIndicator.TabIndex = 26
-        Me.lblDriveSelecterIndicator.Text = "P"
-        Me.lblDriveSelecterIndicator.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.lblDriveSelecterIndicator.Visible = False
-        '
-        'lblMPH
-        '
-        Me.lblMPH.AutoSize = True
-        Me.lblMPH.BackColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.lblMPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMPH.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.lblMPH.Location = New System.Drawing.Point(56, 141)
-        Me.lblMPH.Name = "lblMPH"
-        Me.lblMPH.Size = New System.Drawing.Size(45, 15)
-        Me.lblMPH.TabIndex = 27
-        Me.lblMPH.Text = "0 MPH"
-        Me.lblMPH.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.lblMPH.Visible = False
-        '
-        'lblGear
-        '
-        Me.lblGear.AutoSize = True
-        Me.lblGear.BackColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.lblGear.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblGear.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.lblGear.Location = New System.Drawing.Point(238, 126)
-        Me.lblGear.Name = "lblGear"
-        Me.lblGear.Size = New System.Drawing.Size(14, 15)
-        Me.lblGear.TabIndex = 28
-        Me.lblGear.Text = "1"
-        Me.lblGear.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        Me.lblGear.Visible = False
-        '
-        'TextBox3
-        '
-        Me.TextBox3.Location = New System.Drawing.Point(407, 77)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox3.TabIndex = 29
+        Me.pbxTurnSignalStockDown.Image = Global.CSC300_CarSim.My.Resources.Resources.TurnSignalStockDown
+        Me.pbxTurnSignalStockDown.Location = New System.Drawing.Point(24, 354)
+        Me.pbxTurnSignalStockDown.Name = "pbxTurnSignalStockDown"
+        Me.pbxTurnSignalStockDown.Size = New System.Drawing.Size(115, 48)
+        Me.pbxTurnSignalStockDown.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxTurnSignalStockDown.TabIndex = 14
+        Me.pbxTurnSignalStockDown.TabStop = False
+        Me.pbxTurnSignalStockDown.Visible = False
         '
         'TextBox1
         '
@@ -415,6 +468,9 @@ Partial Class frmCarSim
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.pbxRadio)
+        Me.Controls.Add(Me.pbxClock)
+        Me.Controls.Add(Me.pbxFuelandTempGauge)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.TextBox4)
@@ -448,7 +504,20 @@ Partial Class frmCarSim
         Me.Controls.Add(Me.pbxTurnSignalStockDown)
         Me.Name = "frmCarSim"
         Me.Text = "Car Simulator"
-        CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxParkingButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxHazardSwitch, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxHighBeamSwitch, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxLowBeamSwitch, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxFogLightSwitch, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxFogLightIndicator, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxLowBeamIndicator, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxHighBeamIndicator, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxRightTurnSignalLight, System.ComponentModel.ISupportInitialize).EndInit()
@@ -461,17 +530,7 @@ Partial Class frmCarSim
         CType(Me.pbxBrake, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxTurnSignalStock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxTurnSignalStockUp, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxHighBeamIndicator, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxLowBeamIndicator, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxFogLightIndicator, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxFogLightSwitch, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxLowBeamSwitch, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxHighBeamSwitch, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxHazardSwitch, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxParkingButton, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -507,5 +566,8 @@ Partial Class frmCarSim
     Friend WithEvents lblMPH As Label
     Friend WithEvents lblGear As Label
     Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents pbxFuelandTempGauge As PictureBox
+    Friend WithEvents pbxClock As PictureBox
+    Friend WithEvents pbxRadio As PictureBox
     Friend WithEvents TextBox1 As TextBox
 End Class
