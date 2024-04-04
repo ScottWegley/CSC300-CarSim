@@ -59,7 +59,7 @@ Partial Class frmStart
         'mnStartAbout
         '
         Me.mnStartAbout.Name = "mnStartAbout"
-        Me.mnStartAbout.Size = New System.Drawing.Size(107, 22)
+        Me.mnStartAbout.Size = New System.Drawing.Size(180, 22)
         Me.mnStartAbout.Text = "About"
         '
         'mnStartExit

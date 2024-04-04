@@ -56,20 +56,10 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStockUp = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStockDown = New System.Windows.Forms.PictureBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxRightTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxLeftTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxParkingBrakeLight, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbParkingBrake, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxSpeed, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxRpm, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxGas, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxBrake, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxTurnSignalStock, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxTurnSignalStockUp, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.mnStripCar = New System.Windows.Forms.MenuStrip()
+        Me.mnCarHelp = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnCarExit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnCarAbout = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -84,6 +74,20 @@ Partial Class frmCarSim
         CType(Me.pbxFogLightIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxLowBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxHighBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxRightTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxLeftTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxParkingBrakeLight, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbParkingBrake, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxSpeed, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxRpm, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxGas, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxBrake, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxTurnSignalStock, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxTurnSignalStockUp, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.mnStripCar.SuspendLayout()
         Me.SuspendLayout()
         '
         'TextBox2
@@ -119,7 +123,7 @@ Partial Class frmCarSim
         Me.lblMPH.BackColor = System.Drawing.SystemColors.ControlDarkDark
         Me.lblMPH.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblMPH.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.lblMPH.Location = New System.Drawing.Point(56, 141)
+        Me.lblMPH.Location = New System.Drawing.Point(60, 158)
         Me.lblMPH.Name = "lblMPH"
         Me.lblMPH.Size = New System.Drawing.Size(45, 15)
         Me.lblMPH.TabIndex = 27
@@ -133,7 +137,7 @@ Partial Class frmCarSim
         Me.lblGear.BackColor = System.Drawing.SystemColors.ActiveCaptionText
         Me.lblGear.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblGear.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.lblGear.Location = New System.Drawing.Point(238, 126)
+        Me.lblGear.Location = New System.Drawing.Point(250, 146)
         Me.lblGear.Name = "lblGear"
         Me.lblGear.Size = New System.Drawing.Size(14, 15)
         Me.lblGear.TabIndex = 28
@@ -171,7 +175,7 @@ Partial Class frmCarSim
         'pbxFuelandTempGauge
         '
         Me.pbxFuelandTempGauge.Image = Global.CSC300_CarSim.My.Resources.Resources.TemoAndFuelGauge
-        Me.pbxFuelandTempGauge.Location = New System.Drawing.Point(343, 48)
+        Me.pbxFuelandTempGauge.Location = New System.Drawing.Point(339, 65)
         Me.pbxFuelandTempGauge.Name = "pbxFuelandTempGauge"
         Me.pbxFuelandTempGauge.Size = New System.Drawing.Size(112, 108)
         Me.pbxFuelandTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -367,7 +371,7 @@ Partial Class frmCarSim
         '
         Me.pbxSpeed.Image = Global.CSC300_CarSim.My.Resources.Resources.BlankSpeedometer
         Me.pbxSpeed.InitialImage = Global.CSC300_CarSim.My.Resources.Resources.BlankSpeedometer
-        Me.pbxSpeed.Location = New System.Drawing.Point(2, 12)
+        Me.pbxSpeed.Location = New System.Drawing.Point(2, 25)
         Me.pbxSpeed.Name = "pbxSpeed"
         Me.pbxSpeed.Size = New System.Drawing.Size(160, 159)
         Me.pbxSpeed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -377,7 +381,7 @@ Partial Class frmCarSim
         'pbxRpm
         '
         Me.pbxRpm.Image = Global.CSC300_CarSim.My.Resources.Resources.Tachometer1
-        Me.pbxRpm.Location = New System.Drawing.Point(156, -7)
+        Me.pbxRpm.Location = New System.Drawing.Point(168, 12)
         Me.pbxRpm.Name = "pbxRpm"
         Me.pbxRpm.Size = New System.Drawing.Size(181, 177)
         Me.pbxRpm.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -441,10 +445,38 @@ Partial Class frmCarSim
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(407, 120)
+        Me.TextBox1.Location = New System.Drawing.Point(351, 39)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 30
+        '
+        'mnStripCar
+        '
+        Me.mnStripCar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnCarHelp, Me.mnCarExit})
+        Me.mnStripCar.Location = New System.Drawing.Point(0, 0)
+        Me.mnStripCar.Name = "mnStripCar"
+        Me.mnStripCar.Size = New System.Drawing.Size(1154, 24)
+        Me.mnStripCar.TabIndex = 33
+        Me.mnStripCar.Text = "MenuStrip1"
+        '
+        'mnCarHelp
+        '
+        Me.mnCarHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnCarAbout})
+        Me.mnCarHelp.Name = "mnCarHelp"
+        Me.mnCarHelp.Size = New System.Drawing.Size(44, 20)
+        Me.mnCarHelp.Text = "Help"
+        '
+        'mnCarExit
+        '
+        Me.mnCarExit.Name = "mnCarExit"
+        Me.mnCarExit.Size = New System.Drawing.Size(38, 20)
+        Me.mnCarExit.Text = "Exit"
+        '
+        'mnCarAbout
+        '
+        Me.mnCarAbout.Name = "mnCarAbout"
+        Me.mnCarAbout.Size = New System.Drawing.Size(180, 22)
+        Me.mnCarAbout.Text = "About"
         '
         'frmCarSim
         '
@@ -486,6 +518,8 @@ Partial Class frmCarSim
         Me.Controls.Add(Me.pbxTurnSignalStock)
         Me.Controls.Add(Me.pbxTurnSignalStockUp)
         Me.Controls.Add(Me.pbxTurnSignalStockDown)
+        Me.Controls.Add(Me.mnStripCar)
+        Me.MainMenuStrip = Me.mnStripCar
         Me.Name = "frmCarSim"
         Me.Text = "Car Simulator"
         CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).EndInit()
@@ -515,6 +549,8 @@ Partial Class frmCarSim
         CType(Me.pbxTurnSignalStock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxTurnSignalStockUp, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.mnStripCar.ResumeLayout(False)
+        Me.mnStripCar.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -554,4 +590,8 @@ Partial Class frmCarSim
     Friend WithEvents pbxClock As PictureBox
     Friend WithEvents pbxRadio As PictureBox
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents mnStripCar As MenuStrip
+    Friend WithEvents mnCarHelp As ToolStripMenuItem
+    Friend WithEvents mnCarAbout As ToolStripMenuItem
+    Friend WithEvents mnCarExit As ToolStripMenuItem
 End Class

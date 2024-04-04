@@ -130,4 +130,8 @@ Public Class frmCarSim
     Private Sub pbxDriveButton_Click(sender As Object, e As EventArgs) Handles pbxDriveButton.Click
         car.getRPMSystem().DriveButtonClick()
     End Sub
+
+    Private Sub mnCarExit_Click(sender As Object, e As EventArgs) Handles mnCarExit.Click
+        Me.Close()
+    End Sub
 End Class
