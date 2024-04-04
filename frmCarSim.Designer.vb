@@ -69,6 +69,24 @@ Partial Class frmCarSim
         CType(Me.pbxFogLightIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxLowBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxHighBeamIndicator, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.pbxHighBeamIndicator = New System.Windows.Forms.PictureBox()
+        Me.pbxLowBeamIndicator = New System.Windows.Forms.PictureBox()
+        Me.pbxFogLightIndicator = New System.Windows.Forms.PictureBox()
+        Me.pbxFogLightSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxLowBeamSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxHighBeamSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxHazardSwitch = New System.Windows.Forms.PictureBox()
+        Me.pbxParkingButton = New System.Windows.Forms.PictureBox()
+        Me.pbxReverseButton = New System.Windows.Forms.PictureBox()
+        Me.pbxNuetralButton = New System.Windows.Forms.PictureBox()
+        Me.pbxDriveButton = New System.Windows.Forms.PictureBox()
+        Me.lblDriveSelecterIndicator = New System.Windows.Forms.Label()
+        Me.lblMPH = New System.Windows.Forms.Label()
+        Me.lblGear = New System.Windows.Forms.Label()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        CType(Me.pbxTurnSignalStockDown, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxStartButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxSteeringWheel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxRightTurnSignalLight, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -437,6 +455,13 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStockDown.TabStop = False
         Me.pbxTurnSignalStockDown.Visible = False
         '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(407, 120)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox1.TabIndex = 30
+        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -446,6 +471,7 @@ Partial Class frmCarSim
         Me.Controls.Add(Me.pbxRadio)
         Me.Controls.Add(Me.pbxClock)
         Me.Controls.Add(Me.pbxFuelandTempGauge)
+        Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.lblGear)
@@ -543,4 +569,5 @@ Partial Class frmCarSim
     Friend WithEvents pbxFuelandTempGauge As PictureBox
     Friend WithEvents pbxClock As PictureBox
     Friend WithEvents pbxRadio As PictureBox
+    Friend WithEvents TextBox1 As TextBox
 End Class

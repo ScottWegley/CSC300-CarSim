@@ -2,6 +2,13 @@
 
 Public Class RPMSystem
 
+#Region "Fuel System Variables"
+    Const MPG = 20 ' Base MPG. Changes depending on RPM
+    Const MAX_FUEL = 20 ' In gallons
+
+    Dim dblCurrentFuel = MAX_FUEL
+#End Region
+
 #Region "RPM System Variables"
     ' These represent the current change being applied to the speed and rpm
     Private dblRpmIncrease As Double = 400
@@ -13,7 +20,7 @@ Public Class RPMSystem
     Const SHIFT_RPM As Double = 3500 ' Fairly standard RPM shift point
     Const MAX_RPM As Double = 6000
     Private dblEngineTorque As Double = 0
-    Const MAX_ENGINE_TORQUE As Double = 700
+    Const MAX_ENGINE_TORQUE As Double = 2000
 
     Const DRAG_COEFFICIENT As Double = 0.05
     'Const MIN_DRAG_FORCE = 17.5 ' Prevent excessive velocity when idle while stationary
@@ -57,8 +64,7 @@ Public Class RPMSystem
     Private dblSpeedNeedleAngle = 2.15
 
     Const SPEED_NEEDLE_X_ORIGIN = 80
-    Const SPEED_NEEDLE_Y_ORIGIN = 90
-
+    Const SPEED_NEEDLE_Y_ORIGIN = 80
 
     Private intSpeedNeedleXEnd = SPEED_NEEDLE_X_ORIGIN
     Private intSpeedNeedleYEnd = SPEED_NEEDLE_Y_ORIGIN
@@ -89,6 +95,7 @@ Public Class RPMSystem
     Dim TextBox2 As System.Windows.Forms.TextBox
     Dim TextBox3 As System.Windows.Forms.TextBox
     Dim TextBox4 As System.Windows.Forms.TextBox
+    Dim TextBox1 As System.Windows.Forms.TextBox
     Dim pbxSpeed As PictureBox
     Dim pbxRPM As PictureBox
     Dim pbxParkingBrakeLight As PictureBox
@@ -190,6 +197,12 @@ Public Class RPMSystem
 
             End If
         End If
+        dblCurrentFuel = Math.Max(0, dblCurrentFuel - (dblEngineTorque / (MPG * 10000)))
+
+        ' Resistance forces must grow faster than Engine Torque in order to prevent infinite velocity increase
+        'dblDragForce = Math.Max(MIN_DRAG_FORCE, DRAG_COEFFICIENT * (dblVelocity ^ 2))
+        dblDragForce = DRAG_COEFFICIENT * (dblVelocity ^ 2)
+        dblRollingResistanceForce = ROLLING_RESISTANCE_COEFFICIENT * VEHICLE_MASS
 
         If boolBrakeHeld Then
             'dblRPM = Math.Min(dblMaxRPM, dblRPM - (dblRpmBrakeDecrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
@@ -210,7 +223,7 @@ Public Class RPMSystem
 
         lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         Me.TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Current Gear: " & intGear
+        TextBox3.Text = "Fuel: " & dblCurrentFuel
         TextBox4.Text = "Power: " & Convert.ToInt32(dblEngineTorque)
         lblGear.Text = intGear
     End Sub
