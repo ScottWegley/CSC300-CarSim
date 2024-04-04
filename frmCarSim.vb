@@ -136,6 +136,6 @@ Public Class frmCarSim
     End Sub
 
     Private Sub mnCarAbout_Click(sender As Object, e As EventArgs) Handles mnCarAbout.Click
-        MessageBox.Show("This is a physics accurate car simulation designed by Adam Cartozian, Keegan Lenz, and Scott Wegley." & Environment.NewLine & "Turn the car on, put it in drive, release the parking brake and step on the gas!", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show("This is a physics accurate car simulation designed by Adam Cartozian, Keegan Lenz, and Scott Wegley." & Environment.NewLine & "Turn the car on, put it in drive, release the parking brake and step on the gas!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 End Class
