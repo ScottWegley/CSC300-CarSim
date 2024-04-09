@@ -8,17 +8,17 @@
 
     Dim pbxRightTurnSignalLight As PictureBox
     Dim pbxLeftTurnSignalLight As PictureBox
-    Dim pbxTurnSignalStock As PictureBox
-    Dim pbxTurnSignalStockDown As PictureBox
-    Dim pbxTurnSignalStockUp As PictureBox
+    Dim pbxTurnSignalStalk As PictureBox
+    Dim pbxTurnSignalStalkDown As PictureBox
+    Dim pbxTurnSignalStalkUp As PictureBox
 
-    Public Sub New(ByRef RightTurnSignalLight As PictureBox, ByRef LeftTurnSignalLight As PictureBox, ByRef TurnStockDefault As PictureBox, ByRef TurnStockUp As PictureBox, ByRef TurnStockDown As PictureBox)
+    Public Sub New(ByRef RightTurnSignalLight As PictureBox, ByRef LeftTurnSignalLight As PictureBox, ByRef TurnStalkDefault As PictureBox, ByRef TurnStalkUp As PictureBox, ByRef TurnStalkDown As PictureBox)
         tmrBlinkers.Interval = 500
         pbxRightTurnSignalLight = RightTurnSignalLight
         pbxLeftTurnSignalLight = LeftTurnSignalLight
-        pbxTurnSignalStock = TurnStockDefault
-        pbxTurnSignalStockDown = TurnStockDown
-        pbxTurnSignalStockUp = TurnStockUp
+        pbxTurnSignalStalk = TurnStalkDefault
+        pbxTurnSignalStalkDown = TurnStalkDown
+        pbxTurnSignalStalkUp = TurnStalkUp
     End Sub
 
     Private Sub tmrBlinkers_Tick(sender As Object, e As EventArgs) Handles tmrBlinkers.Tick
@@ -39,8 +39,8 @@
         tmrBlinkers.Start()
         pbxRightTurnSignalLight.Visible = True
         pbxLeftTurnSignalLight.Visible = False
-        pbxTurnSignalStock.Visible = False
-        pbxTurnSignalStockUp.Visible = True
+        pbxTurnSignalStalk.Visible = False
+        pbxTurnSignalStalkUp.Visible = True
         boolRightSignalOn = True
         boolLeftSignalOn = False
     End Sub
@@ -49,8 +49,8 @@
         tmrBlinkers.Start()
         pbxLeftTurnSignalLight.Visible = True
         pbxRightTurnSignalLight.Visible = False
-        pbxTurnSignalStock.Visible = False
-        pbxTurnSignalStockDown.Visible = True
+        pbxTurnSignalStalk.Visible = False
+        pbxTurnSignalStalkDown.Visible = True
         boolLeftSignalOn = True
         boolRightSignalOn = False
     End Sub
@@ -76,9 +76,9 @@
         tmrBlinkers.Stop()
         pbxRightTurnSignalLight.Visible = False
         pbxLeftTurnSignalLight.Visible = False
-        pbxTurnSignalStock.Visible = True
-        pbxTurnSignalStockUp.Visible = False
-        pbxTurnSignalStockDown.Visible = False
+        pbxTurnSignalStalk.Visible = True
+        pbxTurnSignalStalkUp.Visible = False
+        pbxTurnSignalStalkDown.Visible = False
         boolLeftSignalOn = False
         boolRightSignalOn = False
     End Sub

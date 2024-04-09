@@ -363,9 +363,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property TurnSignalStockDown() As System.Drawing.Bitmap
+        Friend ReadOnly Property TurnSignalStalkDown() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("TurnSignalStockDown", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TurnSignalStalkDown", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -373,9 +373,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property TurnSignalStockUp() As System.Drawing.Bitmap
+        Friend ReadOnly Property TurnSignalStalkUp() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("TurnSignalStockUp", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TurnSignalStalkUp", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -383,9 +383,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property TurnStock() As System.Drawing.Bitmap
+        Friend ReadOnly Property TurnStalk() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("TurnStock", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("TurnStalk", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

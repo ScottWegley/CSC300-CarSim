@@ -14,7 +14,7 @@ Public Class frmCarSim
 
     ' Hello
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
-        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStock, pbxTurnSignalStockDown, pbxTurnSignalStockUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator)
+        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator)
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -60,17 +60,17 @@ Public Class frmCarSim
         car.getRPMSystem().ToggleParkingBrake()
     End Sub
 
-    ' Logging for the turn stock interactions
+    ' Logging for the turn stalk interactions
     Dim MousePosition1 As Point
     ' Grab the first position on click
 
-    Private Sub pbxTurnSignalStock_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseDown
+    Private Sub pbxTurnSignalStalk_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStalk.MouseDown
         If car.isOn() Then 'Check if Car is on
             MousePosition1 = Cursor.Position
         End If
     End Sub
 
-    Private Sub pbxTurnSignalStock_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStock.MouseUp
+    Private Sub pbxTurnSignalStalk_MouseUp(sender As Object, e As MouseEventArgs) Handles pbxTurnSignalStalk.MouseUp
         If car.isOn() Then 'Check if Car is on
 
             ' Log the second position, 
@@ -78,15 +78,15 @@ Public Class frmCarSim
             MousePosition2 = Cursor.Position
             If MousePosition1.Y >= MousePosition2.Y Then
                 ' Right Turn Signal On
-                car.getBlinkers().RightTurnSignalOn()
+                car.getBlinkers().rightTurnSignalOn()
             ElseIf MousePosition1.Y < MousePosition2.Y Then
                 ' Left Turn Signal On
-                car.getBlinkers().LeftTurnSignalOn()
+                car.getBlinkers().leftTurnSignalOn()
             End If
         End If
     End Sub
 
-    Private Sub pbxTurnSignalAlt_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStockUp.Click, pbxTurnSignalStockDown.Click
+    Private Sub pbxTurnSignalAlt_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStalkUp.Click, pbxTurnSignalStalkDown.Click
         ' Turn Signal Off
         car.getBlinkers().ForceSignalsOff()
     End Sub
