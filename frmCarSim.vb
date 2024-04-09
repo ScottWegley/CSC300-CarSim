@@ -12,6 +12,7 @@ Public Class frmCarSim
         InitializeComponent()
     End Sub
 
+    ' Hello
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
         car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStock, pbxTurnSignalStockDown, pbxTurnSignalStockUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator)
     End Sub

@@ -124,6 +124,11 @@ Public Class RPMSystem
     End Sub
 
     ' Speed is dictated by RPM instead of the other way around.
+    ' Hello
+    Dim abc As Integer = 0
+
+
+
     Private Sub tmrPedalsHeld_Tick(sender As Object, e As EventArgs) Handles tmrPedals.Tick
         If intGear = 1 Then
             dblGearRatio = 1 / 4
