@@ -2,6 +2,14 @@
 
 Public Class RPMSystem
 
+#Region "Engine Temperature Varaibles"
+    ' Celsius values
+    Const MAX_TEMP = 120
+    Const MIN_TEMP = 0
+
+    Dim dblCurrentTemp = 95
+#End Region
+
 #Region "Fuel System Variables"
     Const MPG = 20 ' Base MPG. Changes depending on RPM
     Const MAX_FUEL = 20 ' In gallons
@@ -15,6 +23,7 @@ Public Class RPMSystem
     Private dblRpmBrakeDecrease As Double = 200
     Private dblRpmDecrese As Double = 100
 
+    Private dblTempRPM As Double = 0
     Private dblRPM As Double = 0
     Const MINIMUM_RPM As Double = 800
     Const SHIFT_RPM As Double = 3500 ' Fairly standard RPM shift point
@@ -156,7 +165,7 @@ Public Class RPMSystem
             dblRpmDecrese = 125
         End If
 
-
+        dblTempRPM = dblRPM
         ' Increase or decrease the speed based on the gas, with upper and lower limits
         If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) Then
             dblRPM = Math.Min(MAX_RPM, dblRPM + (dblRpmIncrease * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * dblGearRatio))
@@ -168,6 +177,7 @@ Public Class RPMSystem
                 intGear += 1
                 ' Reset RPM to prevent overshooting the next gear's RPM range
                 dblRPM = MAX_RPM * dblGearRatio
+                dblTempRPM = dblRPM
             End If
         ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
             dblRPM = Math.Min(MAX_RPM, dblRPM + (400 * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * 1))
@@ -184,6 +194,7 @@ Public Class RPMSystem
                 'dblRPM = (dblMaxRPM * dblGearRatio) + 1500
                 'dblRPM = dblRPM + 1000 + dblRpmIncrease
                 dblRPM = MAX_RPM - (intGear * 200)
+                dblTempRPM = dblRPM
             End If
 
             If Not boolBrakeHeld Then
@@ -202,6 +213,13 @@ Public Class RPMSystem
 
             End If
         End If
+
+        If dblRPM > dblTempRPM Then
+            dblCurrentTemp = Math.Min(MAX_TEMP, dblCurrentTemp + ((dblRPM - dblTempRPM) * 0.001))
+        Else
+            dblCurrentTemp = Math.Max(MIN_TEMP, dblCurrentTemp - ((dblTempRPM - dblRPM) * 0.001))
+        End If
+
         dblCurrentFuel = Math.Max(0, dblCurrentFuel - (dblEngineTorque / (MPG * 10000)))
 
         ' Resistance forces must grow faster than Engine Torque in order to prevent infinite velocity increase
@@ -228,7 +246,7 @@ Public Class RPMSystem
 
         lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         Me.TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Fuel: " & dblCurrentFuel
+        TextBox3.Text = "Fuel and Temp: " & Convert.ToInt32(dblCurrentFuel) & ", " & Convert.ToInt32(dblCurrentTemp)
         TextBox4.Text = "Power: " & Convert.ToInt32(dblEngineTorque)
         lblGear.Text = intGear
     End Sub
