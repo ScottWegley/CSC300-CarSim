@@ -175,10 +175,10 @@ Partial Class frmCarSim
         'pbxFuelandTempGauge
         '
         Me.pbxFuelandTempGauge.Image = Global.CSC300_CarSim.My.Resources.Resources.TemoAndFuelGauge
-        Me.pbxFuelandTempGauge.Location = New System.Drawing.Point(339, 65)
+        Me.pbxFuelandTempGauge.Location = New System.Drawing.Point(351, 12)
         Me.pbxFuelandTempGauge.Name = "pbxFuelandTempGauge"
-        Me.pbxFuelandTempGauge.Size = New System.Drawing.Size(112, 108)
-        Me.pbxFuelandTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxFuelandTempGauge.Size = New System.Drawing.Size(194, 177)
+        Me.pbxFuelandTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.pbxFuelandTempGauge.TabIndex = 30
         Me.pbxFuelandTempGauge.TabStop = False
         '
