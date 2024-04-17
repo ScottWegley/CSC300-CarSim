@@ -26,4 +26,23 @@
     Public Sub New(ByRef Clock As PictureBox)
         pbxClock = Clock
     End Sub
+
+    Private Function secondsToAngle(ByVal intSeconds) As Double
+        Return intSeconds / 60 * 360
+    End Function
+
+    Private Function minutesToAngle(ByVal intMinutes) As Double
+        Return intMinutes / 60 * 360
+    End Function
+
+    Private Function hoursToAngle(ByVal intHours) As Double
+        Return (intHours Mod 12) / 12 * 360
+    End Function
+
+    ' Function to calculate the X and Y of a point where the needle ends
+    Private Function getEndPoint(ByVal intXOrigin As Integer, ByVal intYOrigin As Integer, ByVal dblAngle As Double, ByVal intNeedleLength As Integer) As (intEndX As Integer, intEndY As Integer)
+        Dim intEndX As Integer = intXOrigin + intNeedleLength * Math.Cos(Math.PI * 2 * ((dblAngle - 90) / (360)))
+        Dim intEndY As Integer = intYOrigin + -intNeedleLength * Math.Sin(Math.PI * 2 * ((dblAngle - 90) / (360)))
+        Return (intEndX, intEndY)
+    End Function
 End Class
