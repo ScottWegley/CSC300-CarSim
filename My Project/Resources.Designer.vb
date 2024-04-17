@@ -171,6 +171,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property groovy_ambient_funk_201745_1() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("groovy_ambient_funk_201745_1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property HazardLights_Switch() As System.Drawing.Bitmap
@@ -247,6 +256,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("LowBeam Switch", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property movement_200697() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("movement_200697", resourceCulture)
             End Get
         End Property
         
@@ -357,6 +375,24 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("TemoAndFuelGauge", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property the_best_jazz_club_in_new_orleans_164472() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("the_best_jazz_club_in_new_orleans_164472", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property trap_future_bass_royalty_free_music_167020() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("trap_future_bass_royalty_free_music_167020", resourceCulture)
             End Get
         End Property
         

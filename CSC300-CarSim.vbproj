@@ -223,5 +223,17 @@
   <ItemGroup>
     <None Include="Resources\Radio.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\groovy-ambient-funk-201745_1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\movement-200697.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\the-best-jazz-club-in-new-orleans-164472.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trap-future-bass-royalty-free-music-167020.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
