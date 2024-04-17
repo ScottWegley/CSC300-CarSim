@@ -30,7 +30,7 @@ Partial Class frmCarSim
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.pbxRadio = New System.Windows.Forms.PictureBox()
         Me.pbxClock = New System.Windows.Forms.PictureBox()
-        Me.pbxFuelandTempGauge = New System.Windows.Forms.PictureBox()
+        Me.pbxFuelAndTempGauge = New System.Windows.Forms.PictureBox()
         Me.pbxDriveButton = New System.Windows.Forms.PictureBox()
         Me.pbxNuetralButton = New System.Windows.Forms.PictureBox()
         Me.pbxReverseButton = New System.Windows.Forms.PictureBox()
@@ -62,7 +62,7 @@ Partial Class frmCarSim
         Me.mnCarExit = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pbxFuelAndTempGauge, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -172,15 +172,15 @@ Partial Class frmCarSim
         Me.pbxClock.TabIndex = 31
         Me.pbxClock.TabStop = False
         '
-        'pbxFuelandTempGauge
+        'pbxFuelAndTempGauge
         '
-        Me.pbxFuelandTempGauge.Image = Global.CSC300_CarSim.My.Resources.Resources.TemoAndFuelGauge
-        Me.pbxFuelandTempGauge.Location = New System.Drawing.Point(351, 12)
-        Me.pbxFuelandTempGauge.Name = "pbxFuelandTempGauge"
-        Me.pbxFuelandTempGauge.Size = New System.Drawing.Size(194, 177)
-        Me.pbxFuelandTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pbxFuelandTempGauge.TabIndex = 30
-        Me.pbxFuelandTempGauge.TabStop = False
+        Me.pbxFuelAndTempGauge.Image = Global.CSC300_CarSim.My.Resources.Resources.TemoAndFuelGauge
+        Me.pbxFuelAndTempGauge.Location = New System.Drawing.Point(351, 12)
+        Me.pbxFuelAndTempGauge.Name = "pbxFuelAndTempGauge"
+        Me.pbxFuelAndTempGauge.Size = New System.Drawing.Size(194, 177)
+        Me.pbxFuelAndTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pbxFuelAndTempGauge.TabIndex = 30
+        Me.pbxFuelAndTempGauge.TabStop = False
         '
         'pbxDriveButton
         '
@@ -486,7 +486,7 @@ Partial Class frmCarSim
         Me.ClientSize = New System.Drawing.Size(1154, 690)
         Me.Controls.Add(Me.pbxRadio)
         Me.Controls.Add(Me.pbxClock)
-        Me.Controls.Add(Me.pbxFuelandTempGauge)
+        Me.Controls.Add(Me.pbxFuelAndTempGauge)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.TextBox4)
@@ -524,7 +524,7 @@ Partial Class frmCarSim
         Me.Text = "Car Simulator"
         CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.pbxFuelAndTempGauge, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxDriveButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxNuetralButton, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxReverseButton, System.ComponentModel.ISupportInitialize).EndInit()
@@ -586,7 +586,7 @@ Partial Class frmCarSim
     Friend WithEvents lblMPH As Label
     Friend WithEvents lblGear As Label
     Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents pbxFuelandTempGauge As PictureBox
+    Friend WithEvents pbxFuelAndTempGauge As PictureBox
     Friend WithEvents pbxClock As PictureBox
     Friend WithEvents pbxRadio As PictureBox
     Friend WithEvents TextBox1 As TextBox

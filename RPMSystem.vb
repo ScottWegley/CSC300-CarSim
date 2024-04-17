@@ -94,19 +94,25 @@ Public Class RPMSystem
     'Config variables for fuel needle
     Const FUEL_NEEDLE_LENGTH = 100
 
-    Const FUEL_NEEDLE_X_ORIGIN = 90
-    Const FUEL_NEEDLE_Y_ORIGIN = 84
+    Const FUEL_NEEDLE_X_ORIGIN = 0
+    Const FUEL_NEEDLE_Y_ORIGIN = 0
 
-    Private intFuelNeedleXEnd = FUEL_NEEDLE_X_ORIGIN + FUEL_NEEDLE_LENGTH
-    Private intFuelNeedleYEnd = FUEL_NEEDLE_Y_ORIGIN + FUEL_NEEDLE_LENGTH
+    Const TEMP_NEEDLE_X_ORIGIN = 0
+    Const TEMP_NEEDLE_Y_ORIGIN = 0
+
+    Private intTempNeedleXEnd = TEMP_NEEDLE_X_ORIGIN
+    Private intTempNeedleYEnd = TEMP_NEEDLE_Y_ORIGIN
+
+    Private intFuelNeedleXEnd = 100
+    Private intFuelNeedleYEnd = 100
 
     ' Config variables for drawing on Gauges
     Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
     Dim bmpRpmNeedle As New Bitmap(1024, 1024)
-    Dim bmpFuelNeedle As New Bitmap(1024, 1024)
+    Dim bmpFuelTempGauge As New Bitmap(1024, 1024)
     Dim grphSpeedSheet As Graphics = Graphics.FromImage(bmpSpeedNeedle)
     Dim grphRpmSheet As Graphics = Graphics.FromImage(bmpRpmNeedle)
-    Dim grphFuelSheet As Graphics = Graphics.FromImage(bmpFuelNeedle)
+    Dim grphFuelTempGauge As Graphics = Graphics.FromImage(bmpFuelTempGauge)
 #End Region
 
     Private WithEvents tmrPedals As Timer = New Timer()
@@ -122,8 +128,6 @@ Public Class RPMSystem
     Dim pbxFuelandTempGauge As PictureBox
     Dim pbxParkingBrakeLight As PictureBox
     Dim lblDriveSelecterIndicator As Label
-
-
 
     Const TIMER_INTERVAL = 100
 
@@ -292,12 +296,9 @@ Public Class RPMSystem
         intRpmNeedleXEnd = RPM_NEEDLE_X_ORIGIN + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * RPM_NEEDLE_LENGTH)
         intRpmNeedleYEnd = RPM_NEEDLE_Y_ORIGIN + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * RPM_NEEDLE_LENGTH)
 
-        intFuelNeedleXEnd = FUEL_NEEDLE_X_ORIGIN + Convert.ToInt32(Math.Cos(dblCurrentFuel / 20) * FUEL_NEEDLE_LENGTH)
-        intFuelNeedleXEnd = FUEL_NEEDLE_Y_ORIGIN + Convert.ToInt32(Math.Sin(dblCurrentFuel / 20) * FUEL_NEEDLE_LENGTH)
-
         grphSpeedSheet.Dispose()
         grphRpmSheet.Dispose()
-        grphFuelSheet.Dispose()
+        grphFuelTempGauge.Dispose()
 
         bmpSpeedNeedle.Dispose()
         bmpSpeedNeedle = New Bitmap(1024, 1024)
@@ -305,12 +306,12 @@ Public Class RPMSystem
         bmpRpmNeedle.Dispose()
         bmpRpmNeedle = New Bitmap(1024, 1024)
 
-        bmpFuelNeedle.Dispose()
-        bmpFuelNeedle = New Bitmap(1024, 1024)
+        bmpFuelTempGauge.Dispose()
+        bmpFuelTempGauge = New Bitmap(1024, 1024)
 
         grphSpeedSheet = Graphics.FromImage(bmpSpeedNeedle)
         grphRpmSheet = Graphics.FromImage(bmpRpmNeedle)
-        grphFuelSheet = Graphics.FromImage(bmpFuelNeedle)
+        grphFuelTempGauge = Graphics.FromImage(bmpFuelTempGauge)
 
         pbxSpeed.Refresh()
         pbxRPM.Refresh()
@@ -327,7 +328,7 @@ Public Class RPMSystem
     End Sub
 
     Public Sub DrawFuel(e As PaintEventArgs)
-        grphFuelSheet.DrawLine(New Pen(Color.Green, 3), FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, intFuelNeedleXEnd, intFuelNeedleYEnd)
+        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, intFuelNeedleXEnd, intFuelNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
     End Sub
 
