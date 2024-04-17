@@ -97,14 +97,14 @@ Public Class RPMSystem
     Const FUEL_NEEDLE_X_ORIGIN = 42
     Const FUEL_NEEDLE_Y_ORIGIN = 89
 
-    Const TEMP_NEEDLE_X_ORIGIN = 0
-    Const TEMP_NEEDLE_Y_ORIGIN = 0
+    Const TEMP_NEEDLE_X_ORIGIN = 42
+    Const TEMP_NEEDLE_Y_ORIGIN = 89
 
     Private intTempNeedleXEnd = TEMP_NEEDLE_X_ORIGIN
     Private intTempNeedleYEnd = TEMP_NEEDLE_Y_ORIGIN
 
-    Private intFuelNeedleXEnd = 51
-    Private intFuelNeedleYEnd = 45
+    Private intFuelNeedleXEnd = FUEL_NEEDLE_X_ORIGIN
+    Private intFuelNeedleYEnd = FUEL_NEEDLE_Y_ORIGIN
 
     ' Config variables for drawing on Gauges
     Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
