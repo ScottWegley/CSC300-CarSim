@@ -5,6 +5,7 @@ Public Class Clock
     Private pbxClock As PictureBox
 
     ' Draw needles in order: HOURS -> MINUTES -> SECONDS to ensure seconds is on top of minutes is on top of hours
+    ' Link to desmos graph if you need to rederive clock angles: https://www.desmos.com/calculator/pmi4rhpogu
 
 #Region "Needle Coordinate Variables"
     Private intSecondsNeedleLength As Integer
