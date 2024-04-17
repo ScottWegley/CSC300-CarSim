@@ -181,7 +181,7 @@ Public Class RPMSystem
 
         dblTempRPM = dblRPM
         ' Increase or decrease the speed based on the gas, with upper and lower limits
-        If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) Then
+        If boolGasHeld And boolDrive And boolParkingBrake.Equals(False) And dblCurrentFuel > 0 Then
             dblRPM = Math.Min(MAX_RPM, dblRPM + (dblRpmIncrease * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * dblGearRatio))
 
             dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio
@@ -193,10 +193,10 @@ Public Class RPMSystem
                 dblRPM = MAX_RPM * dblGearRatio
                 dblTempRPM = dblRPM
             End If
-        ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) Then
+        ElseIf boolGasHeld And (boolPark Or boolNuetral) And dblVelocity.Equals(0) And dblCurrentFuel > 0 Then
             dblRPM = Math.Min(MAX_RPM, dblRPM + (400 * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * 1))
             dblSpeedNeedleMaxAngle = 2.25
-        ElseIf boolGasHeld And boolReverse And boolParkingBrake.Equals(False) Then
+        ElseIf boolGasHeld And boolReverse And boolParkingBrake.Equals(False) And dblCurrentFuel > 0 Then
             dblRPM = Math.Min(4000, dblRPM + (dblRpmIncrease * ((MAX_RPM - (dblRPM - 1000)) / (MAX_RPM - 1000)) * dblGearRatio))
             dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio
             intGear = 1
