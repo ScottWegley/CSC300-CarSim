@@ -102,8 +102,8 @@ Public Class RPMSystem
     Const TEMP_NEEDLE_X_ORIGIN = 42
     Const TEMP_NEEDLE_Y_ORIGIN = 89
 
-    Private intTempNeedleXEnd = 63
-    Private intTempNeedleYEnd = 128
+    Private intTempNeedleXEnd = TEMP_NEEDLE_X_ORIGIN
+    Private intTempNeedleYEnd = TEMP_NEEDLE_Y_ORIGIN
 
     Private intFuelNeedleXEnd = FUEL_NEEDLE_X_ORIGIN
     Private intFuelNeedleYEnd = FUEL_NEEDLE_Y_ORIGIN
@@ -295,7 +295,13 @@ Public Class RPMSystem
         boolGasHeld = False
     End Sub
 
-    Public Function temperatureToAngle(ByVal dblTemp) As Double
+    Public Function fuelToAngle(ByVal dblFuel As Double) As Double
+        Dim dblOffset = dblCurrentFuel / 20
+
+        Return dblOffset
+    End Function
+
+    Public Function temperatureToAngle(ByVal dblTemp As Double) As Double
         Dim dblOffset As Double = ((dblTemp - 45) / 75) ' Calculates how far from the top we are as a ratio off the offset to the range from top to bottom (0-75 degrees offset from 125).
         Return (dblOffset * 140)
     End Function
