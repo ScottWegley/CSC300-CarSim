@@ -155,7 +155,7 @@ Partial Class frmCarSim
         'pbxRadio
         '
         Me.pbxRadio.Image = Global.CSC300_CarSim.My.Resources.Resources.Radio
-        Me.pbxRadio.Location = New System.Drawing.Point(641, 315)
+        Me.pbxRadio.Location = New System.Drawing.Point(432, 352)
         Me.pbxRadio.Name = "pbxRadio"
         Me.pbxRadio.Size = New System.Drawing.Size(283, 87)
         Me.pbxRadio.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -165,7 +165,7 @@ Partial Class frmCarSim
         'pbxClock
         '
         Me.pbxClock.Image = Global.CSC300_CarSim.My.Resources.Resources.Clock1
-        Me.pbxClock.Location = New System.Drawing.Point(743, 212)
+        Me.pbxClock.Location = New System.Drawing.Point(432, 280)
         Me.pbxClock.Name = "pbxClock"
         Me.pbxClock.Size = New System.Drawing.Size(75, 66)
         Me.pbxClock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
