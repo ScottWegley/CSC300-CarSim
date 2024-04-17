@@ -97,6 +97,7 @@ Partial Class frmCarSim
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(100, 20)
         Me.TextBox2.TabIndex = 7
+        Me.TextBox2.Visible = False
         '
         'TextBox4
         '
@@ -104,6 +105,7 @@ Partial Class frmCarSim
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(100, 20)
         Me.TextBox4.TabIndex = 15
+        Me.TextBox4.Visible = False
         '
         'lblDriveSelecterIndicator
         '
@@ -151,6 +153,7 @@ Partial Class frmCarSim
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 29
+        Me.TextBox3.Visible = False
         '
         'pbxRadio
         '
@@ -449,6 +452,7 @@ Partial Class frmCarSim
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(100, 20)
         Me.TextBox1.TabIndex = 30
+        Me.TextBox1.Visible = False
         '
         'mnStripCar
         '
@@ -475,7 +479,7 @@ Partial Class frmCarSim
         'mnCarExit
         '
         Me.mnCarExit.Name = "mnCarExit"
-        Me.mnCarExit.Size = New System.Drawing.Size(38, 20)
+        Me.mnCarExit.Size = New System.Drawing.Size(37, 20)
         Me.mnCarExit.Text = "Exit"
         '
         'frmCarSim

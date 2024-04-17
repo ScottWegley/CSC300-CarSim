@@ -139,4 +139,20 @@ Public Class frmCarSim
     Private Sub mnCarAbout_Click(sender As Object, e As EventArgs) Handles mnCarAbout.Click
         MessageBox.Show("This is a physics accurate car simulation designed by Adam Cartozian, Keegan Lenz, and Scott Wegley." & Environment.NewLine & "Turn the car on, put it in drive, release the parking brake and step on the gas!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
+
+    Private Sub frmCarSim_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        Dim bHandled As Boolean = False
+        Select Case e.KeyCode
+            Case Keys.Right
+                pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
+                pbxSteeringWheel.Refresh()
+                e.Handled = True
+            Case Keys.Left
+                For x = 0 To 2
+                    pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
+                Next
+                pbxSteeringWheel.Refresh()
+                e.Handled = True
+        End Select
+    End Sub
 End Class

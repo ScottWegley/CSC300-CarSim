@@ -108,6 +108,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RPMSystem.vb" />
+    <Compile Include="Steering.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmCarSim.resx">
