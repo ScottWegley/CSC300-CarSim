@@ -61,6 +61,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property abstract_fashion_pop_131283() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("abstract_fashion_pop_131283", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
         Friend ReadOnly Property BlankSpeedometer() As System.Drawing.Bitmap
@@ -335,6 +344,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("RightTurnSignal", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        '''</summary>
+        Friend ReadOnly Property smoke_143172() As System.IO.UnmanagedMemoryStream
+            Get
+                Return ResourceManager.GetStream("smoke_143172", resourceCulture)
             End Get
         End Property
         

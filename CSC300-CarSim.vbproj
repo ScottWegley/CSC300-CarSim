@@ -235,5 +235,11 @@
   <ItemGroup>
     <None Include="Resources\trap-future-bass-royalty-free-music-167020.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smoke-143172.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\abstract-fashion-pop-131283.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

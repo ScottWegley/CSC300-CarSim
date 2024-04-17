@@ -217,11 +217,17 @@
   <data name="Radio" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Radio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="abstract_fashion_pop_131283" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\abstract-fashion-pop-131283.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="groovy_ambient_funk_201745_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\groovy-ambient-funk-201745_1.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="movement_200697" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\movement-200697.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="smoke_143172" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\smoke-143172.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="the_best_jazz_club_in_new_orleans_164472" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\the-best-jazz-club-in-new-orleans-164472.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
