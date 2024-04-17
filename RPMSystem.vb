@@ -96,7 +96,7 @@ Public Class RPMSystem
 
     Const TEMP_NEEDLE_LENGTH = 47
 
-    Const FUEL_NEEDLE_X_ORIGIN = 42
+    Const FUEL_NEEDLE_X_ORIGIN = 150
     Const FUEL_NEEDLE_Y_ORIGIN = 89
 
     Const TEMP_NEEDLE_X_ORIGIN = 42
@@ -105,8 +105,8 @@ Public Class RPMSystem
     Private intTempNeedleXEnd = TEMP_NEEDLE_X_ORIGIN
     Private intTempNeedleYEnd = TEMP_NEEDLE_Y_ORIGIN
 
-    Private intFuelNeedleXEnd = FUEL_NEEDLE_X_ORIGIN
-    Private intFuelNeedleYEnd = FUEL_NEEDLE_Y_ORIGIN
+    Private intFuelNeedleXEnd = 100
+    Private intFuelNeedleYEnd = 100
 
     ' Config variables for drawing on Gauges
     Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
@@ -312,6 +312,12 @@ Public Class RPMSystem
         Return (intEndX, intEndY)
     End Function
 
+    Public Function getFuelDestinationPoint(ByVal intOriginX As Integer, ByVal intOriginY As Integer, ByVal dblLength As Double, ByVal dblAngle As Double) As (intX As Integer, intY As Integer)
+        Dim intEndX As Integer = intOriginX - dblLength * Math.Cos(Math.PI * 2 * ((dblAngle - 60) / 360))
+        Dim intEndY As Integer = intOriginY - dblLength * Math.Sin(Math.PI * 2 * ((dblAngle - 60) / 360))
+        Return (intEndX, intEndY)
+    End Function
+
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
         intSpeedNeedleXEnd = SPEED_NEEDLE_X_ORIGIN + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * SPEED_NEEDLE_LENGTH))
@@ -324,6 +330,10 @@ Public Class RPMSystem
         Dim tempDestPoint As (intX As Integer, intY As Integer) = getTemperatureDestinationPoint(TEMP_NEEDLE_X_ORIGIN, TEMP_NEEDLE_Y_ORIGIN, TEMP_NEEDLE_LENGTH, temperatureToAngle(dblCurrentTemp))
         intTempNeedleXEnd = tempDestPoint.intX
         intTempNeedleYEnd = tempDestPoint.intY
+
+        Dim fuelDestPoint As (intX As Integer, intY As Integer) = getFuelDestinationPoint(FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, FUEL_NEEDLE_LENGTH, fuelToAngle(0))
+        intFuelNeedleXEnd = fuelDestPoint.intX
+        intFuelNeedleYEnd = fuelDestPoint.intY
 
         grphSpeedSheet.Dispose()
         grphRpmSheet.Dispose()
@@ -359,6 +369,7 @@ Public Class RPMSystem
 
     Public Sub DrawFuelAndTemperature(e As PaintEventArgs)
         grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), TEMP_NEEDLE_X_ORIGIN, TEMP_NEEDLE_Y_ORIGIN, intTempNeedleXEnd, intTempNeedleYEnd)
+        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, intFuelNeedleXEnd, intFuelNeedleYEnd)
         e.Graphics.DrawImage(bmpFuelTempGauge, 0, 0)
     End Sub
 
