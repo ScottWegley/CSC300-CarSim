@@ -241,5 +241,8 @@
   <ItemGroup>
     <None Include="Resources\abstract-fashion-pop-131283.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StartBackground.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
