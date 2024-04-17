@@ -145,4 +145,37 @@ Public Class frmCarSim
     Private Sub mnCarAbout_Click(sender As Object, e As EventArgs) Handles mnCarAbout.Click
         MessageBox.Show("This is a physics accurate car simulation designed by Adam Cartozian, Keegan Lenz, and Scott Wegley." & Environment.NewLine & "Turn the car on, put it in drive, release the parking brake and step on the gas!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
+
+    Private Sub pbxRadio_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxRadio.MouseDown
+        If e.X <= 219 And e.X >= 195 And e.Y >= 66 And e.Y <= 76 Then
+            ' Button 6
+            Console.WriteLine("Button 6")
+            Return
+        End If
+        If e.X <= 194 And e.X >= 169 And e.Y <= 76 And e.Y >= 67 Then
+            ' Button 5
+            Console.WriteLine("Button 5")
+            Return
+        End If
+        If e.X <= 169 And e.X >= 143 And e.Y <= 78 And e.Y >= 67 Then
+            ' Button 4
+            Console.WriteLine("Button 4")
+            Return
+        End If
+        If e.X <= 143 And e.X >= 115 And e.Y <= 75 And e.Y >= 66 Then
+            ' Button 3
+            Console.WriteLine("Button 3")
+            Return
+        End If
+        If e.X <= 112 And e.X >= 89 And e.Y <= 76 And e.Y >= 64 Then
+            ' Button 2
+            Console.WriteLine("Button 2")
+            Return
+        End If
+        If e.X <= 86 And e.X >= 62 And e.Y <= 74 And e.Y >= 64 Then
+            ' Button 1
+            Console.WriteLine("Button 1")
+            Return
+        End If
+    End Sub
 End Class
