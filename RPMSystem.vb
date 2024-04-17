@@ -4,15 +4,15 @@ Public Class RPMSystem
 
 #Region "Engine Temperature Varaibles"
     ' Celsius values
-    Const MAX_TEMP = 120
-    Const MIN_TEMP = 0
+    Const MAX_TEMP As Integer = 125
+    Const MIN_TEMP As Integer = 45
 
     Dim dblCurrentTemp = 95
 #End Region
 
 #Region "Fuel System Variables"
-    Const MPG = 20 ' Base MPG. Changes depending on RPM
-    Const MAX_FUEL = 20 ' In gallons
+    Const MPG As Integer = 20 ' Base MPG. Changes depending on RPM
+    Const MAX_FUEL As Integer = 20 ' In gallons
 
     Dim dblCurrentFuel = MAX_FUEL
 #End Region
@@ -67,46 +67,46 @@ Public Class RPMSystem
 
 #Region "Gauge Variables"
     ' Config variables for speed needle
-    Const SPEED_NEEDLE_LENGTH = 75
-    Const SPEED_NEEDLE_MIN_ANGLE = 2.25
-    Private dblSpeedNeedleMaxAngle = 7.2
-    Private dblSpeedNeedleAngle = 2.15
+    Const SPEED_NEEDLE_LENGTH As Integer = 75
+    Const SPEED_NEEDLE_MIN_ANGLE As Integer = 2.25
+    Private dblSpeedNeedleMaxAngle As Double = 7.2
+    Private dblSpeedNeedleAngle As Double = 2.15
 
-    Const SPEED_NEEDLE_X_ORIGIN = 80
-    Const SPEED_NEEDLE_Y_ORIGIN = 80
+    Const SPEED_NEEDLE_X_ORIGIN As Integer = 80
+    Const SPEED_NEEDLE_Y_ORIGIN As Integer = 80
 
-    Private intSpeedNeedleXEnd = SPEED_NEEDLE_X_ORIGIN
-    Private intSpeedNeedleYEnd = SPEED_NEEDLE_Y_ORIGIN
+    Private intSpeedNeedleXEnd As Integer = SPEED_NEEDLE_X_ORIGIN
+    Private intSpeedNeedleYEnd As Integer = SPEED_NEEDLE_Y_ORIGIN
 
     ' Config variables for rpm needle
-    Const RPM_NEEDLE_LENGTH = 60
+    Const RPM_NEEDLE_LENGTH As Integer = 60
 
-    Const RPM_NEEDLE_MIN_ANGLE = 2.25
-    Const RPM_NEEDLE_MAX_ANGLE = 7.2
-    Private dblRpmNeedleAngle = 2.25
+    Const RPM_NEEDLE_MIN_ANGLE As Double = 2.25
+    Const RPM_NEEDLE_MAX_ANGLE As Double = 7.2
+    Private dblRpmNeedleAngle As Double = 2.25
 
-    Const RPM_NEEDLE_X_ORIGIN = 90
-    Const RPM_NEEDLE_Y_ORIGIN = 84
-    Private intRpmNeedleXEnd = RPM_NEEDLE_X_ORIGIN
-    Private intRpmNeedleYEnd = RPM_NEEDLE_Y_ORIGIN
+    Const RPM_NEEDLE_X_ORIGIN As Integer = 90
+    Const RPM_NEEDLE_Y_ORIGIN As Integer = 84
+    Private intRpmNeedleXEnd As Integer = RPM_NEEDLE_X_ORIGIN
+    Private intRpmNeedleYEnd As Integer = RPM_NEEDLE_Y_ORIGIN
 
 
     'Config variables for fuel and temperature needle
-    Const FUEL_NEEDLE_LENGTH = 47
+    Const FUEL_NEEDLE_LENGTH As Integer = 47
 
-    Const TEMP_NEEDLE_LENGTH = 47
+    Const TEMP_NEEDLE_LENGTH As Integer = 47
 
-    Const FUEL_NEEDLE_X_ORIGIN = 150
-    Const FUEL_NEEDLE_Y_ORIGIN = 89
+    Const FUEL_NEEDLE_X_ORIGIN As Integer = 150
+    Const FUEL_NEEDLE_Y_ORIGIN As Integer = 89
 
-    Const TEMP_NEEDLE_X_ORIGIN = 42
-    Const TEMP_NEEDLE_Y_ORIGIN = 89
+    Const TEMP_NEEDLE_X_ORIGIN As Integer = 42
+    Const TEMP_NEEDLE_Y_ORIGIN As Integer = 89
 
-    Private intTempNeedleXEnd = TEMP_NEEDLE_X_ORIGIN
-    Private intTempNeedleYEnd = TEMP_NEEDLE_Y_ORIGIN
+    Private intTempNeedleXEnd As Integer = TEMP_NEEDLE_X_ORIGIN
+    Private intTempNeedleYEnd As Integer = TEMP_NEEDLE_Y_ORIGIN
 
-    Private intFuelNeedleXEnd = 100
-    Private intFuelNeedleYEnd = 100
+    Private intFuelNeedleXEnd As Integer = 100
+    Private intFuelNeedleYEnd As Integer = 100
 
     ' Config variables for drawing on Gauges
     Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
@@ -296,7 +296,7 @@ Public Class RPMSystem
     End Sub
 
     Public Function fuelToAngle(ByVal dblFuel As Double) As Double
-        Dim dblOffset = dblCurrentFuel / 20
+        Dim dblOffset = dblCurrentFuel / MAX_FUEL
 
         Return dblOffset * 136
     End Function
