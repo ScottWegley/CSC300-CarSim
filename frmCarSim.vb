@@ -56,6 +56,7 @@ Public Class frmCarSim
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         ' Toggle Car On
         car.getRPMSystem().ToggleCarOn()
+        ' Toggle Clock On
         car.getClock().ToggleClock()
     End Sub
 

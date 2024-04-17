@@ -37,38 +37,38 @@ Public Class Clock
 
     Public Sub New(ByRef Clock As PictureBox)
         pbxClock = Clock
-        tmrClockUpdate.Interval = 1000
+        tmrClockUpdate.Interval = 250
 
-        intSecondsNeedleLength = 0.4 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intMinutesNeedleLength = 0.3 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intHoursNeedleLength = 0.2 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intSecondsNeedleLength = 0.3 * ((pbxClock.Width + pbxClock.Height) / 2)
+        intMinutesNeedleLength = 0.2 * ((pbxClock.Width + pbxClock.Height) / 2)
+        intHoursNeedleLength = 0.12 * ((pbxClock.Width + pbxClock.Height) / 2)
 
-        intSecondsNeedleOriginX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intSecondsNeedleOriginY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intSecondsNeedleEndX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intSecondsNeedleEndY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intSecondsNeedleOriginX = 0.54 * ((pbxClock.Width + pbxClock.Height) / 2)
+        intSecondsNeedleOriginY = 0.52 * ((pbxClock.Width + pbxClock.Height)/2)
+        intSecondsNeedleEndX = intSecondsNeedleOriginX
+        intSecondsNeedleEndY = intSecondsNeedleOriginY
 
-        intMinutesNeedleOriginX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intMinutesNeedleOriginY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intMinutesNeedleEndX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intMinutesNeedleEndY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intMinutesNeedleOriginX = intSecondsNeedleOriginX
+        intMinutesNeedleOriginY = intSecondsNeedleOriginY
+        intMinutesNeedleEndX = intMinutesNeedleOriginX
+        intMinutesNeedleEndY = intMinutesNeedleOriginY
 
-        intHoursNeedleOriginX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intHoursNeedleOriginY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intHoursNeedleEndX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
-        intHoursNeedleEndY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intHoursNeedleOriginX = intSecondsNeedleOriginX
+        intHoursNeedleOriginY = intSecondsNeedleOriginY
+        intHoursNeedleEndX = intHoursNeedleOriginX
+        intHoursNeedleEndY = intHoursNeedleOriginY
     End Sub
 
-    Private Function secondsToAngle(ByVal intSeconds As Integer) As Double
-        Return 360 - (intSeconds / 60 * 360)
+    Private Function secondsToAngle(ByVal dblSeconds As Double) As Double
+        Return 180 - (dblSeconds / 60 * 360)
     End Function
 
-    Private Function minutesToAngle(ByVal intMinutes As Integer) As Double
-        Return 360 - (intMinutes / 60 * 360)
+    Private Function minutesToAngle(ByVal dblMinutes As Double) As Double
+        Return 180 - (dblMinutes / 60 * 360)
     End Function
 
-    Private Function hoursToAngle(ByVal intHours As Integer) As Double
-        Return 360 - ((intHours Mod 12) / 12 * 360)
+    Private Function hoursToAngle(ByVal dblHours As Double) As Double
+        Return 180 - ((IIf(dblHours > 12, dblHours - 12, dblHours) / 12) * 360)
     End Function
 
     ' Function to calculate the X and Y of a point where the needle ends
@@ -79,25 +79,27 @@ Public Class Clock
     End Function
 
     Public Sub tmrClockUpdate_Tick(sender As Object, e As EventArgs) Handles tmrClockUpdate.Tick
+
         grphClock.Dispose()
         bmpClock.Dispose()
 
         bmpClock = New Bitmap(1024, 1024)
         grphClock = Graphics.FromImage(bmpClock)
 
-        Dim intCurrentSeconds As Integer = DateTime.Now.Second
-        Dim intCurrentMinutes As Integer = DateTime.Now.Minute
-        Dim intCurrentHours As Integer = DateTime.Now.Hour
+        Dim dblCurrentSeconds As Double = DateTime.Now.Second
+        Dim dblCurrentMinutes As Double = DateTime.Now.Minute + (dblCurrentSeconds / 60)
+        Dim dblCurrentHours As Double = DateTime.Now.Hour + (dblCurrentMinutes / 60)
 
-        Dim secondsEnd As (intX As Integer, intY As Integer) = getEndPoint(intSecondsNeedleOriginX, intSecondsNeedleOriginY, secondsToAngle(intCurrentSeconds), intSecondsNeedleLength)
+
+        Dim secondsEnd As (intX As Integer, intY As Integer) = getEndPoint(intSecondsNeedleOriginX, intSecondsNeedleOriginY, secondsToAngle(dblCurrentSeconds), intSecondsNeedleLength)
         intSecondsNeedleEndX = secondsEnd.intX
         intSecondsNeedleEndY = secondsEnd.intY
 
-        Dim minutesEnd As (intX As Integer, intY As Integer) = getEndPoint(intMinutesNeedleOriginX, intMinutesNeedleOriginY, minutesToAngle(intCurrentMinutes), intMinutesNeedleLength)
+        Dim minutesEnd As (intX As Integer, intY As Integer) = getEndPoint(intMinutesNeedleOriginX, intMinutesNeedleOriginY, minutesToAngle(dblCurrentMinutes), intMinutesNeedleLength)
         intMinutesNeedleEndX = minutesEnd.intX
         intMinutesNeedleEndY = minutesEnd.intY
 
-        Dim hoursEnd As (intX As Integer, intY As Integer) = getEndPoint(intHoursNeedleOriginX, hoursNeedleOriginY, hoursToAngle(intCurrentHours), intHoursNeedleLength)
+        Dim hoursEnd As (intX As Integer, intY As Integer) = getEndPoint(intHoursNeedleOriginX, intHoursNeedleOriginY, hoursToAngle(dblCurrentHours), intHoursNeedleLength)
         intHoursNeedleEndX = hoursEnd.intX
         intHoursNeedleEndY = hoursEnd.intY
 
@@ -106,7 +108,9 @@ Public Class Clock
 
     Public Sub DrawNeedles(e As PaintEventArgs)
         If boolClockOn Then
-            grphClock.DrawLine(New Pen(Color.Green, 1), intSecondsNeedleOriginX, intSecondsNeedleOriginY, intSecondsNeedleEndX, intSecondsNeedleEndY)
+            grphClock.DrawLine(New Pen(Color.White, 1), intHoursNeedleOriginX, intHoursNeedleOriginY, intHoursNeedleEndX, intHoursNeedleEndY)
+            grphClock.DrawLine(New Pen(Color.Red, 1), intMinutesNeedleOriginX, intMinutesNeedleOriginY, intMinutesNeedleEndX, intMinutesNeedleEndY)
+            grphClock.DrawLine(New Pen(Color.Yellow, 1), intSecondsNeedleOriginX, intSecondsNeedleOriginY, intSecondsNeedleEndX, intSecondsNeedleEndY)
             e.Graphics.DrawImage(bmpClock, 0, 0)
         End If
     End Sub
