@@ -11,12 +11,12 @@ Public Class Clock
     Const MINUTES_NEEDLE_LENGTH As Integer = 20
     Const HOURS_NEEDLE_LENGTH As Integer = 15
 
-    Const SECONDS_NEEDLE_ORIGIN_X As Integer = 37
-    Const SECONDS_NEEDLE_ORIGIN_Y As Integer = 40
-    Const MINUTES_NEEDLE_ORIGIN_X As Integer = 0
-    Const MINUTES_NEEDLE_ORIGIN_Y As Integer = 0
-    Const HOURS_NEEDLE_ORIGIN_X As Integer = 0
-    Const HOURS_NEEDLE_ORIGIN_Y As Integer = 0
+    Private intSecondsNeedleOriginX As Integer
+    Private intSecondsNeedleOriginY As Integer
+    Private intMinutesNeedleOriginX As Integer
+    Private intMinutesNeedleOriginY As Integer
+    Private intHoursNeedleOriginX As Integer
+    Private intHoursNeedleOriginY As Integer
 
     Private intSecondsNeedleEndX As Integer
     Private intSecondsNeedleEndY As Integer
@@ -41,15 +41,15 @@ Public Class Clock
     End Sub
 
     Private Function secondsToAngle(ByVal intSeconds As Integer) As Double
-        Return 360 - intSeconds / 60 * 360
+        Return 360 - (intSeconds / 60 * 360)
     End Function
 
     Private Function minutesToAngle(ByVal intMinutes As Integer) As Double
-        Return 360 - intMinutes / 60 * 360
+        Return 360 - (intMinutes / 60 * 360)
     End Function
 
     Private Function hoursToAngle(ByVal intHours As Integer) As Double
-        Return 360 - (intHours Mod 12) / 12 * 360
+        Return 360 - ((intHours Mod 12) / 12 * 360)
     End Function
 
     ' Function to calculate the X and Y of a point where the needle ends
@@ -70,15 +70,15 @@ Public Class Clock
         Dim intCurrentMinutes As Integer = DateTime.Now.Minute
         Dim intCurrentHours As Integer = DateTime.Now.Hour
 
-        Dim secondsEnd As (intX As Integer, intY As Integer) = getEndPoint(SECONDS_NEEDLE_ORIGIN_X, SECONDS_NEEDLE_ORIGIN_Y, secondsToAngle(intCurrentSeconds), SECONDS_NEEDLE_LENGTH)
+        Dim secondsEnd As (intX As Integer, intY As Integer) = getEndPoint(intSecondsNeedleOriginX, intSecondsNeedleOriginY, secondsToAngle(intCurrentSeconds), SECONDS_NEEDLE_LENGTH)
         intSecondsNeedleEndX = secondsEnd.intX
         intSecondsNeedleEndY = secondsEnd.intY
 
-        Dim minutesEnd As (intX As Integer, intY As Integer) = getEndPoint(MINUTES_NEEDLE_ORIGIN_X, MINUTES_NEEDLE_ORIGIN_Y, minutesToAngle(intCurrentMinutes), MINUTES_NEEDLE_LENGTH)
+        Dim minutesEnd As (intX As Integer, intY As Integer) = getEndPoint(intMinutesNeedleOriginX, intMinutesNeedleOriginY, minutesToAngle(intCurrentMinutes), MINUTES_NEEDLE_LENGTH)
         intMinutesNeedleEndX = minutesEnd.intX
         intMinutesNeedleEndY = minutesEnd.intY
 
-        Dim hoursEnd As (intX As Integer, intY As Integer) = getEndPoint(HOURS_NEEDLE_ORIGIN_X, HOURS_NEEDLE_ORIGIN_Y, hoursToAngle(intCurrentHours), HOURS_NEEDLE_LENGTH)
+        Dim hoursEnd As (intX As Integer, intY As Integer) = getEndPoint(intHoursNeedleOriginX, hoursNeedleOriginY, hoursToAngle(intCurrentHours), HOURS_NEEDLE_LENGTH)
         intHoursNeedleEndX = hoursEnd.intX
         intHoursNeedleEndY = hoursEnd.intY
 
@@ -87,7 +87,7 @@ Public Class Clock
 
     Public Sub DrawNeedles(e As PaintEventArgs)
         If boolClockOn Then
-            grphClock.DrawLine(New Pen(Color.Green, 1), SECONDS_NEEDLE_ORIGIN_X, SECONDS_NEEDLE_ORIGIN_Y, intSecondsNeedleEndX, intSecondsNeedleEndY)
+            grphClock.DrawLine(New Pen(Color.Green, 1), intSecondsNeedleOriginX, intSecondsNeedleOriginY, intSecondsNeedleEndX, intSecondsNeedleEndY)
             e.Graphics.DrawImage(bmpClock, 0, 0)
         End If
     End Sub
