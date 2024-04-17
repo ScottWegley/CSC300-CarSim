@@ -94,8 +94,8 @@ Public Class RPMSystem
     'Config variables for fuel needle
     Const FUEL_NEEDLE_LENGTH = 100
 
-    Const FUEL_NEEDLE_X_ORIGIN = 0
-    Const FUEL_NEEDLE_Y_ORIGIN = 0
+    Const FUEL_NEEDLE_X_ORIGIN = 42
+    Const FUEL_NEEDLE_Y_ORIGIN = 89
 
     Const TEMP_NEEDLE_X_ORIGIN = 0
     Const TEMP_NEEDLE_Y_ORIGIN = 0
@@ -115,19 +115,25 @@ Public Class RPMSystem
     Dim grphFuelTempGauge As Graphics = Graphics.FromImage(bmpFuelTempGauge)
 #End Region
 
-    Private WithEvents tmrPedals As Timer = New Timer()
-    Private WithEvents tmrNeedleUpdate As Timer = New Timer()
-    Private WithEvents lblMPH As Label
-    Private WithEvents lblGear As Label
+#Region "Debug Text Boxes"
     Dim TextBox2 As System.Windows.Forms.TextBox
     Dim TextBox3 As System.Windows.Forms.TextBox
     Dim TextBox4 As System.Windows.Forms.TextBox
     Dim TextBox1 As System.Windows.Forms.TextBox
+#End Region
+
+#Region "Form Elements"
+    Private WithEvents tmrPedals As Timer = New Timer()
+    Private WithEvents tmrNeedleUpdate As Timer = New Timer()
+    Private WithEvents lblMPH As Label
+    Private WithEvents lblGear As Label
+
     Dim pbxSpeed As PictureBox
     Dim pbxRPM As PictureBox
     Dim pbxFuelandTempGauge As PictureBox
     Dim pbxParkingBrakeLight As PictureBox
     Dim lblDriveSelecterIndicator As Label
+#End Region
 
     Const TIMER_INTERVAL = 100
 
