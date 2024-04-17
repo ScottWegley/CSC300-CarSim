@@ -327,7 +327,7 @@ Public Class RPMSystem
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
     End Sub
 
-    Public Sub DrawFuel(e As PaintEventArgs)
+    Public Sub DrawFuelAndTemperature(e As PaintEventArgs)
         grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, intFuelNeedleXEnd, intFuelNeedleYEnd)
         e.Graphics.DrawImage(bmpRpmNeedle, 0, 0)
     End Sub

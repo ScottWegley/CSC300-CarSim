@@ -49,6 +49,8 @@ Public Class frmCarSim
     End Sub
 
     Private Sub frmCarSim_PaintFuelTempNeedle(sender As Object, e As PaintEventArgs) Handles pbxFuelAndTempGauge.Paint
+        car.getRPMSystem().DrawFuelAndTemperature(e)
+    End Sub
 
     ' Turns the car on/off
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
