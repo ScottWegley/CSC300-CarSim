@@ -28,6 +28,12 @@ Partial Class frmCarSim
         Me.lblMPH = New System.Windows.Forms.Label()
         Me.lblGear = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.mnStripCar = New System.Windows.Forms.MenuStrip()
+        Me.mnCarHelp = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnCarAbout = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnCarInstructions = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnCarExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.pbxRadio = New System.Windows.Forms.PictureBox()
         Me.pbxClock = New System.Windows.Forms.PictureBox()
         Me.pbxFuelandTempGauge = New System.Windows.Forms.PictureBox()
@@ -55,11 +61,7 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStalk = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStalkUp = New System.Windows.Forms.PictureBox()
         Me.pbxTurnSignalStalkDown = New System.Windows.Forms.PictureBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.mnStripCar = New System.Windows.Forms.MenuStrip()
-        Me.mnCarHelp = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnCarAbout = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnCarExit = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnStripCar.SuspendLayout()
         CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,7 +89,6 @@ Partial Class frmCarSim
         CType(Me.pbxTurnSignalStalk, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxTurnSignalStalkUp, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbxTurnSignalStalkDown, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.mnStripCar.SuspendLayout()
         Me.SuspendLayout()
         '
         'TextBox2
@@ -154,6 +155,48 @@ Partial Class frmCarSim
         Me.TextBox3.Size = New System.Drawing.Size(100, 20)
         Me.TextBox3.TabIndex = 29
         Me.TextBox3.Visible = False
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(351, 39)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
+        Me.TextBox1.TabIndex = 30
+        Me.TextBox1.Visible = False
+        '
+        'mnStripCar
+        '
+        Me.mnStripCar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnCarHelp, Me.mnCarExit})
+        Me.mnStripCar.Location = New System.Drawing.Point(0, 0)
+        Me.mnStripCar.Name = "mnStripCar"
+        Me.mnStripCar.Size = New System.Drawing.Size(1154, 24)
+        Me.mnStripCar.TabIndex = 33
+        Me.mnStripCar.Text = "MenuStrip1"
+        '
+        'mnCarHelp
+        '
+        Me.mnCarHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnCarAbout, Me.mnCarInstructions})
+        Me.mnCarHelp.Name = "mnCarHelp"
+        Me.mnCarHelp.Size = New System.Drawing.Size(44, 20)
+        Me.mnCarHelp.Text = "Help"
+        '
+        'mnCarAbout
+        '
+        Me.mnCarAbout.Name = "mnCarAbout"
+        Me.mnCarAbout.Size = New System.Drawing.Size(180, 22)
+        Me.mnCarAbout.Text = "About"
+        '
+        'mnCarInstructions
+        '
+        Me.mnCarInstructions.Name = "mnCarInstructions"
+        Me.mnCarInstructions.Size = New System.Drawing.Size(180, 22)
+        Me.mnCarInstructions.Text = "Instructions"
+        '
+        'mnCarExit
+        '
+        Me.mnCarExit.Name = "mnCarExit"
+        Me.mnCarExit.Size = New System.Drawing.Size(37, 20)
+        Me.mnCarExit.Text = "Exit"
         '
         'pbxRadio
         '
@@ -446,42 +489,6 @@ Partial Class frmCarSim
         Me.pbxTurnSignalStalkDown.TabStop = False
         Me.pbxTurnSignalStalkDown.Visible = False
         '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(351, 39)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox1.TabIndex = 30
-        Me.TextBox1.Visible = False
-        '
-        'mnStripCar
-        '
-        Me.mnStripCar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnCarHelp, Me.mnCarExit})
-        Me.mnStripCar.Location = New System.Drawing.Point(0, 0)
-        Me.mnStripCar.Name = "mnStripCar"
-        Me.mnStripCar.Size = New System.Drawing.Size(1154, 24)
-        Me.mnStripCar.TabIndex = 33
-        Me.mnStripCar.Text = "MenuStrip1"
-        '
-        'mnCarHelp
-        '
-        Me.mnCarHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnCarAbout})
-        Me.mnCarHelp.Name = "mnCarHelp"
-        Me.mnCarHelp.Size = New System.Drawing.Size(44, 20)
-        Me.mnCarHelp.Text = "Help"
-        '
-        'mnCarAbout
-        '
-        Me.mnCarAbout.Name = "mnCarAbout"
-        Me.mnCarAbout.Size = New System.Drawing.Size(107, 22)
-        Me.mnCarAbout.Text = "About"
-        '
-        'mnCarExit
-        '
-        Me.mnCarExit.Name = "mnCarExit"
-        Me.mnCarExit.Size = New System.Drawing.Size(37, 20)
-        Me.mnCarExit.Text = "Exit"
-        '
         'frmCarSim
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -526,6 +533,8 @@ Partial Class frmCarSim
         Me.MainMenuStrip = Me.mnStripCar
         Me.Name = "frmCarSim"
         Me.Text = "Car Simulator"
+        Me.mnStripCar.ResumeLayout(False)
+        Me.mnStripCar.PerformLayout()
         CType(Me.pbxRadio, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxClock, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxFuelandTempGauge, System.ComponentModel.ISupportInitialize).EndInit()
@@ -553,8 +562,6 @@ Partial Class frmCarSim
         CType(Me.pbxTurnSignalStalk, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxTurnSignalStalkUp, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbxTurnSignalStalkDown, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.mnStripCar.ResumeLayout(False)
-        Me.mnStripCar.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -598,4 +605,5 @@ Partial Class frmCarSim
     Friend WithEvents mnCarHelp As ToolStripMenuItem
     Friend WithEvents mnCarAbout As ToolStripMenuItem
     Friend WithEvents mnCarExit As ToolStripMenuItem
+    Friend WithEvents mnCarInstructions As ToolStripMenuItem
 End Class
