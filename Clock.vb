@@ -7,9 +7,9 @@ Public Class Clock
     ' Draw needles in order: HOURS -> MINUTES -> SECONDS to ensure seconds is on top of minutes is on top of hours
 
 #Region "Needle Coordinate Variables"
-    Const SECONDS_NEEDLE_LENGTH As Integer = 25
-    Const MINUTES_NEEDLE_LENGTH As Integer = 20
-    Const HOURS_NEEDLE_LENGTH As Integer = 15
+    Private intSecondsNeedleLength As Integer
+    Private intMinutesNeedleLength As Integer
+    Private intHoursNeedleLength As Integer
 
     Private intSecondsNeedleOriginX As Integer
     Private intSecondsNeedleOriginY As Integer
@@ -38,6 +38,25 @@ Public Class Clock
     Public Sub New(ByRef Clock As PictureBox)
         pbxClock = Clock
         tmrClockUpdate.Interval = 1000
+
+        intSecondsNeedleLength = 0.4 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intMinutesNeedleLength = 0.3 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intHoursNeedleLength = 0.2 * Math.Max(pbxClock.Width, pbxClock.Height)
+
+        intSecondsNeedleOriginX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intSecondsNeedleOriginY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intSecondsNeedleEndX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intSecondsNeedleEndY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+
+        intMinutesNeedleOriginX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intMinutesNeedleOriginY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intMinutesNeedleEndX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intMinutesNeedleEndY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+
+        intHoursNeedleOriginX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intHoursNeedleOriginY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intHoursNeedleEndX = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
+        intHoursNeedleEndY = 0.45 * Math.Max(pbxClock.Width, pbxClock.Height)
     End Sub
 
     Private Function secondsToAngle(ByVal intSeconds As Integer) As Double
@@ -70,15 +89,15 @@ Public Class Clock
         Dim intCurrentMinutes As Integer = DateTime.Now.Minute
         Dim intCurrentHours As Integer = DateTime.Now.Hour
 
-        Dim secondsEnd As (intX As Integer, intY As Integer) = getEndPoint(intSecondsNeedleOriginX, intSecondsNeedleOriginY, secondsToAngle(intCurrentSeconds), SECONDS_NEEDLE_LENGTH)
+        Dim secondsEnd As (intX As Integer, intY As Integer) = getEndPoint(intSecondsNeedleOriginX, intSecondsNeedleOriginY, secondsToAngle(intCurrentSeconds), intSecondsNeedleLength)
         intSecondsNeedleEndX = secondsEnd.intX
         intSecondsNeedleEndY = secondsEnd.intY
 
-        Dim minutesEnd As (intX As Integer, intY As Integer) = getEndPoint(intMinutesNeedleOriginX, intMinutesNeedleOriginY, minutesToAngle(intCurrentMinutes), MINUTES_NEEDLE_LENGTH)
+        Dim minutesEnd As (intX As Integer, intY As Integer) = getEndPoint(intMinutesNeedleOriginX, intMinutesNeedleOriginY, minutesToAngle(intCurrentMinutes), intMinutesNeedleLength)
         intMinutesNeedleEndX = minutesEnd.intX
         intMinutesNeedleEndY = minutesEnd.intY
 
-        Dim hoursEnd As (intX As Integer, intY As Integer) = getEndPoint(intHoursNeedleOriginX, hoursNeedleOriginY, hoursToAngle(intCurrentHours), HOURS_NEEDLE_LENGTH)
+        Dim hoursEnd As (intX As Integer, intY As Integer) = getEndPoint(intHoursNeedleOriginX, hoursNeedleOriginY, hoursToAngle(intCurrentHours), intHoursNeedleLength)
         intHoursNeedleEndX = hoursEnd.intX
         intHoursNeedleEndY = hoursEnd.intY
 
