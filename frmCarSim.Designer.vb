@@ -149,7 +149,7 @@ Partial Class frmCarSim
         '
         Me.TextBox3.Location = New System.Drawing.Point(621, 562)
         Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(197, 20)
+        Me.TextBox3.Size = New System.Drawing.Size(441, 20)
         Me.TextBox3.TabIndex = 29
         '
         'pbxRadio

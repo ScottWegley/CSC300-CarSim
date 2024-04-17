@@ -91,8 +91,10 @@ Public Class RPMSystem
     Private intRpmNeedleYEnd = RPM_NEEDLE_Y_ORIGIN
 
 
-    'Config variables for fuel needle
-    Const FUEL_NEEDLE_LENGTH = 100
+    'Config variables for fuel and temperature needle
+    Const FUEL_NEEDLE_LENGTH = 47
+
+    Const TEMP_NEEDLE_LENGTH = 47
 
     Const FUEL_NEEDLE_X_ORIGIN = 42
     Const FUEL_NEEDLE_Y_ORIGIN = 89
@@ -100,8 +102,8 @@ Public Class RPMSystem
     Const TEMP_NEEDLE_X_ORIGIN = 42
     Const TEMP_NEEDLE_Y_ORIGIN = 89
 
-    Private intTempNeedleXEnd = TEMP_NEEDLE_X_ORIGIN
-    Private intTempNeedleYEnd = TEMP_NEEDLE_Y_ORIGIN
+    Private intTempNeedleXEnd = 63
+    Private intTempNeedleYEnd = 128
 
     Private intFuelNeedleXEnd = FUEL_NEEDLE_X_ORIGIN
     Private intFuelNeedleYEnd = FUEL_NEEDLE_Y_ORIGIN
@@ -270,7 +272,7 @@ Public Class RPMSystem
 
         lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
         Me.TextBox2.Text = "RPM: " & Convert.ToInt32(dblRPM)
-        TextBox3.Text = "Fuel and Temp: " & Convert.ToInt32(dblCurrentFuel) & ", " & Convert.ToInt32(dblCurrentTemp)
+        TextBox3.Text = "Fuel and Temp: " & Convert.ToInt32(dblCurrentFuel) & ", " & Convert.ToInt32(dblCurrentTemp) & " Temp Angle " & temperatureToAngle(dblCurrentTemp)
         TextBox4.Text = "Power: " & Convert.ToInt32(dblEngineTorque)
         lblGear.Text = intGear
     End Sub
@@ -293,6 +295,17 @@ Public Class RPMSystem
         boolGasHeld = False
     End Sub
 
+    Public Function temperatureToAngle(ByVal dblTemp) As Double
+        Dim dblOffset As Double = ((dblTemp - 45) / 75) ' Calculates how far from the top we are as a ratio off the offset to the range from top to bottom (0-75 degrees offset from 125).
+        Return (dblOffset * 140)
+    End Function
+
+    Public Function getTemperatureDestinationPoint(ByVal intOriginX As Integer, ByVal intOriginY As Integer, ByVal dblLength As Double, ByVal dblAngle As Double) As (intX As Integer, intY As Integer)
+        Dim intEndX As Integer = intOriginX + dblLength * Math.Cos(Math.PI * 2 * ((dblAngle - 69) / (360)))
+        Dim intEndY As Integer = intOriginY + -dblLength * Math.Sin(Math.PI * 2 * ((dblAngle - 69) / (360)))
+        Return (intEndX, intEndY)
+    End Function
+
     Private Sub tmrNeedleUpdate_Tick(sender As Object, e As EventArgs) Handles tmrNeedleUpdate.Tick
         ' Update end coordinates
         intSpeedNeedleXEnd = SPEED_NEEDLE_X_ORIGIN + Convert.ToInt32((Math.Cos((dblVelocity / 40.5) - 4) * SPEED_NEEDLE_LENGTH))
@@ -301,6 +314,10 @@ Public Class RPMSystem
         dblRpmNeedleAngle = dblRpmNeedleAngle + (dblRpmIncrease * 0.15)
         intRpmNeedleXEnd = RPM_NEEDLE_X_ORIGIN + Convert.ToInt32(Math.Cos((dblRPM / 2250) - 3.8) * RPM_NEEDLE_LENGTH)
         intRpmNeedleYEnd = RPM_NEEDLE_Y_ORIGIN + Convert.ToInt32(Math.Sin((dblRPM / 2250) - 3.8) * RPM_NEEDLE_LENGTH)
+
+        Dim tempDestPoint As (intX As Integer, intY As Integer) = getTemperatureDestinationPoint(TEMP_NEEDLE_X_ORIGIN, TEMP_NEEDLE_Y_ORIGIN, TEMP_NEEDLE_LENGTH, temperatureToAngle(dblCurrentTemp))
+        intTempNeedleXEnd = tempDestPoint.intX
+        intTempNeedleYEnd = tempDestPoint.intY
 
         grphSpeedSheet.Dispose()
         grphRpmSheet.Dispose()
@@ -322,6 +339,7 @@ Public Class RPMSystem
         pbxSpeed.Refresh()
         pbxRPM.Refresh()
         pbxFuelandTempGauge.Refresh()
+        temperatureToAngle(dblCurrentTemp)
     End Sub
     Public Sub DrawSpeed(e As PaintEventArgs)
         grphSpeedSheet.DrawLine(New Pen(Color.Red, 3), SPEED_NEEDLE_X_ORIGIN, SPEED_NEEDLE_Y_ORIGIN, intSpeedNeedleXEnd, intSpeedNeedleYEnd)
@@ -334,7 +352,7 @@ Public Class RPMSystem
     End Sub
 
     Public Sub DrawFuelAndTemperature(e As PaintEventArgs)
-        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, intFuelNeedleXEnd, intFuelNeedleYEnd)
+        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), TEMP_NEEDLE_X_ORIGIN, TEMP_NEEDLE_Y_ORIGIN, intTempNeedleXEnd, intTempNeedleYEnd)
         e.Graphics.DrawImage(bmpFuelTempGauge, 0, 0)
     End Sub
 
