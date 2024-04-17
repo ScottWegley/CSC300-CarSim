@@ -32,4 +32,8 @@ Public Class Car
     Public Function getRPMSystem() As RPMSystem
         Return rpmSystem
     End Function
+
+    Public Function getClock() As Clock
+        Return clock
+    End Function
 End Class

@@ -14,7 +14,7 @@ Public Class frmCarSim
 
     ' Hello
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
-        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator)
+        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxClock)
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -38,6 +38,10 @@ Public Class frmCarSim
     End Sub
 
 
+    Private Sub frmCarSim_PaintClockNeedles(Sender As Object, e As PaintEventArgs) Handles pbxClock.Paint
+        car.getClock().DrawNeedles(e)
+    End Sub
+
     Private Sub frmCarSim_PaintSpeedNeedle(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
         ' Draw Speed
         car.getRPMSystem().DrawSpeed(e)
@@ -52,6 +56,7 @@ Public Class frmCarSim
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         ' Toggle Car On
         car.getRPMSystem().ToggleCarOn()
+        car.getClock().ToggleClock()
     End Sub
 
     ' Throw the parking brake
@@ -88,7 +93,7 @@ Public Class frmCarSim
 
     Private Sub pbxTurnSignalAlt_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStalkUp.Click, pbxTurnSignalStalkDown.Click
         ' Turn Signal Off
-        car.getBlinkers().ForceSignalsOff()
+        car.getBlinkers().forceSignalsOff()
     End Sub
 
     Private Sub pbxLowBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxLowBeamSwitch.Click
@@ -111,7 +116,7 @@ Public Class frmCarSim
 
     Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click
         If (car.isOn()) Then
-            car.getBlinkers().HazardsToggle()
+            car.getBlinkers().hazardsToggle()
         End If
     End Sub
 
