@@ -298,7 +298,7 @@ Public Class RPMSystem
     Public Function fuelToAngle(ByVal dblFuel As Double) As Double
         Dim dblOffset = dblCurrentFuel / 20
 
-        Return dblOffset
+        Return dblOffset * 136
     End Function
 
     Public Function temperatureToAngle(ByVal dblTemp As Double) As Double
@@ -331,7 +331,7 @@ Public Class RPMSystem
         intTempNeedleXEnd = tempDestPoint.intX
         intTempNeedleYEnd = tempDestPoint.intY
 
-        Dim fuelDestPoint As (intX As Integer, intY As Integer) = getFuelDestinationPoint(FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, FUEL_NEEDLE_LENGTH, fuelToAngle(0))
+        Dim fuelDestPoint As (intX As Integer, intY As Integer) = getFuelDestinationPoint(FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, FUEL_NEEDLE_LENGTH, fuelToAngle(dblCurrentFuel))
         intFuelNeedleXEnd = fuelDestPoint.intX
         intFuelNeedleYEnd = fuelDestPoint.intY
 
