@@ -142,17 +142,19 @@ Public Class frmCarSim
 
     Private Sub frmCarSim_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         Dim bHandled As Boolean = False
-        Select Case e.KeyCode
-            Case Keys.Right
-                pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
-                pbxSteeringWheel.Refresh()
-                e.Handled = True
-            Case Keys.Left
-                For x = 0 To 2
+        If car.isOn() Then
+            Select Case e.KeyCode
+                Case Keys.Right
                     pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
-                Next
-                pbxSteeringWheel.Refresh()
-                e.Handled = True
-        End Select
+                    pbxSteeringWheel.Refresh()
+                    e.Handled = True
+                Case Keys.Left
+                    For x = 0 To 2
+                        pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
+                    Next
+                    pbxSteeringWheel.Refresh()
+                    e.Handled = True
+            End Select
+        End If
     End Sub
 End Class
