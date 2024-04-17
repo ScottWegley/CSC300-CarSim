@@ -103,8 +103,8 @@ Public Class RPMSystem
     Private intTempNeedleXEnd = TEMP_NEEDLE_X_ORIGIN
     Private intTempNeedleYEnd = TEMP_NEEDLE_Y_ORIGIN
 
-    Private intFuelNeedleXEnd = 100
-    Private intFuelNeedleYEnd = 100
+    Private intFuelNeedleXEnd = 51
+    Private intFuelNeedleYEnd = 45
 
     ' Config variables for drawing on Gauges
     Dim bmpSpeedNeedle As New Bitmap(1024, 1024)
