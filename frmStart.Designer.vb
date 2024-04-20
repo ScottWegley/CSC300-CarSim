@@ -28,6 +28,7 @@ Partial Class frmStart
         Me.mnStartAbout = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnStartExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblTitle = New System.Windows.Forms.Label()
+        Me.InstructionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnStart.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -54,7 +55,7 @@ Partial Class frmStart
         '
         'mnStartHelp
         '
-        Me.mnStartHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnStartAbout})
+        Me.mnStartHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnStartAbout, Me.InstructionsToolStripMenuItem})
         Me.mnStartHelp.Name = "mnStartHelp"
         Me.mnStartHelp.Size = New System.Drawing.Size(44, 20)
         Me.mnStartHelp.Text = "Help"
@@ -62,7 +63,7 @@ Partial Class frmStart
         'mnStartAbout
         '
         Me.mnStartAbout.Name = "mnStartAbout"
-        Me.mnStartAbout.Size = New System.Drawing.Size(107, 22)
+        Me.mnStartAbout.Size = New System.Drawing.Size(180, 22)
         Me.mnStartAbout.Text = "About"
         '
         'mnStartExit
@@ -83,6 +84,12 @@ Partial Class frmStart
         Me.lblTitle.TabIndex = 2
         Me.lblTitle.Text = "Welcome To The Codebrewers" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Car Simulator"
         Me.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'InstructionsToolStripMenuItem
+        '
+        Me.InstructionsToolStripMenuItem.Name = "InstructionsToolStripMenuItem"
+        Me.InstructionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.InstructionsToolStripMenuItem.Text = "Instructions"
         '
         'frmStart
         '
@@ -111,4 +118,5 @@ Partial Class frmStart
     Friend WithEvents mnStartAbout As ToolStripMenuItem
     Friend WithEvents mnStartExit As ToolStripMenuItem
     Friend WithEvents lblTitle As Label
+    Friend WithEvents InstructionsToolStripMenuItem As ToolStripMenuItem
 End Class

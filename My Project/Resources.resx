@@ -121,8 +121,8 @@
   <data name="the_best_jazz_club_in_new_orleans_164472" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\the-best-jazz-club-in-new-orleans-164472.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="TurnSignalStalkDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TurnSignalStockDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="LowBeam Switch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LowBeam Switch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TurnStalk" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TurnStock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -130,8 +130,8 @@
   <data name="BlankSpeedometer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlankSpeedometer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="engine start stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\engine start stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StartBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StartBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HighBeamIndicator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HighBeamIndicator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,11 +151,14 @@
   <data name="SteeringWheel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SteeringWheel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Fog Light Indicator" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Fog Light Indicator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Parking Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Parking Button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RightTurnSignal" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RightTurnSignal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ParkingBrake" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ParkingBrake1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fog Light Switch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Fog Light Switch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,6 +169,9 @@
   <data name="Clock1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Clock1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Fog Light Indicator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fog Light Indicator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TemoAndFuelGauge" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TemoAndFuelGauge.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -175,8 +181,8 @@
   <data name="Clock2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Clock2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Parking Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Parking Button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="engine start stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\engine start stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HazardLights Switch" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\HazardLights Switch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,17 +202,14 @@
   <data name="Tachometer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tachometer.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ParkingBrake" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ParkingBrake1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TurnSignalStalkDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\TurnSignalStockDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="movement_200697" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\movement-200697.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Drive Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Drive Button.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tachometer1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tachometer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="trap_future_bass_royalty_free_music_167020" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\trap-future-bass-royalty-free-music-167020.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -220,8 +223,8 @@
   <data name="Radio" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Radio.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="LowBeam Switch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LowBeam Switch.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Tachometer1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tachometer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Low Beam Indicator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Low Beam Indicator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -235,7 +238,7 @@
   <data name="BrakePedal1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BrakePedal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="StartBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\StartBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Road" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Road.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
