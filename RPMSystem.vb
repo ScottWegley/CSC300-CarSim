@@ -5,7 +5,9 @@ Public Class RPMSystem
 #Region "Engine Temperature Varaibles"
     ' Celsius values
     Const MAX_TEMP As Integer = 125
-    Const MIN_TEMP As Integer = 45
+    'Const MIN_TEMP As Integer = 45
+    ' The car should never actually get colder while running, and this value should only matter while the car is running
+    Const MIN_TEMP As Integer = 95
 
     Dim dblCurrentTemp = 95
 #End Region
@@ -29,7 +31,7 @@ Public Class RPMSystem
     Const SHIFT_RPM As Double = 3500 ' Fairly standard RPM shift point
     Const MAX_RPM As Double = 6000
     Private dblEngineTorque As Double = 0
-    Const MAX_ENGINE_TORQUE As Double = 2000
+    Const MAX_ENGINE_TORQUE As Double = 700
 
     Const DRAG_COEFFICIENT As Double = 0.05
     'Const MIN_DRAG_FORCE = 17.5 ' Prevent excessive velocity when idle while stationary
@@ -168,27 +170,27 @@ Public Class RPMSystem
         If intGear = 1 Then
             dblGearRatio = 1 / 4
             dblRpmIncrease = 400
-            dblRpmDecrese = 100
+            dblRpmDecrese = 1
         ElseIf intGear = 2 Then
             dblGearRatio = 1 / 3
             dblRpmIncrease = 200
-            dblRpmDecrese = 120
+            dblRpmDecrese = 2
         ElseIf intGear = 3 Then
             dblGearRatio = 1 / 2
             dblRpmIncrease = 100
-            dblRpmDecrese = 130
+            dblRpmDecrese = 4
         ElseIf intGear = 4 Then
             dblGearRatio = 1 / 1.5
             dblRpmIncrease = 50
-            dblRpmDecrese = 140
+            dblRpmDecrese = 8
         ElseIf intGear = 5 Then
             dblGearRatio = 1 / 1.25
             dblRpmIncrease = 25
-            dblRpmDecrese = 150
+            dblRpmDecrese = 16
         ElseIf intGear = 6 Then
             dblGearRatio = 1
             dblRpmIncrease = 12.5
-            dblRpmDecrese = 125
+            dblRpmDecrese = 32
         End If
 
         dblTempRPM = dblRPM
@@ -224,7 +226,7 @@ Public Class RPMSystem
             End If
 
             If Not boolBrakeHeld Then
-                ' If gas not held, gradually reduce RPM (likely needs to be dictated by rolling/drag in someway)
+                ' If gas not held, gradually reduce RPM
                 If boolCarOn Then
                     dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * dblGearRatio))
                     'dblRPM = Math.Max(1000, dblRPM - (dblRpmDecrese * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
@@ -234,19 +236,11 @@ Public Class RPMSystem
 
                 ' Idle engine power
                 If boolPark.Equals(False) Then
-                    dblEngineTorque = -(MAX_ENGINE_TORQUE / 60) * (dblRPM / MAX_RPM) / dblGearRatio
+                    dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio
                 End If
 
             End If
         End If
-
-        If dblRPM > dblTempRPM Then
-            dblCurrentTemp = Math.Min(MAX_TEMP, dblCurrentTemp + ((dblRPM - dblTempRPM) * 0.001))
-        Else
-            dblCurrentTemp = Math.Max(MIN_TEMP, dblCurrentTemp - ((dblTempRPM - dblRPM) * 0.001))
-        End If
-
-        dblCurrentFuel = Math.Max(0, dblCurrentFuel - (dblEngineTorque / (MPG * 10000)))
 
         ' Resistance forces must grow faster than Engine Torque in order to prevent infinite velocity increase
         'dblDragForce = Math.Max(MIN_DRAG_FORCE, DRAG_COEFFICIENT * (dblVelocity ^ 2))
@@ -254,13 +248,19 @@ Public Class RPMSystem
         dblRollingResistanceForce = ROLLING_RESISTANCE_COEFFICIENT * VEHICLE_MASS
 
         If boolBrakeHeld Then
+            dblTempRPM = dblRPM
             'dblRPM = Math.Min(dblMaxRPM, dblRPM - (dblRpmBrakeDecrease * ((dblMaxRPM - (dblRPM - 1000)) / (dblMaxRPM - 1000)) * dblGearRatio))
-            dblRPM = Math.Max(1000, dblRPM - dblRpmBrakeDecrease / dblGearRatio)
-            dblEngineTorque = -(MAX_ENGINE_TORQUE / 10) * (dblRPM / MAX_RPM) / dblGearRatio
+            dblRPM = Math.Max(MINIMUM_RPM, dblRPM - (dblRpmBrakeDecrease / 2))
+            dblEngineTorque = -dblBrakeForce / 2
         End If
 
-        dblDragForce = 0.5 * DRAG_COEFFICIENT * dblVelocity ^ 2
-        dblRollingResistanceForce = ROLLING_RESISTANCE_COEFFICIENT * VEHICLE_MASS * 9.81
+        If dblRPM > dblTempRPM Or dblRPM > SHIFT_RPM Then
+            dblCurrentTemp = Math.Min(MAX_TEMP, dblCurrentTemp + ((dblRPM - dblTempRPM) * 0.001))
+        Else
+            dblCurrentTemp = Math.Max(MIN_TEMP, dblCurrentTemp - ((dblTempRPM - dblRPM) * 0.001))
+        End If
+
+        dblCurrentFuel = Math.Max(0, dblCurrentFuel - (dblEngineTorque / (MPG * 10000)))
 
         dblNetForce = dblEngineTorque - dblDragForce - dblRollingResistanceForce
         dblAcceleration = dblNetForce / VEHICLE_MASS
@@ -268,6 +268,10 @@ Public Class RPMSystem
 
         If dblVelocity < 0 Then
             dblVelocity = 0
+        End If
+
+        If dblVelocity > 200 Then
+            dblVelocity = 200
         End If
 
         lblMPH.Text = Convert.ToInt32(dblVelocity) & " MPH"
