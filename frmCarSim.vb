@@ -140,19 +140,26 @@ Public Class frmCarSim
         MessageBox.Show("This is a physics accurate car simulation designed by Adam Cartozian, Keegan Lenz, and Scott Wegley." & Environment.NewLine & "Turn the car on, put it in drive, release the parking brake and step on the gas!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
+    Dim SWTurns As Double = 0
     Private Sub frmCarSim_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         Dim bHandled As Boolean = False
         If car.isOn() Then
             Select Case e.KeyCode
                 Case Keys.Right
-                    pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
-                    pbxSteeringWheel.Refresh()
+                    If SWTurns < 2 Then
+                        pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
+                        pbxSteeringWheel.Refresh()
+                        SWTurns = SWTurns + 0.25
+                    End If
                     e.Handled = True
                 Case Keys.Left
-                    For x = 0 To 2
-                        pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
-                    Next
-                    pbxSteeringWheel.Refresh()
+                    If SWTurns > -2 Then
+                        For x = 0 To 2
+                            pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
+                        Next
+                        pbxSteeringWheel.Refresh()
+                        SWTurns = SWTurns - 0.25
+                    End If
                     e.Handled = True
             End Select
         End If
