@@ -196,7 +196,7 @@ Partial Class frmCarSim
         'mnCarExit
         '
         Me.mnCarExit.Name = "mnCarExit"
-        Me.mnCarExit.Size = New System.Drawing.Size(37, 20)
+        Me.mnCarExit.Size = New System.Drawing.Size(38, 20)
         Me.mnCarExit.Text = "Exit"
         '
         'pbxRadio
@@ -214,7 +214,7 @@ Partial Class frmCarSim
         '
         Me.pbxClock.BackColor = System.Drawing.Color.Transparent
         Me.pbxClock.Image = Global.CSC300_CarSim.My.Resources.Resources.Clock1
-        Me.pbxClock.Location = New System.Drawing.Point(909, 296)
+        Me.pbxClock.Location = New System.Drawing.Point(878, 256)
         Me.pbxClock.Name = "pbxClock"
         Me.pbxClock.Size = New System.Drawing.Size(139, 115)
         Me.pbxClock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -223,14 +223,14 @@ Partial Class frmCarSim
         '
         'pbxFuelAndTempGauge
         '
-        Me.pbxFuelandTempGauge.BackColor = System.Drawing.Color.Transparent
-        Me.pbxFuelandTempGauge.Image = Global.CSC300_CarSim.My.Resources.Resources.TemoAndFuelGauge
-        Me.pbxFuelandTempGauge.Location = New System.Drawing.Point(679, 112)
-        Me.pbxFuelandTempGauge.Name = "pbxFuelandTempGauge"
-        Me.pbxFuelandTempGauge.Size = New System.Drawing.Size(112, 108)
-        Me.pbxFuelandTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pbxFuelandTempGauge.TabIndex = 30
-        Me.pbxFuelandTempGauge.TabStop = False
+        Me.pbxFuelAndTempGauge.BackColor = System.Drawing.Color.Transparent
+        Me.pbxFuelAndTempGauge.Image = Global.CSC300_CarSim.My.Resources.Resources.TemoAndFuelGauge
+        Me.pbxFuelAndTempGauge.Location = New System.Drawing.Point(679, 112)
+        Me.pbxFuelAndTempGauge.Name = "pbxFuelAndTempGauge"
+        Me.pbxFuelAndTempGauge.Size = New System.Drawing.Size(112, 108)
+        Me.pbxFuelAndTempGauge.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pbxFuelAndTempGauge.TabIndex = 30
+        Me.pbxFuelAndTempGauge.TabStop = False
         '
         'pbxDriveButton
         '
@@ -523,10 +523,10 @@ Partial Class frmCarSim
         Me.BackgroundImage = Global.CSC300_CarSim.My.Resources.Resources.Road
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1154, 690)
+        Me.Controls.Add(Me.pbxClock)
         Me.Controls.Add(Me.lblMPH)
         Me.Controls.Add(Me.pbxSpeed)
         Me.Controls.Add(Me.pbxRadio)
-        Me.Controls.Add(Me.pbxClock)
         Me.Controls.Add(Me.pbxFuelAndTempGauge)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.TextBox3)

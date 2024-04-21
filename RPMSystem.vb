@@ -94,15 +94,15 @@ Public Class RPMSystem
 
 
     'Config variables for fuel and temperature needle
-    Const FUEL_NEEDLE_LENGTH As Integer = 47
+    Const FUEL_NEEDLE_LENGTH As Integer = 31
 
-    Const TEMP_NEEDLE_LENGTH As Integer = 47
+    Const TEMP_NEEDLE_LENGTH As Integer = 31
 
-    Const FUEL_NEEDLE_X_ORIGIN As Integer = 150
-    Const FUEL_NEEDLE_Y_ORIGIN As Integer = 89
+    Const FUEL_NEEDLE_X_ORIGIN As Integer = 90
+    Const FUEL_NEEDLE_Y_ORIGIN As Integer = 55
 
-    Const TEMP_NEEDLE_X_ORIGIN As Integer = 42
-    Const TEMP_NEEDLE_Y_ORIGIN As Integer = 89
+    Const TEMP_NEEDLE_X_ORIGIN As Integer = 20
+    Const TEMP_NEEDLE_Y_ORIGIN As Integer = 55
 
     Private intTempNeedleXEnd As Integer = TEMP_NEEDLE_X_ORIGIN
     Private intTempNeedleYEnd As Integer = TEMP_NEEDLE_Y_ORIGIN
@@ -367,8 +367,8 @@ Public Class RPMSystem
     End Sub
 
     Public Sub DrawFuelAndTemperature(e As PaintEventArgs)
-        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), TEMP_NEEDLE_X_ORIGIN, TEMP_NEEDLE_Y_ORIGIN, intTempNeedleXEnd, intTempNeedleYEnd)
-        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 3), FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, intFuelNeedleXEnd, intFuelNeedleYEnd)
+        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 2), TEMP_NEEDLE_X_ORIGIN, TEMP_NEEDLE_Y_ORIGIN, intTempNeedleXEnd, intTempNeedleYEnd)
+        grphFuelTempGauge.DrawLine(New Pen(Color.Green, 2), FUEL_NEEDLE_X_ORIGIN, FUEL_NEEDLE_Y_ORIGIN, intFuelNeedleXEnd, intFuelNeedleYEnd)
         e.Graphics.DrawImage(bmpFuelTempGauge, 0, 0)
     End Sub
 
