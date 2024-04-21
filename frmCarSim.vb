@@ -14,7 +14,7 @@ Public Class frmCarSim
 
     ' Hello
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
-        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator)
+        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxSteeringWheel)
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -146,20 +146,10 @@ Public Class frmCarSim
         If car.isOn() Then
             Select Case e.KeyCode
                 Case Keys.Right
-                    If SWTurns < 2 Then
-                        pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
-                        pbxSteeringWheel.Refresh()
-                        SWTurns = SWTurns + 0.25
-                    End If
+                    car.getSteering.turnRight()
                     e.Handled = True
                 Case Keys.Left
-                    If SWTurns > -2 Then
-                        For x = 0 To 2
-                            pbxSteeringWheel.Image.RotateFlip(RotateFlipType.Rotate90FlipNone)
-                        Next
-                        pbxSteeringWheel.Refresh()
-                        SWTurns = SWTurns - 0.25
-                    End If
+                    car.getSteering.turnLeft()
                     e.Handled = True
             End Select
         End If
