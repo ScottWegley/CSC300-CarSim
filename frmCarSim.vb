@@ -13,7 +13,7 @@ Public Class frmCarSim
     End Sub
 
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
-        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxSteeringWheel, pbxClock)
+    car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxFuelAndTempGauge, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxSteeringWheel, pbxClock)
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -49,6 +49,10 @@ Public Class frmCarSim
     Private Sub frmCarSim_PaintRpmNeedle(sender As Object, e As PaintEventArgs) Handles pbxRpm.Paint
         'Draw Rpm
         car.getRPMSystem().DrawRPM(e)
+    End Sub
+
+    Private Sub frmCarSim_PaintFuelTempNeedle(sender As Object, e As PaintEventArgs) Handles pbxFuelAndTempGauge.Paint
+        car.getRPMSystem().DrawFuelAndTemperature(e)
     End Sub
 
     ' Turns the car on/off
