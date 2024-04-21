@@ -12,9 +12,8 @@ Public Class frmCarSim
         InitializeComponent()
     End Sub
 
-    ' Hello
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
-        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxClock)
+        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxSteeringWheel, pbxClock)
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -145,6 +144,32 @@ Public Class frmCarSim
     Private Sub mnCarAbout_Click(sender As Object, e As EventArgs) Handles mnCarAbout.Click
         MessageBox.Show("This is a physics accurate car simulation designed by Adam Cartozian, Keegan Lenz, and Scott Wegley." & Environment.NewLine & "Turn the car on, put it in drive, release the parking brake and step on the gas!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
+
+
+    Dim SWTurns As Double = 0
+    Private Sub frmCarSim_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        Dim bHandled As Boolean = False
+        If car.isOn() Then
+            Select Case e.KeyCode
+                Case Keys.Right
+                    car.getSteering.turnRight()
+                    e.Handled = True
+                Case Keys.Left
+                    car.getSteering.turnLeft()
+                    e.Handled = True
+            End Select
+        End If
+    End Sub
+
+    Private Sub mnCarInstructions_Click(sender As Object, e As EventArgs) Handles mnCarInstructions.Click
+        MessageBox.Show("To use the simulator, you must use your mouse or trackpad as well as your left and right arrow keys as follows:" & Environment.NewLine & Environment.NewLine &
+                        "CAR ON/OFF: Click the Red StartStop Button with the Mouse" & Environment.NewLine & "STEERINGWHEEL: Left and Right Arrow Keys" & Environment.NewLine &
+                        "THROTTLE AND BRAKE: Click and Hold Brake or Gas Icon with Mouse" & Environment.NewLine & "TURN SIGNALS: Click and Drag Turn Signal Stock Up or Down with Mouse" & Environment.NewLine &
+                        "LIGHTS: Click Toggle Switches With Mouse" & Environment.NewLine & "PARKING BRAKE: Click Parking Brake Icon with Mouse" & Environment.NewLine &
+                        "RADIO: Click Radio Buttons With Mouse" & Environment.NewLine & "TRANSMISSION: Click the 'D', 'R', 'N', and 'P' button with mouse" & Environment.NewLine & Environment.NewLine &
+                        "*HOW TO DRIVE*" & Environment.NewLine & "Turn Vehicle On, Hit the 'D' button to put vehicle in drive, Release the parking brake, and Press the throttle!",
+                        "Instructions", MessageBoxButtons.OK, MessageBoxIcon.Information)
+  End Sub
 
     Private Sub pbxRadio_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxRadio.MouseDown
         If e.X <= 219 And e.X >= 195 And e.Y >= 66 And e.Y <= 76 Then
