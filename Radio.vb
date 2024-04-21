@@ -10,7 +10,7 @@
     End Sub
 
     Public Sub PlayMediaOne()
-
+        My.Computer.Audio.Play(My.Resources.Ding, AudioPlayMode.Background)
     End Sub
 
     Public Sub PlayMediaTwo()
