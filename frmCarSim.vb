@@ -12,9 +12,8 @@ Public Class frmCarSim
         InitializeComponent()
     End Sub
 
-    ' Hello
     Private Sub frmCarSim_Load(sender As Object, e As EventArgs) Handles Me.Load
-        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxSteeringWheel)
+        car = New Car(lblMPH, lblGear, TextBox2, TextBox3, TextBox4, pbxSpeed, pbxRpm, pbxParkingBrakeLight, lblDriveSelecterIndicator, pbxRightTurnSignalLight, pbxLeftTurnSignalLight, pbxTurnSignalStalk, pbxTurnSignalStalkDown, pbxTurnSignalStalkUp, pbxLowBeamIndicator, pbxHighBeamIndicator, pbxFogLightIndicator, pbxSteeringWheel, pbxClock)
     End Sub
 
     Private Sub pbxBrake_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxBrake.MouseDown
@@ -38,6 +37,10 @@ Public Class frmCarSim
     End Sub
 
 
+    Private Sub frmCarSim_PaintClockNeedles(Sender As Object, e As PaintEventArgs) Handles pbxClock.Paint
+        car.getClock().DrawNeedles(e)
+    End Sub
+
     Private Sub frmCarSim_PaintSpeedNeedle(sender As Object, e As PaintEventArgs) Handles pbxSpeed.Paint
         ' Draw Speed
         car.getRPMSystem().DrawSpeed(e)
@@ -52,6 +55,8 @@ Public Class frmCarSim
     Private Sub pbxStartButton_Click(sender As Object, e As EventArgs) Handles pbxStartButton.Click
         ' Toggle Car On
         car.getRPMSystem().ToggleCarOn()
+        ' Toggle Clock On
+        car.getClock().ToggleClock()
     End Sub
 
     ' Throw the parking brake
@@ -88,7 +93,7 @@ Public Class frmCarSim
 
     Private Sub pbxTurnSignalAlt_Click(sender As Object, e As EventArgs) Handles pbxTurnSignalStalkUp.Click, pbxTurnSignalStalkDown.Click
         ' Turn Signal Off
-        car.getBlinkers().ForceSignalsOff()
+        car.getBlinkers().forceSignalsOff()
     End Sub
 
     Private Sub pbxLowBeamSwitch_Click(sender As Object, e As EventArgs) Handles pbxLowBeamSwitch.Click
@@ -111,7 +116,7 @@ Public Class frmCarSim
 
     Private Sub pbxHazardSwitch_Click(sender As Object, e As EventArgs) Handles pbxHazardSwitch.Click
         If (car.isOn()) Then
-            car.getBlinkers().HazardsToggle()
+            car.getBlinkers().hazardsToggle()
         End If
     End Sub
 
@@ -140,6 +145,7 @@ Public Class frmCarSim
         MessageBox.Show("This is a physics accurate car simulation designed by Adam Cartozian, Keegan Lenz, and Scott Wegley." & Environment.NewLine & "Turn the car on, put it in drive, release the parking brake and step on the gas!", "About", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
+
     Dim SWTurns As Double = 0
     Private Sub frmCarSim_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         Dim bHandled As Boolean = False
@@ -163,5 +169,38 @@ Public Class frmCarSim
                         "RADIO: Click Radio Buttons With Mouse" & Environment.NewLine & "TRANSMISSION: Click the 'D', 'R', 'N', and 'P' button with mouse" & Environment.NewLine & Environment.NewLine &
                         "*HOW TO DRIVE*" & Environment.NewLine & "Turn Vehicle On, Hit the 'D' button to put vehicle in drive, Release the parking brake, and Press the throttle!",
                         "Instructions", MessageBoxButtons.OK, MessageBoxIcon.Information)
+  End Sub
+
+    Private Sub pbxRadio_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxRadio.MouseDown
+        If e.X <= 219 And e.X >= 195 And e.Y >= 66 And e.Y <= 76 Then
+            ' Button 6
+            Console.WriteLine("Button 6")
+            Return
+        End If
+        If e.X <= 194 And e.X >= 169 And e.Y <= 76 And e.Y >= 67 Then
+            ' Button 5
+            Console.WriteLine("Button 5")
+            Return
+        End If
+        If e.X <= 169 And e.X >= 143 And e.Y <= 78 And e.Y >= 67 Then
+            ' Button 4
+            Console.WriteLine("Button 4")
+            Return
+        End If
+        If e.X <= 143 And e.X >= 115 And e.Y <= 75 And e.Y >= 66 Then
+            ' Button 3
+            Console.WriteLine("Button 3")
+            Return
+        End If
+        If e.X <= 112 And e.X >= 89 And e.Y <= 76 And e.Y >= 64 Then
+            ' Button 2
+            Console.WriteLine("Button 2")
+            Return
+        End If
+        If e.X <= 86 And e.X >= 62 And e.Y <= 74 And e.Y >= 64 Then
+            ' Button 1
+            Console.WriteLine("Button 1")
+            Return
+        End If
     End Sub
 End Class

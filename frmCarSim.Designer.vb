@@ -216,7 +216,7 @@ Partial Class frmCarSim
         Me.pbxClock.Image = Global.CSC300_CarSim.My.Resources.Resources.Clock1
         Me.pbxClock.Location = New System.Drawing.Point(909, 296)
         Me.pbxClock.Name = "pbxClock"
-        Me.pbxClock.Size = New System.Drawing.Size(75, 66)
+        Me.pbxClock.Size = New System.Drawing.Size(139, 115)
         Me.pbxClock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.pbxClock.TabIndex = 31
         Me.pbxClock.TabStop = False
