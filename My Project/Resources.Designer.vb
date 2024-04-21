@@ -241,9 +241,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         '''</summary>
-        Friend ReadOnly Property jaz() As System.IO.UnmanagedMemoryStream
+        Friend ReadOnly Property jazz() As System.IO.UnmanagedMemoryStream
             Get
-                Return ResourceManager.GetStream("jaz", resourceCulture)
+                Return ResourceManager.GetStream("jazz", resourceCulture)
             End Get
         End Property
         
