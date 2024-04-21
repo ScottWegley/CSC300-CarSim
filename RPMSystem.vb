@@ -165,27 +165,27 @@ Public Class RPMSystem
         If intGear = 1 Then
             dblGearRatio = 1 / 4
             dblRpmIncrease = 400
-            dblRpmDecrese = 1
+            dblRpmDecrese = 36
         ElseIf intGear = 2 Then
             dblGearRatio = 1 / 3
             dblRpmIncrease = 200
-            dblRpmDecrese = 2
+            dblRpmDecrese = 26
         ElseIf intGear = 3 Then
             dblGearRatio = 1 / 2
             dblRpmIncrease = 100
-            dblRpmDecrese = 4
+            dblRpmDecrese = 18
         ElseIf intGear = 4 Then
             dblGearRatio = 1 / 1.5
             dblRpmIncrease = 50
-            dblRpmDecrese = 8
+            dblRpmDecrese = 12
         ElseIf intGear = 5 Then
             dblGearRatio = 1 / 1.25
             dblRpmIncrease = 25
-            dblRpmDecrese = 16
+            dblRpmDecrese = 8
         ElseIf intGear = 6 Then
             dblGearRatio = 1
             dblRpmIncrease = 12.5
-            dblRpmDecrese = 32
+            dblRpmDecrese = 6
         End If
 
         dblTempRPM = dblRPM
@@ -231,9 +231,9 @@ Public Class RPMSystem
 
                 ' Idle engine power
                 If boolPark.Equals(False) Then
-                    dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio
+                    'dblEngineTorque = MAX_ENGINE_TORQUE * (dblRPM / MAX_RPM) * dblGearRatio
+                    dblEngineTorque = dblDragForce + dblRollingResistanceForce - 50
                 End If
-
             End If
         End If
 
