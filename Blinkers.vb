@@ -67,6 +67,9 @@
             tmrBlinkers.Stop()
             pbxRightTurnSignalLight.Visible = False
             pbxLeftTurnSignalLight.Visible = False
+            pbxTurnSignalStalkDown.Visible = False
+            pbxTurnSignalStalkUp.Visible = False
+            pbxTurnSignalStalk.Visible = True
             boolLeftSignalOn = False
             boolRightSignalOn = False
         End If
