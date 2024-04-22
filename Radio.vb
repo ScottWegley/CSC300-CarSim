@@ -47,4 +47,8 @@
         My.Computer.Audio.Stop()
         My.Computer.Audio.Play(My.Resources.trap_future_bass, AudioPlayMode.Background)
     End Sub
+
+    Public Sub stopMusic()
+        My.Computer.Audio.Stop()
+    End Sub
 End Class

@@ -8,6 +8,7 @@ Public Class Car
     Private rpmSystem As RPMSystem
     Private steering As Steering
     Private clock As Clock
+    Private radio As Radio
 #End Region
 
     Public Function isOn()
@@ -20,6 +21,7 @@ Public Class Car
         rpmSystem = New RPMSystem(lblMPH_IN, lblGear_IN, TextBox2_IN, TextBox3_IN, TextBox4_IN, SpeedGauge, RPMGauge, FuelAndTempGauge, ParkingBrakeLight, DriveIndicator)
         steering = New Steering(steeringWheel)
         clock = New Clock(ClockBox)
+        radio = New Radio
     End Sub
 
     Public Function getBlinkers() As Blinkers
@@ -40,5 +42,9 @@ Public Class Car
 
     Public Function getClock() As Clock
         Return clock
+    End Function
+
+    Public Function getRadio() As Radio
+        Return radio
     End Function
 End Class

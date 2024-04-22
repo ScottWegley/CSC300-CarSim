@@ -178,33 +178,38 @@ Public Class frmCarSim
     Private Sub pbxRadio_MouseDown(sender As Object, e As MouseEventArgs) Handles pbxRadio.MouseDown
         If e.X <= 219 And e.X >= 195 And e.Y >= 66 And e.Y <= 76 Then
             ' Button 6
-            Console.WriteLine("Button 6")
+            car.getRadio().PlayMediaSix()
             Return
         End If
         If e.X <= 194 And e.X >= 169 And e.Y <= 76 And e.Y >= 67 Then
             ' Button 5
-            Console.WriteLine("Button 5")
+            car.getRadio().PlayMediaFive()
             Return
         End If
         If e.X <= 169 And e.X >= 143 And e.Y <= 78 And e.Y >= 67 Then
             ' Button 4
-            Console.WriteLine("Button 4")
+            car.getRadio().PlayMediaFour()
             Return
         End If
         If e.X <= 143 And e.X >= 115 And e.Y <= 75 And e.Y >= 66 Then
             ' Button 3
-            Console.WriteLine("Button 3")
+            car.getRadio().PlayMediaThree()
             Return
         End If
         If e.X <= 112 And e.X >= 89 And e.Y <= 76 And e.Y >= 64 Then
             ' Button 2
-            Console.WriteLine("Button 2")
+            car.getRadio().PlayMediaTwo()
             Return
         End If
         If e.X <= 86 And e.X >= 62 And e.Y <= 74 And e.Y >= 64 Then
             ' Button 1
-            Console.WriteLine("Button 1")
+            car.getRadio().PlayMediaOne()
             Return
         End If
+        If e.X <= 38 And e.X >= 28 And e.Y <= 54 And e.Y >= 42 Then
+            ' Volume Button
+            car.getRadio().stopMusic()
+        End If
+        Console.WriteLine(e.X & " " & e.Y)
     End Sub
 End Class
