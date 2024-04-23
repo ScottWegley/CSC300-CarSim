@@ -26,9 +26,9 @@ Partial Class frmStart
         Me.mnStart = New System.Windows.Forms.MenuStrip()
         Me.mnStartHelp = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnStartAbout = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InstructionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnStartExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblTitle = New System.Windows.Forms.Label()
-        Me.InstructionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnStart.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -63,13 +63,19 @@ Partial Class frmStart
         'mnStartAbout
         '
         Me.mnStartAbout.Name = "mnStartAbout"
-        Me.mnStartAbout.Size = New System.Drawing.Size(180, 22)
+        Me.mnStartAbout.Size = New System.Drawing.Size(136, 22)
         Me.mnStartAbout.Text = "About"
+        '
+        'InstructionsToolStripMenuItem
+        '
+        Me.InstructionsToolStripMenuItem.Name = "InstructionsToolStripMenuItem"
+        Me.InstructionsToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.InstructionsToolStripMenuItem.Text = "Instructions"
         '
         'mnStartExit
         '
         Me.mnStartExit.Name = "mnStartExit"
-        Me.mnStartExit.Size = New System.Drawing.Size(37, 20)
+        Me.mnStartExit.Size = New System.Drawing.Size(38, 20)
         Me.mnStartExit.Text = "Exit"
         '
         'lblTitle
@@ -85,12 +91,6 @@ Partial Class frmStart
         Me.lblTitle.Text = "Welcome To The Codebrewers" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Car Simulator"
         Me.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'InstructionsToolStripMenuItem
-        '
-        Me.InstructionsToolStripMenuItem.Name = "InstructionsToolStripMenuItem"
-        Me.InstructionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.InstructionsToolStripMenuItem.Text = "Instructions"
-        '
         'frmStart
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -104,7 +104,7 @@ Partial Class frmStart
         Me.DoubleBuffered = True
         Me.MainMenuStrip = Me.mnStart
         Me.Name = "frmStart"
-        Me.Text = "frmStart"
+        Me.Text = "Start"
         Me.mnStart.ResumeLayout(False)
         Me.mnStart.PerformLayout()
         Me.ResumeLayout(False)
